@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title | default: site.title }}</title>
+  {%- seo -%}
+  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="site">
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="/">
+        <span class="kicker">Andrew Vu</span>
+        <span class="title">Art of Circuits & Life</span>
+      </a>
+      <nav class="site-nav">
+        {%- for item in site.nav -%}
+          <a href="{{ item.url }}" class="nav-link">{{ item.title }}</a>
+        {%- endfor -%}
+      </nav>
+    </div>
+  </header>
+
+  <main class="site-main container">
+    <div class="content">
+      {{ content }}
+    </div>
+    <aside class="sidebar">
+      {%- include sidebar.html -%}
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© {{ "now" | date: "%Y" }} {{ site.author.name }} · Built with Jekyll</p>
+    </div>
+  </footer>
+</body>
+</html>

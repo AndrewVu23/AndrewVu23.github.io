@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url>
+<loc>http://localhost:4000/notes/2025/07/30/power-supply-design-notes/</loc>
+<lastmod>2025-07-30T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/projects/2025/08/20/building-rf-signal-generator/</loc>
+<lastmod>2025-08-20T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/notes/2025/09/01/lab-notes-oscilloscope-tricks/</loc>
+<lastmod>2025-09-01T00:00:00-04:00</lastmod>
+</url>
+<url>
+<loc>http://localhost:4000/about/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/</loc>
+</url>
+<url>
+<loc>http://localhost:4000/projects/</loc>
+</url>
+</urlset>

@@ -1,0 +1,45 @@
+title: "Andrew Vu — Electrical Engineering Blog"
+description: "Projects, notes, and research—from a Purdue EE student."
+url: ""
+baseurl: ""
+
+author:
+  name: "Andrew Vu"
+  role: "Electrical Engineering Student"
+  org: "Purdue University"
+  github: "AndrewVu23"
+
+markdown: kramdown
+theme: null
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
+
+permalink: /:categories/:year/:month/:day/:title/
+
+paginate: 7
+paginate_path: "/page:num/"
+
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: post
+      author: "Andrew Vu"
+  - scope:
+      path: ""
+    values:
+      layout: default
+
+nav:
+  - title: Home
+    url: /
+  - title: Projects
+    url: /projects/
+  - title: About
+    url: /about/
+
+logo: /assets/img/avatar.svg

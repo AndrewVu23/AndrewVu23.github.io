@@ -1,0 +1,26 @@
+<section class="card profile">
+  <img class="avatar" src="/assets/img/avatar.svg" alt="Andrew Vu avatar" width="72" height="72">
+  <h3>Andrew Vu</h3>
+  <p>Purdue EE student. I build circuits, embedded systems, and tools that learn.</p>
+  <a class="pill pill-ghost" href="/about/">About</a>
+</section>
+
+<section class="card popular">
+  <h3 class="card-title">Most popular</h3>
+  <ol class="list-ordered">
+    {%- assign popular = site.posts | slice: 0, 3 -%}
+    {%- for p in popular -%}
+      <li><a href="{{ p.url }}">{{ p.title }}</a></li>
+    {%- endfor -%}
+  </ol>
+</section>
+
+<section class="card newsletter">
+  <h3 class="card-title">Newsletter</h3>
+  <p>Occasional project notes. No spam, unsubscribe anytime.</p>
+  <form action="#" method="post" class="newsletter-form" onsubmit="return false;">
+    <label class="sr-only" for="email">Email</label>
+    <input id="email" type="email" placeholder="you@domain.com" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</section>

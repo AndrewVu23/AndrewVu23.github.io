@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.9.5">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2025-09-21T22:02:07-04:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">Andrew Vu — Electrical Engineering Blog</title><subtitle>Projects, notes, and research—from a Purdue EE student.</subtitle><author><name>Andrew Vu</name></author><entry><title type="html">Lab notes: 7 oscilloscope tricks I wish I knew</title><link href="http://localhost:4000/notes/2025/09/01/lab-notes-oscilloscope-tricks/" rel="alternate" type="text/html" title="Lab notes: 7 oscilloscope tricks I wish I knew" /><published>2025-09-01T00:00:00-04:00</published><updated>2025-09-01T00:00:00-04:00</updated><id>http://localhost:4000/notes/2025/09/01/lab-notes-oscilloscope-tricks</id><content type="html" xml:base="http://localhost:4000/notes/2025/09/01/lab-notes-oscilloscope-tricks/"><![CDATA[<p>Here are a few scope tips that improved my day-to-day measurements.</p>
+
+<ol>
+  <li>Use a tight vertical scale and AC coupling when hunting ripple.</li>
+  <li>Save reference waveforms to compare before/after changes.</li>
+  <li>Math channel + low-pass filtering helps reveal PWM fundamentals.</li>
+</ol>
+
+<p>More to come.</p>]]></content><author><name>Andrew Vu</name></author><category term="notes" /><category term="measurement" /><category term="tools" /><category term="basics" /><summary type="html"><![CDATA[Quick techniques for triggering, math channels, and noisy measurements.]]></summary></entry><entry><title type="html">Building a compact RF signal generator</title><link href="http://localhost:4000/projects/2025/08/20/building-rf-signal-generator/" rel="alternate" type="text/html" title="Building a compact RF signal generator" /><published>2025-08-20T00:00:00-04:00</published><updated>2025-08-20T00:00:00-04:00</updated><id>http://localhost:4000/projects/2025/08/20/building-rf-signal-generator</id><content type="html" xml:base="http://localhost:4000/projects/2025/08/20/building-rf-signal-generator/"><![CDATA[<p>I prototyped a small RF generator using an ADF4351 module and a custom filter board. Highlights:</p>
+
+<ul>
+  <li>Power: clean 5 V with a low-noise LDO and LC filtering</li>
+  <li>Reference: 25 MHz TCXO calibrated against GPSDO</li>
+  <li>Output: 35 MHz – 2.2 GHz with switchable attenuators</li>
+</ul>
+
+<p>Full build notes coming soon.</p>]]></content><author><name>Andrew Vu</name></author><category term="projects" /><category term="rf" /><category term="synthesizer" /><category term="adf4351" /><summary type="html"><![CDATA[From PLL choice to output filtering and enclosure layout.]]></summary></entry><entry><title type="html">Notes on quiet switching power supplies</title><link href="http://localhost:4000/notes/2025/07/30/power-supply-design-notes/" rel="alternate" type="text/html" title="Notes on quiet switching power supplies" /><published>2025-07-30T00:00:00-04:00</published><updated>2025-07-30T00:00:00-04:00</updated><id>http://localhost:4000/notes/2025/07/30/power-supply-design-notes</id><content type="html" xml:base="http://localhost:4000/notes/2025/07/30/power-supply-design-notes/"><![CDATA[<p>A running list of lessons while iterating on a compact buck converter board:</p>
+
+<ul>
+  <li>Minimize loop area around the switch node; keep the hot path tiny.</li>
+  <li>RC snubbers are cheap; measure and tune instead of guessing.</li>
+  <li>Current loops matter more than copper area alone.</li>
+</ul>]]></content><author><name>Andrew Vu</name></author><category term="notes" /><category term="power" /><category term="layout" /><category term="emi" /><summary type="html"><![CDATA[Layout, snubbers, and measurement traps when chasing millivolts.]]></summary></entry></feed>

@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Notes on quiet switching power supplies</title><!-- Begin Jekyll SEO tag v2.8.0 -->
+<title>Notes on quiet switching power supplies | Andrew Vu — Electrical Engineering Blog</title>
+<meta name="generator" content="Jekyll v3.9.5" />
+<meta property="og:title" content="Notes on quiet switching power supplies" />
+<meta name="author" content="Andrew Vu" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Layout, snubbers, and measurement traps when chasing millivolts." />
+<meta property="og:description" content="Layout, snubbers, and measurement traps when chasing millivolts." />
+<link rel="canonical" href="http://localhost:4000/notes/2025/07/30/power-supply-design-notes/" />
+<meta property="og:url" content="http://localhost:4000/notes/2025/07/30/power-supply-design-notes/" />
+<meta property="og:site_name" content="Andrew Vu — Electrical Engineering Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2025-07-30T00:00:00-04:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="Notes on quiet switching power supplies" />
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","author":{"@type":"Person","name":"Andrew Vu"},"dateModified":"2025-07-30T00:00:00-04:00","datePublished":"2025-07-30T00:00:00-04:00","description":"Layout, snubbers, and measurement traps when chasing millivolts.","headline":"Notes on quiet switching power supplies","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/notes/2025/07/30/power-supply-design-notes/"},"publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"http://localhost:4000/assets/img/avatar.svg"},"name":"Andrew Vu"},"url":"http://localhost:4000/notes/2025/07/30/power-supply-design-notes/"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body class="site">
+  <header class="site-header">
+    <div class="container">
+      <a class="brand" href="/">
+        <span class="kicker">Andrew Vu</span>
+        <span class="title">Art of Circuits & Life</span>
+      </a>
+      <nav class="site-nav"><a href="/" class="nav-link">Home</a><a href="/projects/" class="nav-link">Projects</a><a href="/about/" class="nav-link">About</a></nav>
+    </div>
+  </header>
+
+  <main class="site-main container">
+    <div class="content">
+      <article class="post">
+  <header class="post-header">
+    <p class="eyebrow">notes</p>
+    <h1>Notes on quiet switching power supplies</h1>
+    <div class="byline">
+      <span>July 30, 2025</span><span> · power, layout, emi</span></div>
+  </header><figure class="post-cover">
+      <img src="/assets/img/posts/psu-notes.jpg" alt="">
+    </figure><div class="post-content">
+    <p>A running list of lessons while iterating on a compact buck converter board:</p>
+
+<ul>
+  <li>Minimize loop area around the switch node; keep the hot path tiny.</li>
+  <li>RC snubbers are cheap; measure and tune instead of guessing.</li>
+  <li>Current loops matter more than copper area alone.</li>
+</ul>
+
+  </div>
+
+  <footer class="post-footer">
+    <a class="pill" href="/">← Back to all posts</a>
+  </footer>
+</article>
+
+    </div>
+    <aside class="sidebar"><section class="card profile">
+  <img class="avatar" src="/assets/img/avatar.svg" alt="Andrew Vu avatar" width="72" height="72">
+  <h3>Andrew Vu</h3>
+  <p>Purdue EE student. I build circuits, embedded systems, and tools that learn.</p>
+  <a class="pill pill-ghost" href="/about/">About</a>
+</section>
+
+<section class="card popular">
+  <h3 class="card-title">Most popular</h3>
+  <ol class="list-ordered"><li><a href="/notes/2025/09/01/lab-notes-oscilloscope-tricks/">Lab notes: 7 oscilloscope tricks I wish I knew</a></li><li><a href="/projects/2025/08/20/building-rf-signal-generator/">Building a compact RF signal generator</a></li><li><a href="/notes/2025/07/30/power-supply-design-notes/">Notes on quiet switching power supplies</a></li></ol>
+</section>
+
+<section class="card newsletter">
+  <h3 class="card-title">Newsletter</h3>
+  <p>Occasional project notes. No spam, unsubscribe anytime.</p>
+  <form action="#" method="post" class="newsletter-form" onsubmit="return false;">
+    <label class="sr-only" for="email">Email</label>
+    <input id="email" type="email" placeholder="you@domain.com" required>
+    <button type="submit">Subscribe</button>
+  </form>
+</section>
+</aside>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <p>© 2025 Andrew Vu · Built with Jekyll</p>
+    </div>
+  </footer>
+</body>
+</html>

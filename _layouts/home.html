@@ -1,0 +1,63 @@
+---
+layout: default
+---
+<section class="hero">
+  <div class="hero-text">
+    <p class="news-ticker" aria-label="Latest">NEWS • Projects, research notes, experiments • RF, embedded, power •</p>
+    <h1>Don’t close your eyes</h1>
+    <p class="lede">I’m {{ site.author.name }}, an {{ site.author.role | downcase }} at {{ site.author.org }}. I document hands-on builds, lab notes, and the messy middle of learning.</p>
+    <div class="meta">
+      <a class="pill" href="/projects/">See projects</a>
+      <a class="pill pill-ghost" href="/about/">About me</a>
+    </div>
+  </div>
+  <div class="hero-media">
+    <img src="/assets/img/hero.svg" alt="Workbench with oscilloscopes and prototype boards">
+  </div>
+</section>
+
+<section class="post-feed">
+  <h2 class="section-title">Latest</h2>
+  {%- if paginator -%}
+    {%- assign posts_list = paginator.posts -%}
+  {%- else -%}
+    {%- assign posts_list = site.posts -%}
+  {%- endif -%}
+
+  {%- for post in posts_list -%}
+    <article class="post-card">
+      <a class="media" href="{{ post.url }}">
+        {%- if post.cover -%}
+          <img src="{{ post.cover }}" alt="" loading="lazy">
+        {%- else -%}
+          <div class="placeholder" aria-hidden="true"></div>
+        {%- endif -%}
+      </a>
+      <div class="details">
+        <h3><a href="{{ post.url }}">{{ post.title }}</a></h3>
+        <p class="excerpt">{{ post.excerpt | strip_html | truncate: 180 }}</p>
+        <div class="byline">
+          <span>{{ post.date | date: "%b %d, %Y" }}</span>
+          {%- if post.reading_time -%}
+            <span> · {{ post.reading_time }} min read</span>
+          {%- endif -%}
+          {%- if post.tags -%}
+            <span class="tags"> · {{ post.tags | join: ', ' }}</span>
+          {%- endif -%}
+        </div>
+      </div>
+    </article>
+  {%- endfor -%}
+
+  {%- if paginator and paginator.total_pages > 1 -%}
+    <nav class="pagination" aria-label="Pagination">
+      {%- if paginator.previous_page -%}
+        <a class="page" href="{{ paginator.previous_page_path }}">Newer</a>
+      {%- endif -%}
+      <span class="page current">Page {{ paginator.page }} of {{ paginator.total_pages }}</span>
+      {%- if paginator.next_page -%}
+        <a class="page" href="{{ paginator.next_page_path }}">Older</a>
+      {%- endif -%}
+    </nav>
+  {%- endif -%}
+</section>
