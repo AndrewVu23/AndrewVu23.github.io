@@ -1,5 +1,5 @@
 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>projects &mdash; andrewvu.dev</title><link rel="stylesheet" href="style.css"></head><body><div class="site-wrap">
-<nav class="nav"><a href="index.html" class="nav-path" style="text-decoration:none;">~</a><span>/</span><a href="index.html" class="nav-path" style="text-decoration:none;">top</a><span>/</span><span class="nav-current">projects</span><div class="nav-right"><a href="about.html">/about</a><a href="projects.html">/projects</a><a href="blog.html">/blog</a><a href="cv.html">/cv</a><span class="nav-sep">|</span><a href="https://github.com/AndrewVu23" class="nav-social" target="_blank">GitHub</a><a href="https://linkedin.com/in/AndrewVu23" class="nav-social" target="_blank">LinkedIn</a><a href="https://x.com/AndrewVu23" class="nav-social" target="_blank">X</a></div></nav>
+<nav class="nav"><a href="index.html" class="nav-path" style="text-decoration:none;">~</a><span>/</span><a href="index.html" class="nav-path" style="text-decoration:none;">top</a><span>/</span><span class="nav-current">projects</span><div class="nav-right"><a href="about.html">/about</a><a href="cv.html">/cv</a><a href="projects.html">/projects</a><a href="blog.html">/blog</a><span class="nav-sep">|</span><a href="https://github.com/AndrewVu23" class="nav-social" target="_blank" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61a3.18 3.18 0 00-1.33-1.76c-1.09-.74.08-.73.08-.73a2.52 2.52 0 011.84 1.24 2.56 2.56 0 003.5 1 2.56 2.56 0 01.76-1.61c-2.67-.3-5.47-1.33-5.47-5.93a4.64 4.64 0 011.24-3.22 4.3 4.3 0 01.12-3.18s1-.33 3.3 1.23a11.38 11.38 0 016 0c2.28-1.56 3.29-1.23 3.29-1.23a4.3 4.3 0 01.12 3.18 4.64 4.64 0 011.23 3.22c0 4.61-2.8 5.63-5.48 5.92a2.87 2.87 0 01.82 2.23v3.29c0 .32.21.7.82.58A12 12 0 0012 .3"/></svg></a><a href="https://www.linkedin.com/in/andrew-vu23/" class="nav-social" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05a3.74 3.74 0 013.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 11-.01-4.13 2.06 2.06 0 01.01 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77A1.75 1.75 0 000 1.73v20.54A1.75 1.75 0 001.77 24h20.45A1.76 1.76 0 0024 22.27V1.73A1.76 1.76 0 0022.22 0z"/></svg></a><a href="mailto:vu89@purdue.edu" class="nav-social" title="Email"><svg viewBox="0 0 24 24"><path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.93 5.36a3 3 0 01-3.14 0L1.5 8.67z"/><path d="M22.5 6.91V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.16l9.72 5.83a1.5 1.5 0 001.56 0L22.5 6.91z"/></svg></a></div></nav>
 
 <p class="mod-decl"><span class="kw">module</span> ip_catalog</p>
 <h1 class="mod-title">Projects<span class="cursor"></span></h1>
@@ -13,33 +13,29 @@
 
 <p class="cat-label" data-cat="soc rtl">SoC &mdash; RISC-V based system</p>
 
-<div class="proj-card" data-cat="soc rtl">
+<a class="proj-card" data-cat="soc rtl" href="https://github.com/AndrewVu23/HOMEMADE-5-STAGE-PIPELINED-RISC-V" target="_blank">
 <div class="proj-card-header"><span class="proj-card-name">risc_v_core</span><div><span class="pill pill-synth">synthesized</span><span class="pill pill-cat">SoC</span></div></div>
 <p class="proj-card-desc">5-stage pipelined RV32IM processor with hazard detection, data forwarding, and branch prediction. M-extension supported via integrated Booth multiplier.</p>
 <div class="proj-card-stats"><span>RV32IM</span><span>5-stage pipeline</span><span>full bypass</span></div>
-<div class="proj-card-link"><a href="https://github.com/AndrewVu23/HOMEMADE-5-STAGE-PIPELINED-RISC-V" target="_blank">View source on GitHub &#8599;</a></div>
-</div>
+</a>
 
-<div class="proj-card" data-cat="soc rtl">
+<a class="proj-card" data-cat="soc rtl" href="https://github.com/AndrewVu23/HOMEMADE-DIGITAL-COMPONENTS/tree/main/Multiplier" target="_blank">
 <div class="proj-card-header"><span class="proj-card-name">booth_mult</span><div><span class="pill pill-synth">synthesized</span><span class="pill pill-cat">SoC</span></div></div>
 <p class="proj-card-desc">Radix-4 Booth2 encoding multiplier with Wallace tree reduction. Integrated into RV32IM core for M-extension multiply operations.</p>
 <div class="proj-card-stats"><span>Radix-4 Booth</span><span>Wallace tree</span><span>EX stage</span></div>
-<div class="proj-card-link"><a href="https://github.com/AndrewVu23/HOMEMADE-DIGITAL-COMPONENTS/tree/main/Multiplier" target="_blank">View source on GitHub &#8599;</a></div>
-</div>
+</a>
 
-<div class="proj-card" data-cat="soc rtl">
+<a class="proj-card" data-cat="soc rtl" href="https://github.com/AndrewVu23/HOMEMADE-DIGITAL-COMPONENTS/tree/main/Cache" target="_blank">
 <div class="proj-card-header"><span class="proj-card-name">cache</span><div><span class="pill pill-synth">synthesized</span><span class="pill pill-cat">SoC</span></div></div>
 <p class="proj-card-desc">4-bank direct-mapped cache for instruction and data access with single-cycle hit latency.</p>
 <div class="proj-card-stats"><span>4 banks</span><span>direct-mapped</span><span>single-cycle hit</span></div>
-<div class="proj-card-link"><a href="https://github.com/AndrewVu23/HOMEMADE-DIGITAL-COMPONENTS/tree/main/Cache" target="_blank">View source on GitHub &#8599;</a></div>
-</div>
+</a>
 
-<div class="proj-card" data-cat="soc rtl">
+<a class="proj-card" data-cat="soc rtl" href="https://github.com/AndrewVu23/HOMEMADE-8BIT-UART-PROTOCOL" target="_blank">
 <div class="proj-card-header"><span class="proj-card-name">uart</span><div><span class="pill pill-synth">synthesized</span><span class="pill pill-cat">SoC</span></div></div>
 <p class="proj-card-desc">8-bit UART transceiver with configurable baud rate. TX and RX support, connected to SoC bus as a peripheral.</p>
 <div class="proj-card-stats"><span>8-bit</span><span>TX + RX</span><span>APB slave</span></div>
-<div class="proj-card-link"><a href="https://github.com/AndrewVu23/HOMEMADE-8BIT-UART-PROTOCOL" target="_blank">View source on GitHub &#8599;</a></div>
-</div>
+</a>
 
 <p class="cat-label" data-cat="pcb">PCB &mdash; board-level designs</p>
 

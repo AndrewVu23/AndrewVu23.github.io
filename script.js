@@ -105,6 +105,22 @@ function filterCards(cat, btn) {
   });
 }
 
+// Theme toggle
+(function () {
+  var toggle = document.getElementById('theme-toggle');
+  var saved = localStorage.getItem('theme');
+  if (saved) document.documentElement.setAttribute('data-theme', saved);
+
+  if (toggle) {
+    toggle.addEventListener('click', function () {
+      var current = document.documentElement.getAttribute('data-theme');
+      var next = current === 'light' ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+    });
+  }
+})();
+
 // Highlight active nav link
 (function () {
   var path = window.location.pathname.split('/').pop() || 'index.html';
