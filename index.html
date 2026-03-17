@@ -29,73 +29,60 @@
 
   <div class="port-map">
     <span><span class="key">.status</span>(<span class="val-green">seeking_opportunities</span>)</span>&nbsp;&nbsp;
-    <span><span class="key">.focus</span>(ASIC_RTL_design)</span>&nbsp;&nbsp;
-    <span><span class="key">.tools</span>(SystemVerilog, Verilog, Verilator, cocotb)</span>&nbsp;&nbsp;
+    <span><span class="key">.focus</span>(RTL_design)</span>&nbsp;&nbsp;
+    <span><span class="key">.tools</span>(SystemVerilog/Verilog, Verilator, cocotb, Librelane toolchain)</span>&nbsp;&nbsp;
     <span><span class="key">.also</span>(Python, C/C++)</span>
   </div>
 
   <p class="section-comment">// system architecture &mdash; hover to explore</p>
   <div class="card-wrap">
     <div class="card-body">
-      <svg id="soc-svg" width="100%" viewBox="0 0 680 380" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+      <svg id="soc-svg" width="100%" viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg" style="display:block;">
         <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-        <rect rx="12" x="42" y="16" width="516" height="296" fill="none" stroke="var(--text3)" stroke-width="0.5" stroke-dasharray="4 3" opacity="0.3"/>
+        <rect rx="12" x="42" y="16" width="596" height="286" fill="none" stroke="var(--text3)" stroke-width="0.5" stroke-dasharray="4 3" opacity="0.3"/>
         <text x="52" y="32" fill="var(--text3)" font-size="12" font-family="var(--mono)" opacity="0.35">SoC domain</text>
-        <rect rx="12" x="572" y="16" width="100" height="296" fill="none" stroke="var(--text3)" stroke-width="0.5" stroke-dasharray="4 3" opacity="0.3"/>
-        <text x="582" y="32" fill="var(--text3)" font-size="12" font-family="var(--mono)" opacity="0.35">Standalone</text>
+
+        <!-- core -> booth_mult (internal to core) -->
+        <line class="soc-line" data-from="core" data-to="mult" x1="480" y1="50" x2="530" y2="50" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
+        <text class="soc-intf" data-line="core-mult" x="490" y="42" fill="var(--text3)" font-size="11" font-family="var(--mono)" opacity="0">EX stage</text>
+        <!-- core -> cache -->
         <line class="soc-line" data-from="core" data-to="cache" x1="280" y1="78" x2="280" y2="108" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
         <text class="soc-intf" data-line="core-cache" x="292" y="96" fill="var(--text3)" font-size="11" font-family="var(--mono)" opacity="0">IF / MEM</text>
-        <line class="soc-line" data-from="cache" data-to="bus" x1="280" y1="152" x2="280" y2="178" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
-        <text class="soc-intf" data-line="cache-bus" x="292" y="168" fill="var(--text3)" font-size="11" font-family="var(--mono)" opacity="0">AXI4</text>
-        <line class="soc-line" data-from="bus" data-to="spi" x1="120" y1="206" x2="120" y2="246" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
-        <text class="soc-intf" data-line="bus-spi" x="132" y="230" fill="var(--text3)" font-size="11" font-family="var(--mono)" opacity="0">APB</text>
-        <line class="soc-line" data-from="bus" data-to="sram" x1="280" y1="206" x2="280" y2="246" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
-        <text class="soc-intf" data-line="bus-sram" x="292" y="230" fill="var(--text3)" font-size="11" font-family="var(--mono)" opacity="0">AXI4</text>
-        <line class="soc-line" data-from="bus" data-to="noc" x1="440" y1="206" x2="440" y2="246" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
-        <text class="soc-intf" data-line="bus-noc" x="452" y="230" fill="var(--text3)" font-size="11" font-family="var(--mono)" opacity="0">NoC link</text>
+        <!-- cache -> bus -->
+        <line class="soc-line" data-from="cache" data-to="bus" x1="280" y1="162" x2="280" y2="188" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
+        <text class="soc-intf" data-line="cache-bus" x="292" y="178" fill="var(--text3)" font-size="11" font-family="var(--mono)" opacity="0">bus</text>
+        <!-- bus -> uart -->
+        <line class="soc-line" data-from="bus" data-to="uart" x1="280" y1="216" x2="280" y2="246" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
+        <text class="soc-intf" data-line="bus-uart" x="292" y="234" fill="var(--text3)" font-size="11" font-family="var(--mono)" opacity="0">APB</text>
 
+        <!-- risc_v_core -->
         <g class="soc-block" data-id="core" style="cursor:pointer">
-          <rect x="160" y="22" width="240" height="56" rx="6" fill="var(--purple-bg)" stroke="var(--purple)" stroke-width="0.5"/>
+          <rect x="100" y="22" width="380" height="56" rx="6" fill="var(--purple-bg)" stroke="var(--purple)" stroke-width="0.5"/>
           <text x="280" y="42" text-anchor="middle" dominant-baseline="central" fill="var(--purple-text)" font-size="14" font-weight="500" font-family="var(--mono)">risc_v_core</text>
-          <text x="280" y="62" text-anchor="middle" dominant-baseline="central" fill="var(--purple)" font-size="12" font-family="var(--mono)">5-stage pipelined RV32I</text>
+          <text x="280" y="62" text-anchor="middle" dominant-baseline="central" fill="var(--purple)" font-size="12" font-family="var(--mono)">5-stage pipelined RV32IM</text>
         </g>
+        <!-- booth_mult -->
+        <g class="soc-block" data-id="mult" style="cursor:pointer">
+          <rect x="530" y="22" width="96" height="56" rx="6" fill="var(--coral-bg)" stroke="var(--coral)" stroke-width="0.5"/>
+          <text x="578" y="42" text-anchor="middle" dominant-baseline="central" fill="var(--coral-text)" font-size="11" font-weight="500" font-family="var(--mono)">booth_mult</text>
+          <text x="578" y="60" text-anchor="middle" dominant-baseline="central" fill="var(--coral)" font-size="9" font-family="var(--mono)">Radix-4 Wallace</text>
+        </g>
+        <!-- cache -->
         <g class="soc-block" data-id="cache" style="cursor:pointer">
-          <rect x="185" y="108" width="190" height="44" rx="6" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="0.5"/>
-          <text x="280" y="130" text-anchor="middle" dominant-baseline="central" fill="var(--teal-text)" font-size="14" font-weight="500" font-family="var(--mono)">cache_ctrl</text>
+          <rect x="160" y="108" width="240" height="54" rx="6" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="0.5"/>
+          <text x="280" y="128" text-anchor="middle" dominant-baseline="central" fill="var(--teal-text)" font-size="14" font-weight="500" font-family="var(--mono)">cache</text>
+          <text x="280" y="148" text-anchor="middle" dominant-baseline="central" fill="var(--teal)" font-size="11" font-family="var(--mono)">4-bank direct-mapped</text>
         </g>
+        <!-- bus -->
         <g class="soc-block" data-id="bus" style="cursor:pointer">
-          <rect x="50" y="178" width="500" height="28" rx="4" fill="var(--gray-bg)" stroke="var(--gray)" stroke-width="0.5"/>
-          <text x="300" y="192" text-anchor="middle" dominant-baseline="central" fill="var(--gray)" font-size="14" font-weight="500" font-family="var(--mono)">AXI4 interconnect</text>
+          <rect x="80" y="188" width="400" height="28" rx="4" fill="var(--gray-bg)" stroke="var(--gray)" stroke-width="0.5"/>
+          <text x="280" y="202" text-anchor="middle" dominant-baseline="central" fill="var(--gray)" font-size="14" font-weight="500" font-family="var(--mono)">bus interconnect</text>
         </g>
-        <g class="soc-block" data-id="spi" style="cursor:pointer">
-          <rect x="50" y="246" width="140" height="56" rx="6" fill="var(--coral-bg)" stroke="var(--coral)" stroke-width="0.5"/>
-          <text x="120" y="266" text-anchor="middle" dominant-baseline="central" fill="var(--coral-text)" font-size="14" font-weight="500" font-family="var(--mono)">spi_peripheral</text>
-          <text x="120" y="283" text-anchor="middle" dominant-baseline="central" fill="var(--coral)" font-size="12" font-family="var(--mono)">Full-duplex + DMA</text>
-        </g>
-        <g class="soc-block" data-id="sram" style="cursor:pointer">
-          <rect x="210" y="246" width="140" height="56" rx="6" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="0.5"/>
-          <text x="280" y="266" text-anchor="middle" dominant-baseline="central" fill="var(--teal-text)" font-size="14" font-weight="500" font-family="var(--mono)">sram_ctrl</text>
-          <text x="280" y="283" text-anchor="middle" dominant-baseline="central" fill="var(--teal)" font-size="12" font-family="var(--mono)">64KB on-chip</text>
-        </g>
-        <g class="soc-block" data-id="noc" style="cursor:pointer">
-          <rect x="370" y="246" width="140" height="56" rx="6" fill="var(--purple-bg)" stroke="var(--purple)" stroke-width="0.5"/>
-          <text x="440" y="266" text-anchor="middle" dominant-baseline="central" fill="var(--purple-text)" font-size="14" font-weight="500" font-family="var(--mono)">noc_router</text>
-          <text x="440" y="283" text-anchor="middle" dominant-baseline="central" fill="var(--purple)" font-size="12" font-family="var(--mono)">Wormhole mesh</text>
-        </g>
-        <g class="soc-block" data-id="sa1" style="cursor:pointer">
-          <rect x="580" y="46" width="84" height="70" rx="6" fill="var(--pink-bg)" stroke="var(--pink)" stroke-width="0.5"/>
-          <text x="622" y="70" text-anchor="middle" dominant-baseline="central" fill="var(--pink-text)" font-size="11" font-weight="500" font-family="var(--mono)">uart_rx</text>
-          <text x="622" y="88" text-anchor="middle" dominant-baseline="central" fill="var(--pink)" font-size="10" font-family="var(--mono)">8N1 receiver</text>
-        </g>
-        <g class="soc-block" data-id="sa2" style="cursor:pointer">
-          <rect x="580" y="132" width="84" height="70" rx="6" fill="var(--pink-bg)" stroke="var(--pink)" stroke-width="0.5"/>
-          <text x="622" y="156" text-anchor="middle" dominant-baseline="central" fill="var(--pink-text)" font-size="11" font-weight="500" font-family="var(--mono)">fir_filter</text>
-          <text x="622" y="174" text-anchor="middle" dominant-baseline="central" fill="var(--pink)" font-size="10" font-family="var(--mono)">16-tap DSP</text>
-        </g>
-        <g class="soc-block" data-id="sa3" style="cursor:pointer">
-          <rect x="580" y="218" width="84" height="70" rx="6" fill="var(--pink-bg)" stroke="var(--pink)" stroke-width="0.5"/>
-          <text x="622" y="242" text-anchor="middle" dominant-baseline="central" fill="var(--pink-text)" font-size="11" font-weight="500" font-family="var(--mono)">pwm_gen</text>
-          <text x="622" y="260" text-anchor="middle" dominant-baseline="central" fill="var(--pink)" font-size="10" font-family="var(--mono)">Multi-ch</text>
+        <!-- uart -->
+        <g class="soc-block" data-id="uart" style="cursor:pointer">
+          <rect x="210" y="246" width="140" height="46" rx="6" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="0.5"/>
+          <text x="280" y="262" text-anchor="middle" dominant-baseline="central" fill="var(--blue-text)" font-size="14" font-weight="500" font-family="var(--mono)">uart</text>
+          <text x="280" y="280" text-anchor="middle" dominant-baseline="central" fill="var(--blue)" font-size="11" font-family="var(--mono)">8-bit TX/RX</text>
         </g>
       </svg>
     </div>

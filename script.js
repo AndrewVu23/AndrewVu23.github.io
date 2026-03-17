@@ -1,14 +1,10 @@
 // SoC Block Diagram Interaction
 var blockInfo = {
-  core: { name: 'risc_v_core', desc: '5-stage pipelined RV32I with hazard detection, forwarding, and branch prediction', specs: '~12K gates \u00b7 200MHz target \u00b7 45nm TSMC', connections: ['cache'] },
-  cache: { name: 'cache_ctrl', desc: '2-way set-associative L1 cache with write-back and LRU replacement', specs: '~8K gates \u00b7 4KB \u00b7 single-cycle hit', connections: ['core', 'bus'] },
-  bus: { name: 'AXI4 interconnect', desc: 'Crossbar switch connecting all masters and slaves', specs: '4 masters \u00b7 3 slaves \u00b7 burst + ID routing', connections: ['cache', 'spi', 'sram', 'noc'] },
-  spi: { name: 'spi_peripheral', desc: 'Full-duplex SPI controller with integrated DMA engine', specs: '~3K gates \u00b7 50MHz SPI \u00b7 APB slave', connections: ['bus'] },
-  sram: { name: 'sram_ctrl', desc: '64KB on-chip SRAM with single-cycle read latency', specs: '~2K gates \u00b7 AXI4 slave \u00b7 byte-enable', connections: ['bus'] },
-  noc: { name: 'noc_router', desc: 'Mesh NoC with wormhole flow control', specs: '~15K gates \u00b7 4 ports \u00b7 credit-based \u00b7 in progress', connections: ['bus'] },
-  sa1: { name: 'uart_rx', desc: 'UART receiver with configurable baud rate and 8N1 framing', specs: '~400 gates \u00b7 standalone IP', connections: [] },
-  sa2: { name: 'fir_filter', desc: '16-tap FIR filter with pipelined multiply-accumulate units', specs: '~6K gates \u00b7 DSP block \u00b7 standalone', connections: [] },
-  sa3: { name: 'pwm_gen', desc: 'Multi-channel PWM generator for motor/LED control', specs: '~1K gates \u00b7 configurable resolution \u00b7 standalone', connections: [] }
+  core: { name: 'risc_v_core', desc: '5-stage pipelined RV32IM processor with hazard detection, data forwarding, and branch prediction', specs: 'RV32IM \u00b7 full bypass \u00b7 integrated M-extension via booth_mult', connections: ['cache', 'mult'] },
+  mult: { name: 'booth_mult', desc: 'Radix-4 Booth2 encoding multiplier with Wallace tree reduction, used for M-extension multiply/divide', specs: 'Radix-4 Booth \u00b7 Wallace tree \u00b7 connected to EX stage', connections: ['core'] },
+  cache: { name: 'cache', desc: '4-bank direct-mapped cache for instruction and data access', specs: '4 banks \u00b7 direct-mapped \u00b7 single-cycle hit', connections: ['core', 'bus'] },
+  bus: { name: 'bus interconnect', desc: 'Bus interconnect connecting processor to peripherals', specs: 'master/slave topology', connections: ['cache', 'uart'] },
+  uart: { name: 'uart', desc: '8-bit UART transceiver with configurable baud rate', specs: '8-bit \u00b7 TX + RX \u00b7 APB slave', connections: ['bus'] }
 };
 
 document.querySelectorAll('.soc-block').forEach(function (el) {
