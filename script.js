@@ -1,10 +1,10 @@
 // SoC Block Diagram Interaction
 var blockInfo = {
-  core: { name: 'risc_v_core', desc: '5-stage pipelined RV32IM processor with hazard detection, data forwarding, and branch prediction', specs: 'RV32IM \u00b7 full bypass \u00b7 integrated M-extension via booth_mult', connections: ['cache', 'mult'] },
-  mult: { name: 'booth_mult', desc: 'Radix-4 Booth2 encoding multiplier with Wallace tree reduction, used for M-extension multiply/divide', specs: 'Radix-4 Booth \u00b7 Wallace tree \u00b7 connected to EX stage', connections: ['core'] },
-  cache: { name: 'cache', desc: '4-bank direct-mapped cache for instruction and data access', specs: '4 banks \u00b7 direct-mapped \u00b7 single-cycle hit', connections: ['core', 'bus'] },
-  bus: { name: 'bus interconnect', desc: 'Bus interconnect connecting processor to peripherals', specs: 'master/slave topology', connections: ['cache', 'uart'] },
-  uart: { name: 'uart', desc: '8-bit UART transceiver with configurable baud rate', specs: '8-bit \u00b7 TX + RX \u00b7 APB slave', connections: ['bus'] }
+  core: { name: 'risc_v_core', desc: '5-stage pipelined RV32IM processor with hazard detection, data forwarding, and branch prediction', specs: 'RV32IM \u00b7 full bypass \u00b7 integrated M-extension via booth_mult', connections: ['cache', 'mult'], link: 'https://github.com/AndrewVu23/HOMEMADE-5-STAGE-PIPELINED-RISC-V' },
+  mult: { name: 'booth_mult', desc: 'Radix-4 Booth2 encoding multiplier with Wallace tree reduction, used for M-extension multiply/divide', specs: 'Radix-4 Booth \u00b7 Wallace tree \u00b7 connected to EX stage', connections: ['core'], link: 'https://github.com/AndrewVu23/HOMEMADE-DIGITAL-COMPONENTS/tree/main/Multiplier' },
+  cache: { name: 'cache', desc: '4-bank direct-mapped cache for instruction and data access', specs: '4 banks \u00b7 direct-mapped \u00b7 single-cycle hit', connections: ['core', 'bus'], link: 'https://github.com/AndrewVu23/HOMEMADE-DIGITAL-COMPONENTS/tree/main/Cache/4-banked%20Cache' },
+  bus: { name: 'bus interconnect', desc: 'Bus interconnect connecting processor to peripherals', specs: 'master/slave topology', connections: ['cache', 'uart'], link: null },
+  uart: { name: 'uart', desc: '8-bit UART transceiver with configurable baud rate', specs: '8-bit \u00b7 TX + RX \u00b7 APB slave', connections: ['bus'], link: 'https://github.com/AndrewVu23/HOMEMADE-8BIT-UART-PROTOCOL' }
 };
 
 document.querySelectorAll('.soc-block').forEach(function (el) {
@@ -28,12 +28,19 @@ document.querySelectorAll('.soc-block').forEach(function (el) {
     var detail = document.getElementById('soc-detail');
     if (detail) {
       detail.style.opacity = '1';
+      var linkHint = info.link ? ' <span style="color:var(--info);margin-left:6px;">click to view source \u2197</span>' : '';
       document.getElementById('soc-detail-text').innerHTML =
         '<strong style="color:var(--text);">' + info.name + '</strong> \u2014 ' + info.desc +
-        '<br><span style="color:var(--text2);">' + info.specs + '</span>';
+        '<br><span style="color:var(--text2);">' + info.specs + '</span>' + linkHint;
     }
   });
   el.addEventListener('mouseleave', clearSocHover);
+  el.addEventListener('click', function () {
+    var id = el.dataset.id;
+    var info = blockInfo[id];
+    if (!info || !info.link) return;
+    window.open(info.link, '_blank');
+  });
 });
 
 function clearSocHover() {
@@ -126,40 +133,35 @@ function timeAgo(dateStr) {
   return months + 'mo ago';
 }
 
-function renderCommits(events) {
-  var commits = [];
-  events.forEach(function (event) {
-    if (event.type !== 'PushEvent') return;
-    var repo = event.repo.name.split('/').pop();
-    (event.payload.commits || []).forEach(function (c) {
-      commits.push({
-        hash: c.sha.substring(0, 7),
-        msg: c.message.split('\n')[0],
-        repo: repo,
-        time: event.created_at,
-        url: 'https://github.com/' + event.repo.name + '/commit/' + c.sha
-      });
-    });
-  });
-
-  // Take only the 6 most recent commits
-  commits = commits.slice(0, 6);
-
+function renderRepos(repos) {
   var container = document.getElementById('github-log');
   if (!container) return;
 
-  if (commits.length === 0) {
-    container.innerHTML = '<div style="font-size:12px;color:var(--text3);">No recent pushes found</div>';
+  // Sort by most recently pushed
+  repos.sort(function (a, b) {
+    return new Date(b.pushed_at) - new Date(a.pushed_at);
+  });
+
+  // Take top 6 non-fork repos
+  var shown = [];
+  repos.forEach(function (r) {
+    if (shown.length >= 6) return;
+    if (r.fork) return;
+    shown.push(r);
+  });
+
+  if (shown.length === 0) {
+    container.innerHTML = '<div style="font-size:12px;color:var(--text3);">// no public repos yet \u2014 push something to populate this</div>';
     return;
   }
 
   var html = '';
-  commits.forEach(function (c) {
+  shown.forEach(function (r) {
     html += '<div class="commit-row">' +
-      '<a href="' + c.url + '" target="_blank" class="commit-hash" style="text-decoration:none;color:var(--text3);">' + c.hash + '</a>' +
-      '<span class="commit-msg">' + c.msg.substring(0, 60) + (c.msg.length > 60 ? '...' : '') + '</span>' +
-      '<span class="commit-repo">' + c.repo + '</span>' +
-      '<span class="commit-time">' + timeAgo(c.time) + '</span>' +
+      '<a href="' + r.html_url + '" target="_blank" class="commit-hash" style="text-decoration:none;color:var(--text3);">' + r.name.substring(0, 20) + '</a>' +
+      '<span class="commit-msg">' + (r.description ? r.description.substring(0, 50) + (r.description.length > 50 ? '...' : '') : '\u2014') + '</span>' +
+      '<span class="commit-repo">' + (r.language || '') + '</span>' +
+      '<span class="commit-time">' + timeAgo(r.pushed_at) + '</span>' +
       '</div>';
   });
   html += '<p style="margin-top:8px;font-size:11px;color:var(--text3);opacity:0.5;">Live from GitHub API</p>';
@@ -168,21 +170,18 @@ function renderCommits(events) {
 
 function fetchGitHub() {
   var container = document.getElementById('github-log');
-  if (!container) return; // Only runs on homepage
+  if (!container) return;
 
-  fetch('https://api.github.com/users/' + GITHUB_USERNAME + '/events/public?per_page=30')
+  fetch('https://api.github.com/users/' + GITHUB_USERNAME + '/repos?sort=pushed&per_page=10')
     .then(function (res) {
       if (!res.ok) throw new Error('GitHub API ' + res.status);
       return res.json();
     })
-    .then(renderCommits)
-    .catch(function (err) {
+    .then(renderRepos)
+    .catch(function () {
       container.innerHTML =
         '<div style="font-size:12px;color:var(--text3);">' +
-        '// could not reach GitHub API \u2014 showing cached data</div>' +
-        '<div class="commit-row"><span class="commit-hash">a3f9c21</span><span class="commit-msg">fix: hazard detection for load-use case</span><span class="commit-repo">risc-v-core</span><span class="commit-time">recently</span></div>' +
-        '<div class="commit-row"><span class="commit-hash">e7b2d08</span><span class="commit-msg">feat: add write-back buffer to cache_ctrl</span><span class="commit-repo">risc-v-core</span><span class="commit-time">recently</span></div>' +
-        '<div class="commit-row"><span class="commit-hash">1c4a5f6</span><span class="commit-msg">refactor: clean up APB bridge timing</span><span class="commit-repo">spi-peripheral</span><span class="commit-time">recently</span></div>';
+        '// could not reach GitHub API</div>';
     });
 }
 

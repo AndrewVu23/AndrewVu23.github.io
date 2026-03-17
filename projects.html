@@ -1,5 +1,5 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>projects &mdash; yourname.dev</title><link rel="stylesheet" href="style.css"></head><body><div class="site-wrap">
-<nav class="nav"><a href="index.html" class="nav-path" style="text-decoration:none;">~</a><span>/</span><a href="index.html" class="nav-path" style="text-decoration:none;">top</a><span>/</span><span class="nav-current">projects</span><div class="nav-right"><a href="about.html">/about</a><a href="projects.html">/projects</a><a href="blog.html">/blog</a><a href="cv.html">/cv</a><span class="nav-sep">|</span><a href="https://github.com/yourname" class="nav-social" target="_blank">GitHub</a><a href="https://linkedin.com/in/yourname" class="nav-social" target="_blank">LinkedIn</a><a href="https://x.com/yourname" class="nav-social" target="_blank">X</a></div></nav>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>projects &mdash; andrewvu.dev</title><link rel="stylesheet" href="style.css"></head><body><div class="site-wrap">
+<nav class="nav"><a href="index.html" class="nav-path" style="text-decoration:none;">~</a><span>/</span><a href="index.html" class="nav-path" style="text-decoration:none;">top</a><span>/</span><span class="nav-current">projects</span><div class="nav-right"><a href="about.html">/about</a><a href="projects.html">/projects</a><a href="blog.html">/blog</a><a href="cv.html">/cv</a><span class="nav-sep">|</span><a href="https://github.com/AndrewVu23" class="nav-social" target="_blank">GitHub</a><a href="https://linkedin.com/in/AndrewVu23" class="nav-social" target="_blank">LinkedIn</a><a href="https://x.com/AndrewVu23" class="nav-social" target="_blank">X</a></div></nav>
 
 <p class="mod-decl"><span class="kw">module</span> ip_catalog</p>
 <h1 class="mod-title">Projects<span class="cursor"></span></h1>
@@ -7,8 +7,7 @@
 
 <div class="filters">
 <button class="filter-btn on" onclick="filterCards('all',this)">all</button>
-<button class="filter-btn" onclick="filterCards('rtl',this)">RTL</button>
-<button class="filter-btn" onclick="filterCards('soc',this)">SoC</button>
+<button class="filter-btn" onclick="filterCards('soc',this)">SoC / RTL</button>
 <button class="filter-btn" onclick="filterCards('pcb',this)">PCB</button>
 </div>
 
@@ -16,44 +15,30 @@
 
 <div class="proj-card" data-cat="soc rtl">
 <div class="proj-card-header"><span class="proj-card-name">risc_v_core</span><div><span class="pill pill-synth">synthesized</span><span class="pill pill-cat">SoC</span></div></div>
-<p class="proj-card-desc">5-stage pipelined RV32I processor with hazard detection, data forwarding, and branch prediction.</p>
-<div class="proj-card-stats"><span>~12K gates</span><span>200MHz target</span><span>45nm</span></div>
-<div class="port-section"><p class="port-section-label">Port map</p>
-<div class="port-row"><span class="port-dir">input</span><span class="port-name">clk</span><span class="port-width">1b</span></div>
-<div class="port-row"><span class="port-dir">input</span><span class="port-name">rst_n</span><span class="port-width">1b</span></div>
-<div class="port-row"><span class="port-dir">input</span><span class="port-name">instr_data</span><span class="port-width">[31:0]</span></div>
-<div class="port-row"><span class="port-dir">output</span><span class="port-name">mem_addr</span><span class="port-width">[31:0]</span></div>
-<div class="port-row"><span class="port-dir">output</span><span class="port-name">mem_we</span><span class="port-width">1b</span></div>
-</div>
-<div class="proj-card-link"><a href="https://github.com/yourname/risc-v-core" target="_blank">View source on GitHub &#8599;</a></div>
+<p class="proj-card-desc">5-stage pipelined RV32IM processor with hazard detection, data forwarding, and branch prediction. M-extension supported via integrated Booth multiplier.</p>
+<div class="proj-card-stats"><span>RV32IM</span><span>5-stage pipeline</span><span>full bypass</span></div>
+<div class="proj-card-link"><a href="https://github.com/AndrewVu23/HOMEMADE-5-STAGE-PIPELINED-RISC-V" target="_blank">View source on GitHub &#8599;</a></div>
 </div>
 
 <div class="proj-card" data-cat="soc rtl">
-<div class="proj-card-header"><span class="proj-card-name">cache_ctrl</span><div><span class="pill pill-synth">synthesized</span><span class="pill pill-cat">SoC</span></div></div>
-<p class="proj-card-desc">2-way set-associative L1 cache with write-back policy and LRU replacement.</p>
-<div class="proj-card-stats"><span>~8K gates</span><span>4KB</span><span>single-cycle hit</span></div>
-<div class="proj-card-link"><a href="#" target="_blank">View source on GitHub &#8599;</a></div>
+<div class="proj-card-header"><span class="proj-card-name">booth_mult</span><div><span class="pill pill-synth">synthesized</span><span class="pill pill-cat">SoC</span></div></div>
+<p class="proj-card-desc">Radix-4 Booth2 encoding multiplier with Wallace tree reduction. Integrated into RV32IM core for M-extension multiply operations.</p>
+<div class="proj-card-stats"><span>Radix-4 Booth</span><span>Wallace tree</span><span>EX stage</span></div>
+<div class="proj-card-link"><a href="https://github.com/AndrewVu23/HOMEMADE-DIGITAL-COMPONENTS/tree/main/Multiplier" target="_blank">View source on GitHub &#8599;</a></div>
 </div>
 
 <div class="proj-card" data-cat="soc rtl">
-<div class="proj-card-header"><span class="proj-card-name">spi_peripheral</span><div><span class="pill pill-synth">synthesized</span><span class="pill pill-cat">SoC</span></div></div>
-<p class="proj-card-desc">Full-duplex SPI controller with integrated DMA engine and APB slave interface.</p>
-<div class="proj-card-stats"><span>~3K gates</span><span>50MHz SPI</span><span>APB slave</span></div>
-<div class="proj-card-link"><a href="#" target="_blank">View source on GitHub &#8599;</a></div>
+<div class="proj-card-header"><span class="proj-card-name">cache</span><div><span class="pill pill-synth">synthesized</span><span class="pill pill-cat">SoC</span></div></div>
+<p class="proj-card-desc">4-bank direct-mapped cache for instruction and data access with single-cycle hit latency.</p>
+<div class="proj-card-stats"><span>4 banks</span><span>direct-mapped</span><span>single-cycle hit</span></div>
+<div class="proj-card-link"><a href="https://github.com/AndrewVu23/HOMEMADE-DIGITAL-COMPONENTS/tree/main/Cache" target="_blank">View source on GitHub &#8599;</a></div>
 </div>
 
 <div class="proj-card" data-cat="soc rtl">
-<div class="proj-card-header"><span class="proj-card-name">noc_router</span><div><span class="pill pill-wip">in progress</span><span class="pill pill-cat">SoC</span></div></div>
-<p class="proj-card-desc">Mesh network-on-chip router with wormhole flow control and credit-based backpressure. 4-port design.</p>
-<div class="proj-card-stats"><span>~15K gates (est.)</span><span>4 ports</span><span>credit-based</span></div>
-</div>
-
-<p class="cat-label" data-cat="rtl">Standalone RTL</p>
-
-<div class="proj-card" data-cat="rtl">
-<div class="proj-card-header"><span class="proj-card-name">uart_rx</span><div><span class="pill pill-synth">synthesized</span></div></div>
-<p class="proj-card-desc">UART receiver with configurable baud rate and 8N1 framing. Standalone IP, no bus dependency.</p>
-<div class="proj-card-stats"><span>~400 gates</span><span>standalone</span></div>
+<div class="proj-card-header"><span class="proj-card-name">uart</span><div><span class="pill pill-synth">synthesized</span><span class="pill pill-cat">SoC</span></div></div>
+<p class="proj-card-desc">8-bit UART transceiver with configurable baud rate. TX and RX support, connected to SoC bus as a peripheral.</p>
+<div class="proj-card-stats"><span>8-bit</span><span>TX + RX</span><span>APB slave</span></div>
+<div class="proj-card-link"><a href="https://github.com/AndrewVu23/HOMEMADE-8BIT-UART-PROTOCOL" target="_blank">View source on GitHub &#8599;</a></div>
 </div>
 
 <p class="cat-label" data-cat="pcb">PCB &mdash; board-level designs</p>
@@ -76,5 +61,5 @@
 <div class="proj-card-stats"><span>2 layers</span><span>EasyEDA</span><span>Robomaster</span></div>
 </div>
 
-<footer class="site-footer" style="margin-top:2rem;"><span><span class="kw">endmodule</span> // ip_catalog</span><span style="opacity:0.5;">yourname.dev</span></footer>
+<footer class="site-footer" style="margin-top:2rem;"><span><span class="kw">endmodule</span> // ip_catalog</span><span style="opacity:0.5;">andrewvu.dev</span></footer>
 </div><script src="script.js"></script></body></html>
