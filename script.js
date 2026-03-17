@@ -130,3 +130,59 @@ function filterCards(cat, btn) {
   });
 })();
 
+// Bottom nav chip traces
+(function () {
+  var wrap = document.querySelector('.bottom-nav-wrap');
+  if (!wrap) return;
+  var nav = wrap.querySelector('.bottom-nav');
+  var svg = wrap.querySelector('.bottom-nav-svg');
+  if (!nav || !svg) return;
+
+  function drawTraces() {
+    var items = nav.querySelectorAll('a, .current');
+    var wrapRect = wrap.getBoundingClientRect();
+    var centerX = wrapRect.width / 2;
+    var chipW = 44, chipH = 22;
+    var totalH = 50;
+    var chipY = 0;
+    var traceStart = chipY + chipH;
+    var traceEnd = totalH;
+    var style = getComputedStyle(document.documentElement);
+    var borderColor = style.getPropertyValue('--border').trim() || '#333';
+    var textColor = style.getPropertyValue('--text2').trim() || '#999';
+    var purpleColor = style.getPropertyValue('--purple').trim() || '#7c6bff';
+
+    var termColor = style.getPropertyValue('--term').trim() || '#8ecb72';
+    // chip body
+    var paths = '<rect x="' + (centerX - chipW/2) + '" y="' + chipY + '" width="' + chipW + '" height="' + chipH + '" rx="3" fill="none" stroke="' + termColor + '" stroke-width="1" opacity="0.7"/>';
+    // chip pins on bottom
+    var pinSpacing = chipW / 6;
+    for (var p = 1; p <= 5; p++) {
+      var px = centerX - chipW/2 + pinSpacing * p;
+      paths += '<line x1="' + px + '" y1="' + (chipY + chipH) + '" x2="' + px + '" y2="' + (chipY + chipH + 3) + '" stroke="' + termColor + '" stroke-width="1" opacity="0.5"/>';
+    }
+    // chip label
+    paths += '<text x="' + centerX + '" y="' + (chipY + chipH/2 + 4) + '" text-anchor="middle" font-size="10" font-family="var(--mono)" fill="' + termColor + '" opacity="0.8">MUX</text>';
+
+    var midY = traceStart + (traceEnd - traceStart) * 0.55;
+
+    items.forEach(function (item) {
+      var r = item.getBoundingClientRect();
+      var itemCenterX = r.left + r.width / 2 - wrapRect.left;
+      var isCurrent = item.classList.contains('current');
+      var col = isCurrent ? purpleColor : borderColor;
+      var opacity = isCurrent ? '0.8' : '0.4';
+      var sw = isCurrent ? '1' : '0.5';
+      paths += '<path d="M' + centerX + ' ' + (traceStart + 3) + ' L' + centerX + ' ' + midY + ' L' + itemCenterX + ' ' + midY + ' L' + itemCenterX + ' ' + traceEnd + '" fill="none" stroke="' + col + '" stroke-width="' + sw + '" opacity="' + opacity + '"/>';
+      paths += '<circle cx="' + itemCenterX + '" cy="' + midY + '" r="1.5" fill="' + col + '" opacity="' + opacity + '"/>';
+    });
+
+    svg.setAttribute('width', wrapRect.width);
+    svg.setAttribute('height', totalH);
+    svg.innerHTML = paths;
+  }
+
+  drawTraces();
+  window.addEventListener('resize', drawTraces);
+})();
+

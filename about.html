@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>about &mdash; andrewvu.dev</title><link rel="stylesheet" href="style.css"><script>var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);</script></head><body><div class="site-wrap">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>about &mdash; andrewvu.netlify.app</title><link rel="stylesheet" href="style.css"><script>var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);</script></head><body><div class="site-wrap">
 <nav class="nav"><a href="index.html" class="nav-path" style="text-decoration:none;">~</a><span>/</span><a href="index.html" class="nav-path" style="text-decoration:none;">top</a><span>/</span><span class="nav-current">about</span><div class="nav-right"><a href="about.html">/about</a><a href="cv.html">/cv</a><a href="projects.html">/projects</a><a href="blog.html">/blog</a><span class="nav-sep">|</span><a href="https://github.com/AndrewVu23" class="nav-social" target="_blank" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61a3.18 3.18 0 00-1.33-1.76c-1.09-.74.08-.73.08-.73a2.52 2.52 0 011.84 1.24 2.56 2.56 0 003.5 1 2.56 2.56 0 01.76-1.61c-2.67-.3-5.47-1.33-5.47-5.93a4.64 4.64 0 011.24-3.22 4.3 4.3 0 01.12-3.18s1-.33 3.3 1.23a11.38 11.38 0 016 0c2.28-1.56 3.29-1.23 3.29-1.23a4.3 4.3 0 01.12 3.18 4.64 4.64 0 011.23 3.22c0 4.61-2.8 5.63-5.48 5.92a2.87 2.87 0 01.82 2.23v3.29c0 .32.21.7.82.58A12 12 0 0012 .3"/></svg></a><a href="https://www.linkedin.com/in/andrew-vu23/" class="nav-social" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05a3.74 3.74 0 013.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 11-.01-4.13 2.06 2.06 0 01.01 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77A1.75 1.75 0 000 1.73v20.54A1.75 1.75 0 001.77 24h20.45A1.76 1.76 0 0024 22.27V1.73A1.76 1.76 0 0022.22 0z"/></svg></a><a href="https://x.com/AndrewVu237" class="nav-social" target="_blank" title="X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
       <span class="nav-sep">|</span>
       <button class="theme-toggle" id="theme-toggle" title="Toggle theme"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg></button></div></nav>
@@ -32,11 +32,10 @@
 
 <div class="gpu-wrap">
   <div class="gpu-header">
-    <span>Streaming Multiprocessor 0 &mdash; warp #0</span>
-    <span><span class="active-label">4/4 threads active</span> &middot; no divergence</span>
+    <span>SM0 &mdash; warp #0</span>
+    <span><span class="active-label">4/4 active</span></span>
   </div>
   <div class="warp-container">
-    <div class="warp-label"><span class="kw">kernel</span> get_to_know &lt;&lt;&lt;1, 4&gt;&gt;&gt;(andrew, tid)</div>
     <div class="thread-grid">
       <button class="thread-btn active" onclick="selectThread(0)"><span class="tid">T0</span>origin</button>
       <button class="thread-btn" onclick="selectThread(1)"><span class="tid">T1</span>hardware</button>
@@ -57,6 +56,8 @@
   </div>
 </div>
 
+<p class="section-comment" style="margin-top:2.5rem;">// pipeline flush &mdash; switching execution context to datasheet mode</p>
+
 <div class="ds-header">
   <div>
     <p style="font-size:11px;color:var(--text3);text-transform:uppercase;letter-spacing:1px;margin-bottom:2px;">Datasheet</p>
@@ -71,15 +72,15 @@
 <div><span class="dash">-</span> Native SystemVerilog / Verilog processing pipeline</div>
 <div><span class="dash">-</span> Integrated RISC-V SoC design experience</div>
 <div><span class="dash">-</span> Verification engine: cocotb, Verilator, OpenSTA, LibreLane toolchain</div>
-<div><span class="dash">-</span> FPGA prototyping interface (Xilinx, Intel)</div>
+<div><span class="dash">-</span> FPGA prototyping interface (Altera Cyclone)</div>
 <div><span class="dash">-</span> GPU architecture and ML/AI hardware accelerator interest bus</div>
 <div><span class="dash">-</span> Board-level PCB design interface (EasyEDA, Altium)</div>
 <div><span class="dash">-</span> Software compatibility layer: C/C++, Python</div>
 </div></div>
 
 <div class="ds-section"><p class="ds-heading">2. Functional description</p>
-<p style="font-size:13px;color:var(--text);line-height:1.7;">The AV-2029A is a first-year computer engineering unit at Purdue University, optimized for digital ASIC design with a growing focus on processor microarchitecture and GPU compute. The core pipeline already supports RTL design in SystemVerilog from specification through verification and synthesis, with an integrated RISC-V SoC as the flagship design. An on-chip verification subsystem drives pre-silicon validation through cocotb, Verilator, and the full LibreLane open-source EDA stack. The device additionally exposes a board-level interface for PCB design and prototyping in competitive robotics applications.</p>
-<p style="font-size:13px;color:var(--text2);line-height:1.7;margin-top:12px;">Currently ramping up a GPU hardware design track through Purdue SoCET, with long-term target of chip design at an ASIC company. Driven by a belief that understanding hardware from the transistor up gives you a perspective no amount of software abstraction can replace. When not at the EDA workstation, found competing in Robomaster, designing PCBs for combat robots, or writing about computer architecture.</p>
+<p style="font-size:13px;color:var(--text);line-height:1.7;">The AV-2029A is a first-year computer engineering unit at Purdue University, optimized for digital ASIC design with a growing focus on processor microarchitecture and GPU compute. The core pipeline already supports RTL design in SystemVerilog from specification through verification and synthesis, with an integrated RISC-V SoC as the flagship design. An on-chip verification subsystem drives pre-silicon validation through cocotb, Verilator, and the full LibreLane open-source EDA stack.</p>
+<p style="font-size:13px;color:var(--text2);line-height:1.7;margin-top:12px;">Currently ramping up a GPU hardware design track through Purdue SoCET, with long-term target of chip design at an ASIC company. When not at the EDA workstation, found either doomscrolling or bouldering.</p>
 </div>
 
 <div class="ds-section"><p class="ds-heading">3. Absolute maximum ratings <span class="note">Exceeding these may cause permanent damage</span></p>
@@ -93,14 +94,6 @@
 <tr><td>Debug session endurance</td><td class="muted">T_DBG</td><td class="val">6</td><td class="unit">hours continuous</td></tr>
 </tbody></table></div></div>
 
-<div class="ds-section"><p class="ds-heading">4. Recommended operating conditions</p>
-<div class="ds-table-wrap"><table class="ds-table">
-<thead><tr><th style="width:45%">Parameter</th><th style="width:15%">Symbol</th><th style="width:10%;text-align:center">Min</th><th style="width:10%;text-align:center">Typ</th><th style="width:10%;text-align:center">Max</th><th style="width:10%;text-align:right">Unit</th></tr></thead>
-<tbody>
-<tr><td>Standup meeting frequency</td><td class="muted">F_SYNC</td><td class="val">1</td><td class="val">2</td><td class="val">3</td><td class="unit">/ week</td></tr>
-<tr><td>Code review turnaround</td><td class="muted">T_REV</td><td class="val">2</td><td class="val">4</td><td class="val">8</td><td class="unit">hours</td></tr>
-<tr><td>IDE monitor count</td><td class="muted">N_MON</td><td class="val">2</td><td class="val">3</td><td class="val">4</td><td class="unit">displays</td></tr>
-</tbody></table></div></div>
 
 <div class="ds-section"><p class="ds-heading">5. Auxiliary I/O <span class="note">Active peripheral interfaces</span></p>
 <div class="ds-table-wrap"><table class="ds-table">
@@ -123,7 +116,8 @@
 <tr><td class="muted">ERR003</td><td>Not beating the &ldquo;engineers don&rsquo;t shower&rdquo; allegations</td><td class="val" style="color:var(--coral);">major</td><td class="unit">soap</td></tr>
 </tbody></table></div></div>
 
-<footer class="site-footer"><span><span class="kw">endmodule</span> // AV-2029A datasheet rev B</span><span style="opacity:0.5;">andrewvu.dev</span></footer>
+<div class="bottom-nav-wrap"><svg class="bottom-nav-svg"></svg><div class="bottom-nav"><a href="index.html">top</a><span class="sep">·</span><span class="current">about</span><span class="sep">·</span><a href="cv.html">cv</a><span class="sep">·</span><a href="projects.html">projects</a><span class="sep">·</span><a href="blog.html">blog</a></div></div>
+<footer class="site-footer"><span><span class="kw">endmodule</span> // AV-2029A datasheet</span><span style="opacity:0.5;">andrewvu.netlify.app</span></footer>
 </div><script src="script.js"></script>
 <script>
 var threads=[

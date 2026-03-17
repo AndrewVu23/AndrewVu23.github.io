@@ -586,6 +586,45 @@ body::before {
 }
 .site-footer .kw { color: var(--term); }
 
+.bottom-nav-wrap {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.bottom-nav-chip {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 0;
+}
+.bottom-nav-chip svg { display: block; }
+.bottom-nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+}
+.bottom-nav a, .bottom-nav .current {
+  padding: 4px 10px;
+  border: 0.5px solid var(--border);
+  border-radius: 4px;
+  text-decoration: none;
+  transition: all 0.15s;
+}
+.bottom-nav a {
+  color: var(--text3);
+}
+.bottom-nav a:hover {
+  border-color: var(--purple);
+  color: var(--purple);
+}
+.bottom-nav .current {
+  color: var(--purple);
+  border-color: var(--purple);
+  background: var(--purple-bg);
+}
+.bottom-nav .sep { color: var(--text3); opacity: 0.3; }
 
 /* DATASHEET HEADER */
 .ds-header {
