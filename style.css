@@ -41,7 +41,7 @@
   --warning-bg: #412402;
   --info: #85B7EB;
   --info-bg: #042C53;
-  --trace-opacity: 0.04;
+  --trace-opacity: 0.06;
   --radius: 8px;
   --radius-lg: 12px;
 }
@@ -85,7 +85,7 @@
   --warning-bg: #faeeda;
   --info: #268bd2;
   --info-bg: #e6f1fb;
-  --trace-opacity: 0.06;
+  --trace-opacity: 0.08;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
