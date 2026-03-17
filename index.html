@@ -1,4 +1,177 @@
----
-layout: home
-title: Home
----
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>yourname.dev</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="site-wrap">
+
+  <nav class="nav">
+    <a href="index.html" style="color:var(--text2);text-decoration:none;">~</a><span>/</span><span class="nav-current">top</span>
+    <div class="nav-right">
+      <a href="about.html">/about</a>
+      <a href="projects.html">/projects</a>
+      <a href="blog.html">/blog</a>
+      <a href="cv.html">/cv</a>
+      <span class="nav-sep">|</span>
+      <a href="https://github.com/yourname" class="nav-social" target="_blank">GitHub</a>
+      <a href="https://linkedin.com/in/yourname" class="nav-social" target="_blank">LinkedIn</a>
+      <a href="https://x.com/yourname" class="nav-social" target="_blank">X</a>
+    </div>
+  </nav>
+
+  <p class="mod-decl"><span class="kw">module</span> your_name <span style="color:var(--text3);">#(.CLK_FREQ(200_000_000))</span></p>
+  <h1 class="mod-title">Your Name<span class="cursor"></span></h1>
+  <p class="mod-desc">Computer engineering @ Purdue. Designing silicon, one flip-flop at a time.</p>
+
+  <div class="port-map">
+    <span><span class="key">.status</span>(<span class="val-green">seeking_opportunities</span>)</span>&nbsp;&nbsp;
+    <span><span class="key">.focus</span>(ASIC_RTL_design)</span>&nbsp;&nbsp;
+    <span><span class="key">.tools</span>(SystemVerilog, Verilog, Verilator, cocotb)</span>&nbsp;&nbsp;
+    <span><span class="key">.also</span>(Python, C/C++)</span>
+  </div>
+
+  <p class="section-comment">// system architecture &mdash; hover to explore</p>
+  <div class="card-wrap">
+    <div class="card-body">
+      <svg id="soc-svg" width="100%" viewBox="0 0 680 380" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <rect rx="12" x="42" y="16" width="516" height="296" fill="none" stroke="var(--text3)" stroke-width="0.5" stroke-dasharray="4 3" opacity="0.3"/>
+        <text x="52" y="32" fill="var(--text3)" font-size="12" font-family="var(--mono)" opacity="0.35">SoC domain</text>
+        <rect rx="12" x="572" y="16" width="100" height="296" fill="none" stroke="var(--text3)" stroke-width="0.5" stroke-dasharray="4 3" opacity="0.3"/>
+        <text x="582" y="32" fill="var(--text3)" font-size="12" font-family="var(--mono)" opacity="0.35">Standalone</text>
+        <line class="soc-line" data-from="core" data-to="cache" x1="280" y1="78" x2="280" y2="108" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
+        <text class="soc-intf" data-line="core-cache" x="292" y="96" fill="var(--text3)" font-size="11" font-family="var(--mono)" opacity="0">IF / MEM</text>
+        <line class="soc-line" data-from="cache" data-to="bus" x1="280" y1="152" x2="280" y2="178" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
+        <text class="soc-intf" data-line="cache-bus" x="292" y="168" fill="var(--text3)" font-size="11" font-family="var(--mono)" opacity="0">AXI4</text>
+        <line class="soc-line" data-from="bus" data-to="spi" x1="120" y1="206" x2="120" y2="246" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
+        <text class="soc-intf" data-line="bus-spi" x="132" y="230" fill="var(--text3)" font-size="11" font-family="var(--mono)" opacity="0">APB</text>
+        <line class="soc-line" data-from="bus" data-to="sram" x1="280" y1="206" x2="280" y2="246" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
+        <text class="soc-intf" data-line="bus-sram" x="292" y="230" fill="var(--text3)" font-size="11" font-family="var(--mono)" opacity="0">AXI4</text>
+        <line class="soc-line" data-from="bus" data-to="noc" x1="440" y1="206" x2="440" y2="246" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
+        <text class="soc-intf" data-line="bus-noc" x="452" y="230" fill="var(--text3)" font-size="11" font-family="var(--mono)" opacity="0">NoC link</text>
+
+        <g class="soc-block" data-id="core" style="cursor:pointer">
+          <rect x="160" y="22" width="240" height="56" rx="6" fill="var(--purple-bg)" stroke="var(--purple)" stroke-width="0.5"/>
+          <text x="280" y="42" text-anchor="middle" dominant-baseline="central" fill="var(--purple-text)" font-size="14" font-weight="500" font-family="var(--mono)">risc_v_core</text>
+          <text x="280" y="62" text-anchor="middle" dominant-baseline="central" fill="var(--purple)" font-size="12" font-family="var(--mono)">5-stage pipelined RV32I</text>
+        </g>
+        <g class="soc-block" data-id="cache" style="cursor:pointer">
+          <rect x="185" y="108" width="190" height="44" rx="6" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="0.5"/>
+          <text x="280" y="130" text-anchor="middle" dominant-baseline="central" fill="var(--teal-text)" font-size="14" font-weight="500" font-family="var(--mono)">cache_ctrl</text>
+        </g>
+        <g class="soc-block" data-id="bus" style="cursor:pointer">
+          <rect x="50" y="178" width="500" height="28" rx="4" fill="var(--gray-bg)" stroke="var(--gray)" stroke-width="0.5"/>
+          <text x="300" y="192" text-anchor="middle" dominant-baseline="central" fill="var(--gray)" font-size="14" font-weight="500" font-family="var(--mono)">AXI4 interconnect</text>
+        </g>
+        <g class="soc-block" data-id="spi" style="cursor:pointer">
+          <rect x="50" y="246" width="140" height="56" rx="6" fill="var(--coral-bg)" stroke="var(--coral)" stroke-width="0.5"/>
+          <text x="120" y="266" text-anchor="middle" dominant-baseline="central" fill="var(--coral-text)" font-size="14" font-weight="500" font-family="var(--mono)">spi_peripheral</text>
+          <text x="120" y="283" text-anchor="middle" dominant-baseline="central" fill="var(--coral)" font-size="12" font-family="var(--mono)">Full-duplex + DMA</text>
+        </g>
+        <g class="soc-block" data-id="sram" style="cursor:pointer">
+          <rect x="210" y="246" width="140" height="56" rx="6" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="0.5"/>
+          <text x="280" y="266" text-anchor="middle" dominant-baseline="central" fill="var(--teal-text)" font-size="14" font-weight="500" font-family="var(--mono)">sram_ctrl</text>
+          <text x="280" y="283" text-anchor="middle" dominant-baseline="central" fill="var(--teal)" font-size="12" font-family="var(--mono)">64KB on-chip</text>
+        </g>
+        <g class="soc-block" data-id="noc" style="cursor:pointer">
+          <rect x="370" y="246" width="140" height="56" rx="6" fill="var(--purple-bg)" stroke="var(--purple)" stroke-width="0.5"/>
+          <text x="440" y="266" text-anchor="middle" dominant-baseline="central" fill="var(--purple-text)" font-size="14" font-weight="500" font-family="var(--mono)">noc_router</text>
+          <text x="440" y="283" text-anchor="middle" dominant-baseline="central" fill="var(--purple)" font-size="12" font-family="var(--mono)">Wormhole mesh</text>
+        </g>
+        <g class="soc-block" data-id="sa1" style="cursor:pointer">
+          <rect x="580" y="46" width="84" height="70" rx="6" fill="var(--pink-bg)" stroke="var(--pink)" stroke-width="0.5"/>
+          <text x="622" y="70" text-anchor="middle" dominant-baseline="central" fill="var(--pink-text)" font-size="11" font-weight="500" font-family="var(--mono)">uart_rx</text>
+          <text x="622" y="88" text-anchor="middle" dominant-baseline="central" fill="var(--pink)" font-size="10" font-family="var(--mono)">8N1 receiver</text>
+        </g>
+        <g class="soc-block" data-id="sa2" style="cursor:pointer">
+          <rect x="580" y="132" width="84" height="70" rx="6" fill="var(--pink-bg)" stroke="var(--pink)" stroke-width="0.5"/>
+          <text x="622" y="156" text-anchor="middle" dominant-baseline="central" fill="var(--pink-text)" font-size="11" font-weight="500" font-family="var(--mono)">fir_filter</text>
+          <text x="622" y="174" text-anchor="middle" dominant-baseline="central" fill="var(--pink)" font-size="10" font-family="var(--mono)">16-tap DSP</text>
+        </g>
+        <g class="soc-block" data-id="sa3" style="cursor:pointer">
+          <rect x="580" y="218" width="84" height="70" rx="6" fill="var(--pink-bg)" stroke="var(--pink)" stroke-width="0.5"/>
+          <text x="622" y="242" text-anchor="middle" dominant-baseline="central" fill="var(--pink-text)" font-size="11" font-weight="500" font-family="var(--mono)">pwm_gen</text>
+          <text x="622" y="260" text-anchor="middle" dominant-baseline="central" fill="var(--pink)" font-size="10" font-family="var(--mono)">Multi-ch</text>
+        </g>
+      </svg>
+    </div>
+    <div class="card-detail" id="soc-detail" style="opacity:0.5;">
+      <span id="soc-detail-text">Hover an IP block to see details</span>
+    </div>
+  </div>
+
+  <p class="section-comment">// SKILL_CSR[31:0] &mdash; capability register</p>
+  <div class="card-wrap">
+    <div class="card-body">
+      <svg width="100%" viewBox="0 0 680 56" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <g class="reg-field" data-field="rtl" style="cursor:pointer">
+          <rect x="30" y="6" width="182" height="42" rx="4" fill="var(--purple-bg)" stroke="var(--purple)" stroke-width="0.5"/>
+          <text x="121" y="20" text-anchor="middle" dominant-baseline="central" fill="var(--purple-text)" font-size="12" font-weight="500" font-family="var(--mono)">RTL_DESIGN</text>
+          <text x="121" y="38" text-anchor="middle" dominant-baseline="central" fill="var(--purple)" font-size="10" font-family="var(--mono)">[31:22]  10b</text>
+        </g>
+        <g class="reg-field" data-field="arch" style="cursor:pointer">
+          <rect x="220" y="6" width="130" height="42" rx="4" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="0.5"/>
+          <text x="285" y="20" text-anchor="middle" dominant-baseline="central" fill="var(--teal-text)" font-size="12" font-weight="500" font-family="var(--mono)">COMP_ARCH</text>
+          <text x="285" y="38" text-anchor="middle" dominant-baseline="central" fill="var(--teal)" font-size="10" font-family="var(--mono)">[21:15]  7b</text>
+        </g>
+        <g class="reg-field" data-field="verif" style="cursor:pointer">
+          <rect x="358" y="6" width="108" height="42" rx="4" fill="var(--coral-bg)" stroke="var(--coral)" stroke-width="0.5"/>
+          <text x="412" y="20" text-anchor="middle" dominant-baseline="central" fill="var(--coral-text)" font-size="12" font-weight="500" font-family="var(--mono)">VERIF</text>
+          <text x="412" y="38" text-anchor="middle" dominant-baseline="central" fill="var(--coral)" font-size="10" font-family="var(--mono)">[14:9]  6b</text>
+        </g>
+        <g class="reg-field" data-field="sta" style="cursor:pointer">
+          <rect x="474" y="6" width="108" height="42" rx="4" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="0.5"/>
+          <text x="528" y="20" text-anchor="middle" dominant-baseline="central" fill="var(--blue-text)" font-size="12" font-weight="500" font-family="var(--mono)">STA_SYNTH</text>
+          <text x="528" y="38" text-anchor="middle" dominant-baseline="central" fill="var(--blue)" font-size="10" font-family="var(--mono)">[8:3]  6b</text>
+        </g>
+        <g class="reg-field" data-field="sw" style="cursor:pointer">
+          <rect x="590" y="6" width="60" height="42" rx="4" fill="var(--gray-bg)" stroke="var(--gray)" stroke-width="0.5"/>
+          <text x="620" y="20" text-anchor="middle" dominant-baseline="central" fill="var(--gray)" font-size="10" font-weight="500" font-family="var(--mono)">SW</text>
+          <text x="620" y="38" text-anchor="middle" dominant-baseline="central" fill="var(--gray)" font-size="10" font-family="var(--mono)">[2:0]</text>
+        </g>
+      </svg>
+    </div>
+    <div class="card-detail" id="reg-detail" style="opacity:0.5;">
+      <span id="reg-detail-text">Hover a bitfield &mdash; wider fields = deeper expertise</span>
+    </div>
+  </div>
+
+  <div class="chip-deco">
+    <svg width="200" viewBox="0 0 200 50" xmlns="http://www.w3.org/2000/svg">
+      <rect x="50" y="6" width="100" height="38" rx="3" fill="var(--bg2)" stroke="var(--border2)" stroke-width="1"/>
+      <rect x="56" y="11" width="88" height="28" rx="1" fill="none" stroke="var(--text3)" stroke-width="0.3" opacity="0.3"/>
+      <circle cx="62" cy="17" r="3" fill="none" stroke="var(--text3)" stroke-width="0.4" opacity="0.3"/>
+      <text x="100" y="28" text-anchor="middle" dominant-baseline="central" fill="var(--text3)" font-size="8" font-family="var(--mono)" opacity="0.5">CQFP-44</text>
+      <rect x="64" y="1" width="4" height="6" rx="1" fill="var(--text3)" opacity="0.3"/><rect x="74" y="1" width="4" height="6" rx="1" fill="var(--text3)" opacity="0.3"/><rect x="84" y="1" width="4" height="6" rx="1" fill="var(--text3)" opacity="0.3"/><rect x="94" y="1" width="4" height="6" rx="1" fill="var(--text3)" opacity="0.3"/><rect x="104" y="1" width="4" height="6" rx="1" fill="var(--text3)" opacity="0.3"/><rect x="114" y="1" width="4" height="6" rx="1" fill="var(--text3)" opacity="0.3"/><rect x="124" y="1" width="4" height="6" rx="1" fill="var(--text3)" opacity="0.3"/>
+      <rect x="64" y="43" width="4" height="6" rx="1" fill="var(--text3)" opacity="0.3"/><rect x="74" y="43" width="4" height="6" rx="1" fill="var(--text3)" opacity="0.3"/><rect x="84" y="43" width="4" height="6" rx="1" fill="var(--text3)" opacity="0.3"/><rect x="94" y="43" width="4" height="6" rx="1" fill="var(--text3)" opacity="0.3"/><rect x="104" y="43" width="4" height="6" rx="1" fill="var(--text3)" opacity="0.3"/><rect x="114" y="43" width="4" height="6" rx="1" fill="var(--text3)" opacity="0.3"/><rect x="124" y="43" width="4" height="6" rx="1" fill="var(--text3)" opacity="0.3"/>
+      <rect x="45" y="14" width="6" height="4" rx="1" fill="var(--text3)" opacity="0.3"/><rect x="45" y="22" width="6" height="4" rx="1" fill="var(--text3)" opacity="0.3"/><rect x="45" y="30" width="6" height="4" rx="1" fill="var(--text3)" opacity="0.3"/>
+      <rect x="149" y="14" width="6" height="4" rx="1" fill="var(--text3)" opacity="0.3"/><rect x="149" y="22" width="6" height="4" rx="1" fill="var(--text3)" opacity="0.3"/><rect x="149" y="30" width="6" height="4" rx="1" fill="var(--text3)" opacity="0.3"/>
+    </svg>
+  </div>
+
+  <p class="section-comment">// simulation log &mdash; latest writes</p>
+  <div style="margin-bottom:2rem;">
+    <div class="sim-row"><span class="sim-time">@t=1024ns</span><a href="blog.html" class="sim-msg" style="color:var(--text);text-decoration:none;">Why branch predictors matter more than clock speed</a></div>
+    <div class="sim-row"><span class="sim-time">@t=0512ns</span><a href="blog.html" class="sim-msg" style="color:var(--text);text-decoration:none;">Debugging a clock domain crossing at 3 AM</a></div>
+    <div class="sim-row"><span class="sim-time">@t=0256ns</span><a href="blog.html" class="sim-msg" style="color:var(--text);text-decoration:none;">How I built a 2-way set-associative cache from scratch</a></div>
+    <div class="sim-row"><span class="sim-time">@t=0128ns</span><a href="blog.html" class="sim-msg" style="color:var(--text);text-decoration:none;">RISC-V vs ARM: an RTL designer's perspective</a></div>
+  </div>
+
+  <p class="section-comment">// git log --oneline &mdash; live from GitHub</p>
+  <div class="commit-wrap" id="github-log">
+    <div style="font-size:12px;color:var(--text3);">Fetching commits from GitHub...</div>
+  </div>
+
+  <footer class="site-footer">
+    <span><span class="kw">endmodule</span> // built with care, verified with cocotb</span>
+    <span style="opacity:0.5;">yourname.dev</span>
+  </footer>
+
+</div>
+<script src="script.js"></script>
+</body>
+</html>

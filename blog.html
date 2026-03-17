@@ -1,0 +1,59 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>blog &mdash; yourname.dev</title><link rel="stylesheet" href="style.css"></head><body><div class="site-wrap">
+<nav class="nav"><a href="index.html" class="nav-path" style="text-decoration:none;">~</a><span>/</span><a href="index.html" class="nav-path" style="text-decoration:none;">top</a><span>/</span><span class="nav-current">blog</span><div class="nav-right"><a href="about.html">/about</a><a href="projects.html">/projects</a><a href="blog.html">/blog</a><a href="cv.html">/cv</a><span class="nav-sep">|</span><a href="https://github.com/yourname" class="nav-social" target="_blank">GitHub</a><a href="https://linkedin.com/in/yourname" class="nav-social" target="_blank">LinkedIn</a><a href="https://x.com/yourname" class="nav-social" target="_blank">X</a></div></nav>
+
+<p class="mod-decl"><span class="kw">`timescale</span> 1ns/1ps</p>
+<h1 class="mod-title">Simulation log<span class="cursor"></span></h1>
+<p class="mod-desc">Writing about computer architecture, RTL design, and the things I break along the way.</p>
+
+<div class="filters">
+<button class="filter-btn on" onclick="filterCards('all',this)">all</button>
+<button class="filter-btn" onclick="filterCards('arch',this)">architecture</button>
+<button class="filter-btn" onclick="filterCards('rtl',this)">RTL</button>
+<button class="filter-btn" onclick="filterCards('debug',this)">debug stories</button>
+<button class="filter-btn" onclick="filterCards('learn',this)">learning</button>
+</div>
+
+<a class="blog-card" href="#" data-cat="arch">
+<div class="blog-meta"><span>@t=1024ns</span><span>March 12, 2026</span><span>8 min read &middot; 2,140 words</span></div>
+<p class="blog-title">Why branch predictors matter more than clock speed</p>
+<p class="blog-excerpt">Everyone obsesses over GHz, but the branch predictor is doing the real work. A deep dive into how speculative execution shapes modern pipeline performance &mdash; and why I redesigned mine three times.</p>
+<div><span class="blog-tag">architecture</span><span class="blog-tag">pipeline</span><span class="blog-tag">branch prediction</span></div>
+</a>
+
+<a class="blog-card" href="#" data-cat="debug">
+<div class="blog-meta"><span>@t=0512ns</span><span>February 28, 2026</span><span>6 min read &middot; 1,580 words</span></div>
+<p class="blog-title">Debugging a clock domain crossing at 3 AM</p>
+<p class="blog-excerpt">The waveform looked fine. The synthesis report was clean. But the FPGA kept glitching. A war story about metastability, synchronizers, and the humbling moment when you realize the simulator was lying.</p>
+<div><span class="blog-tag">debug</span><span class="blog-tag">CDC</span><span class="blog-tag">FPGA</span></div>
+</a>
+
+<a class="blog-card" href="#" data-cat="rtl learn">
+<div class="blog-meta"><span>@t=0256ns</span><span>February 10, 2026</span><span>12 min read &middot; 3,200 words</span></div>
+<p class="blog-title">How I built a 2-way set-associative cache from scratch</p>
+<p class="blog-excerpt">A walkthrough of designing cache_ctrl in SystemVerilog &mdash; from the LRU replacement policy to the write-back buffer, and every timing violation I hit along the way.</p>
+<div><span class="blog-tag">RTL</span><span class="blog-tag">cache</span><span class="blog-tag">tutorial</span></div>
+</a>
+
+<a class="blog-card" href="#" data-cat="arch">
+<div class="blog-meta"><span>@t=0128ns</span><span>January 22, 2026</span><span>10 min read &middot; 2,700 words</span></div>
+<p class="blog-title">RISC-V vs ARM: an RTL designer's perspective</p>
+<p class="blog-excerpt">Not a business comparison. This is about what it feels like to implement each ISA in hardware &mdash; instruction encoding, decode complexity, and the downstream effects on pipeline width.</p>
+<div><span class="blog-tag">architecture</span><span class="blog-tag">RISC-V</span><span class="blog-tag">ARM</span></div>
+</a>
+
+<a class="blog-card" href="#" data-cat="learn rtl">
+<div class="blog-meta"><span>@t=0064ns</span><span>January 5, 2026</span><span>5 min read &middot; 1,300 words</span></div>
+<p class="blog-title">Lessons learned from my first synthesis run</p>
+<p class="blog-excerpt">I thought my RTL was clean. Then I ran it through OpenSTA and everything caught fire. A beginner's guide to the gap between "simulates correctly" and "actually synthesizable."</p>
+<div><span class="blog-tag">learning</span><span class="blog-tag">synthesis</span><span class="blog-tag">OpenSTA</span></div>
+</a>
+
+<a class="blog-card" href="#" data-cat="debug learn">
+<div class="blog-meta"><span>@t=0032ns</span><span>December 15, 2025</span><span>7 min read &middot; 1,800 words</span></div>
+<p class="blog-title">The cocotb testbench that saved my SoC</p>
+<p class="blog-excerpt">I was about to rip out the entire AXI interconnect when a Python testbench pinpointed the bug in 30 seconds. A love letter to cocotb and why verification-first thinking changed how I design.</p>
+<div><span class="blog-tag">debug</span><span class="blog-tag">cocotb</span><span class="blog-tag">verification</span></div>
+</a>
+
+<footer class="site-footer" style="margin-top:2rem;"><span><span class="kw">$finish;</span> // end of simulation log</span><span style="opacity:0.5;">yourname.dev</span></footer>
+</div><script src="script.js"></script></body></html>
