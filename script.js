@@ -186,3 +186,36 @@ function filterCards(cat, btn) {
   window.addEventListener('resize', drawTraces);
 })();
 
+// ============================================
+// Background Effects: Bitstream Rain + Signal Traces
+// ============================================
+(function () {
+  var container = document.getElementById('bg-effects');
+  if (!container) return;
+
+  // Respect reduced motion
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  // --- BITSTREAM RAIN ---
+  var bitItems = [
+    "01101", "10110", "0xDEAD", "0xBEEF", "0xFF", "1'b0", "1'b1",
+    "32'h0", "assign", "wire", "reg", "always_ff", "posedge", "negedge",
+    "module", "endmodule", "input", "output", "logic", "clk", "rst_n",
+    "4'hF", "8'b1010", "ack", "valid", "ready", "data", "addr",
+    "begin", "end", "case", "parameter", "genvar", "generate",
+    "initial", "integer", "localparam", "typedef", "enum", "struct"
+  ];
+
+  for (var i = 0; i < 25; i++) {
+    var span = document.createElement('span');
+    span.className = 'bit-drop';
+    span.textContent = bitItems[Math.floor(Math.random() * bitItems.length)];
+    span.style.left = Math.random() * 95 + '%';
+    span.style.fontSize = (9 + Math.random() * 3) + 'px';
+    span.style.animationDuration = (12 + Math.random() * 20) + 's';
+    span.style.animationDelay = (-Math.random() * 25) + 's';
+    container.appendChild(span);
+  }
+
+})();
+
