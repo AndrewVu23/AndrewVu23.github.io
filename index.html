@@ -58,7 +58,7 @@ a:hover{color:#2b2419;}
 [data-play]::after{content:"";position:absolute;left:21px;top:16px;border-style:solid;border-width:11px 0 11px 18px;border-color:transparent transparent transparent #8b4a36;}
 [data-vid]:hover [data-play]{transform:scale(1.08);}
 [data-vid][data-playing] [data-play]{opacity:0;transform:scale(.8);}
-[data-petal]{position:fixed;z-index:40;pointer-events:none;border-radius:60% 0 60% 0;animation:petalfall .9s cubic-bezier(.4,.1,.6,1) forwards;}
+[data-petal]{position:fixed;z-index:40;pointer-events:none;border-radius:60% 0 60% 0;animation:petalfall .7s cubic-bezier(.4,.1,.6,1) forwards;}
 [data-note]{position:fixed;z-index:45;width:300px;max-width:calc(100vw - 24px);padding:20px 22px 16px;background:#fbf6ea;background-image:linear-gradient(180deg,rgba(255,255,255,.6),rgba(255,255,255,0) 40%);color:#2b2419;border-radius:2px;box-shadow:0 18px 40px -12px rgba(40,25,5,.55),0 0 0 1px rgba(43,36,25,.08);transform-origin:50% 100%;opacity:0;visibility:hidden;transform:translateY(10px) rotate(-1.5deg) scale(.92);transition:opacity .3s ease,transform .45s cubic-bezier(.2,1.2,.4,1),visibility 0s linear .3s;}
 [data-note][data-show]{opacity:1;visibility:visible;transform:rotate(-1.5deg);transition:opacity .3s ease,transform .45s cubic-bezier(.2,1.2,.4,1),visibility 0s;}
 [data-notehead]{font-size:11.5px;letter-spacing:.2em;font-variant:small-caps;color:#8b4a36;margin-bottom:8px;}
@@ -104,7 +104,7 @@ a:hover{color:#2b2419;}
 [data-spot]{display:none;}
 [data-mode="dark"] [data-spot]{display:block;}
 [data-spotlight]{opacity:0;}
-[data-mode="dark"] [data-overlay][data-lit] [data-spotlight]{animation:lampOn 1.1s ease-out forwards;}
+[data-mode="dark"] [data-overlay][data-lit] [data-spotlight]{animation:lampOn .7s ease-out forwards;}
 @keyframes lampOn{0%{opacity:0}8%{opacity:.7}14%{opacity:.1}24%{opacity:.85}30%{opacity:.35}45%,100%{opacity:1}}
 @media (prefers-reduced-motion:reduce){[data-mode="dark"] [data-overlay][data-lit] [data-spotlight]{animation:none;opacity:1;}}
 </style>
@@ -193,7 +193,7 @@ a:hover{color:#2b2419;}
     <button data-notenext="" onClick="{{ nextNote }}">another →</button>
   </div>
 
-  <div data-overlay="" onClick="{{ overlayClick }}" style="position:fixed;inset:0;z-index:50;display:none;opacity:0;transition:opacity .35s ease;background:rgba(58,42,22,.6);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);flex-direction:column;align-items:center;justify-content:center;gap:22px;">
+  <div data-overlay="" onClick="{{ overlayClick }}" style="position:fixed;inset:0;z-index:50;display:none;opacity:0;transition:opacity .22s ease;background:rgba(58,42,22,.6);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);flex-direction:column;align-items:center;justify-content:center;gap:22px;">
     <div data-spot="" style="position:absolute;inset:0;pointer-events:none;">
       <div data-spotlight="" style="position:absolute;inset:0;">
         <span style="position:absolute;left:50%;top:50%;width:min(1100px,150vw);height:min(780px,115vh);transform:translate(-50%,-50%);background:radial-gradient(ellipse at 50% 50%,rgba(255,206,140,.28),rgba(255,206,140,0) 66%);"></span>
@@ -542,16 +542,16 @@ a:hover{color:#2b2419;}
   </div>
 </div>
 </x-dc>
-<script type="text/x-dc" data-dc-script data-props="{&quot;flipMs&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 900, &quot;min&quot;: 400, &quot;max&quot;: 1800, &quot;step&quot;: 50, &quot;unit&quot;: &quot;ms&quot;, &quot;tsType&quot;: &quot;number&quot;}, &quot;openOnLoad&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;none&quot;, &quot;options&quot;: [&quot;none&quot;, &quot;about&quot;, &quot;projects&quot;, &quot;experience&quot;, &quot;timeline&quot;, &quot;skills&quot;, &quot;blog&quot;, &quot;contact&quot;], &quot;tsType&quot;: &quot;string&quot;}}">
+<script type="text/x-dc" data-dc-script data-props="{&quot;flipMs&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 520, &quot;min&quot;: 300, &quot;max&quot;: 1800, &quot;step&quot;: 50, &quot;unit&quot;: &quot;ms&quot;, &quot;tsType&quot;: &quot;number&quot;}, &quot;openOnLoad&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;none&quot;, &quot;options&quot;: [&quot;none&quot;, &quot;about&quot;, &quot;projects&quot;, &quot;experience&quot;, &quot;timeline&quot;, &quot;skills&quot;, &quot;blog&quot;, &quot;contact&quot;], &quot;tsType&quot;: &quot;string&quot;}}">
 class Component extends DCLogic {
   state = { turned: 0, total: 0, side: 'l', mobile: false };
   rootRef = React.createRef();
   turned = 0; side = 'l'; mobile = false; k = 1;
   book = null;
   timers = [];
-  ease = 'cubic-bezier(.645,.045,.355,1)';
+  ease = 'cubic-bezier(.45,.05,.25,1)';
 
-  get ms() { return this.props.flipMs ?? 900; }
+  get ms() { return this.props.flipMs ?? 520; }
   q = (s) => this.rootRef.current && this.rootRef.current.querySelector(s);
   later(fn, t) { this.timers.push(setTimeout(fn, t)); }
   clearTimers() { this.timers.forEach(clearTimeout); this.timers = []; }
@@ -685,21 +685,21 @@ class Component extends DCLogic {
     this.fit();
     void ov.offsetWidth;
     ov.style.opacity = '1';
-    pop.style.transition = 'transform .45s cubic-bezier(.2,.8,.2,1), opacity .35s ease';
+    pop.style.transition = 'transform .3s cubic-bezier(.2,.8,.2,1), opacity .22s ease';
     pop.style.transform = 'none';
     pop.style.opacity = '1';
     if (!wasLit) {
       ov.removeAttribute('data-lit');
-      this.later(() => ov.setAttribute('data-lit', ''), 150);
+      this.later(() => ov.setAttribute('data-lit', ''), 60);
     }
     this.sync(L.length);
-    this.later(() => this.apply(1), 480);
+    this.later(() => this.apply(1), 240);
   }
 
   close = () => {
     if (!this.book) return;
     this.clearTimers();
-    const n = this.turned, st = 70;
+    const n = this.turned, st = 30;
     this.apply(0, st);
     const wait = n > 0 ? this.ms + (n - 1) * st : 0;
     this.later(() => {
@@ -707,7 +707,7 @@ class Component extends DCLogic {
       pop.style.transform = 'translateY(30px) scale(.86)';
       pop.style.opacity = '0';
       ov.style.opacity = '0';
-      this.later(() => { ov.style.display = 'none'; ov.removeAttribute('data-lit'); this.book.style.display = 'none'; this.book = null; }, 380);
+      this.later(() => { ov.style.display = 'none'; ov.removeAttribute('data-lit'); this.book.style.display = 'none'; this.book = null; }, 230);
     }, wait);
   };
 
@@ -810,7 +810,7 @@ class Component extends DCLogic {
       setTimeout(() => petal.remove(), 1000);
       b.removeAttribute('data-regrow'); void b.offsetWidth; b.setAttribute('data-regrow', '');
     }
-    this.later(() => this.showNote(), this.noteOpen ? 0 : 380);
+    this.later(() => this.showNote(), this.noteOpen ? 0 : 260);
   };
   nextFact() {
     if (!this.factOrder.length || this.factAt >= this.factOrder.length - 1) {
@@ -848,7 +848,7 @@ class Component extends DCLogic {
   toContents = () => {
     if (!this.book || !this.toc) return;
     this.side = this.toc.side;
-    this.apply(this.toc.t, 60);
+    this.apply(this.toc.t, 30);
   };
 
   switchTo(id) {
@@ -856,10 +856,10 @@ class Component extends DCLogic {
     try { navigator.vibrate && navigator.vibrate(8); } catch (e) {}
     this.clearTimers();
     const pop = this.q('[data-pop]');
-    pop.style.transition = 'transform .26s ease, opacity .22s ease';
+    pop.style.transition = 'transform .18s ease, opacity .15s ease';
     pop.style.transform = 'translateY(14px) scale(.96)';
     pop.style.opacity = '0';
-    this.later(() => this.open(id), 240);
+    this.later(() => this.open(id), 160);
   }
   switchBook = (e) => this.switchTo(e.currentTarget.dataset.switch);
 
@@ -874,7 +874,7 @@ class Component extends DCLogic {
 
   bookClick = (e) => {
     const g = e.target.closest('[data-goto]');
-    if (g) { this.side = g.dataset.side || 'l'; this.apply(+g.dataset.goto + 1, 90); return; }
+    if (g) { this.side = g.dataset.side || 'l'; this.apply(+g.dataset.goto + 1, 40); return; }
     const vid = e.target.closest('[data-vid]');
     if (vid) {
       const v = vid.querySelector('video');
