@@ -14,6 +14,8 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&amp;family=Great+Vibes&amp;display=swap">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+html,body{overflow-x:hidden;}
+[data-root]{overflow-x:clip;}
 body{font-family:'EB Garamond',Georgia,serif;background:#efe7d4;color:#2b2419;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;}
 a{color:#8b4a36;text-decoration:none;}
 a:hover{color:#2b2419;}
@@ -885,6 +887,12 @@ class Component extends DCLogic {
     if (e.target.closest('a,button,input,textarea,label,form,video')) return;
     const f = e.target.closest('[data-face]');
     if (!f) return;
+    if (this.mobile) {
+      // phones show one page: tap the left third to go back, anywhere else to go forward
+      const r = this.q('[data-stagebox]').getBoundingClientRect();
+      if (e.clientX < r.left + r.width / 3) this.prev(); else this.next();
+      return;
+    }
     if (f.dataset.face === 'r') this.next();
     else if (f.dataset.face === 'l') this.prev();
   };
