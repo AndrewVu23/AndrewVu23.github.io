@@ -50,12 +50,32 @@ a:hover{color:#2b2419;}
 @media (hover:hover){[data-vase]:hover [data-stem]{animation:sway 1.8s ease-in-out infinite;}}
 [data-vase] [data-stem]:nth-of-type(2){animation-delay:-.6s;}
 [data-vase] [data-stem]:nth-of-type(3){animation-delay:-1.2s;}
-[data-vase][data-pop] [data-bloom]{animation:bloom .55s cubic-bezier(.3,1.4,.5,1) both;}
-@media (prefers-reduced-motion:reduce){[data-vase] [data-stem],[data-vase][data-pop] [data-bloom]{animation:none !important;}}
+[data-bloom][data-regrow]{animation:bloom .6s cubic-bezier(.3,1.4,.5,1) .55s both;}
+@keyframes petalfall{0%{transform:translate(0,0) rotate(0deg);opacity:1}100%{transform:translate(var(--dx),70px) rotate(220deg);opacity:0}}
+[data-petal]{position:fixed;z-index:40;pointer-events:none;border-radius:60% 0 60% 0;animation:petalfall .9s cubic-bezier(.4,.1,.6,1) forwards;}
+[data-note]{position:fixed;z-index:45;width:300px;max-width:calc(100vw - 24px);padding:20px 22px 16px;background:#fbf6ea;background-image:linear-gradient(180deg,rgba(255,255,255,.6),rgba(255,255,255,0) 40%);color:#2b2419;border-radius:2px;box-shadow:0 18px 40px -12px rgba(40,25,5,.55),0 0 0 1px rgba(43,36,25,.08);transform-origin:50% 100%;opacity:0;visibility:hidden;transform:translateY(10px) rotate(-1.5deg) scale(.92);transition:opacity .3s ease,transform .45s cubic-bezier(.2,1.2,.4,1),visibility 0s linear .3s;}
+[data-note][data-show]{opacity:1;visibility:visible;transform:rotate(-1.5deg);transition:opacity .3s ease,transform .45s cubic-bezier(.2,1.2,.4,1),visibility 0s;}
+[data-notehead]{font-size:11.5px;letter-spacing:.2em;font-variant:small-caps;color:#8b4a36;margin-bottom:8px;}
+[data-notehead] span{color:#9a8d76;letter-spacing:.08em;margin-left:4px;}
+[data-notetext]{font-size:16.5px;font-style:italic;line-height:1.5;text-wrap:pretty;min-height:3em;}
+[data-noteclose]{position:absolute;top:6px;right:8px;width:28px;height:28px;border:none;background:none;font-size:20px;line-height:1;color:#9a8d76;cursor:pointer;font-family:inherit;}
+[data-noteclose]:hover{color:#2b2419;}
+[data-notenext]{display:block;margin:12px 0 0 auto;border:none;background:none;padding:4px 0;font-family:inherit;font-size:15px;font-style:italic;color:#8b4a36;cursor:pointer;}
+[data-notenext]:hover{color:#2b2419;}
+@media (prefers-reduced-motion:reduce){[data-vase] [data-stem],[data-bloom][data-regrow],[data-petal]{animation:none !important;}[data-petal]{display:none;}}
+/* reader controls: solid, easy to spot */
+[data-overlay] > [data-keep]:not([data-rail]) > button{background:rgba(251,246,234,.94) !important;color:#2b2419 !important;border:none !important;border-radius:999px !important;padding:8px 18px !important;box-shadow:0 6px 16px -6px rgba(0,0,0,.45);transition:transform .15s ease,background-color .15s ease,opacity .2s ease;}
+[data-overlay] > [data-keep]:not([data-rail]) > button:hover:not(:disabled){background:#fff !important;transform:translateY(-1px);}
+[data-overlay] > [data-keep]:not([data-rail]) > button:nth-of-type(2){background:#8b4a36 !important;color:#fbf6ea !important;}
+[data-overlay] > [data-keep]:not([data-rail]) > button:nth-of-type(2):hover:not(:disabled){background:#9c5540 !important;}
+[data-overlay] > [data-keep]:not([data-rail]) > button:nth-of-type(4){background:transparent !important;color:#fbf6ea !important;box-shadow:inset 0 0 0 1px rgba(251,246,234,.7);}
+[data-overlay] > [data-keep]:not([data-rail]) > button:nth-of-type(4):hover{background:rgba(251,246,234,.14) !important;}
+[data-overlay] > [data-keep]:not([data-rail]) > button:disabled{opacity:.38 !important;cursor:default;box-shadow:none;}
+[data-overlay] > [data-keep]:not([data-rail]) > span{color:#fbf6ea !important;font-weight:500;letter-spacing:.06em;text-shadow:0 1px 6px rgba(0,0,0,.35);}
 /* keep the reader controls on one row on phones */
 @media (max-width:719px){
   [data-overlay] > [data-keep]:not([data-rail]){gap:6px !important;}
-  [data-overlay] > [data-keep]:not([data-rail]) > button{padding:6px 10px !important;font-size:14px !important;margin-left:0 !important;}
+  [data-overlay] > [data-keep]:not([data-rail]) > button{padding:7px 12px !important;font-size:14px !important;margin-left:0 !important;}
   [data-overlay] > [data-keep]:not([data-rail]) > span{min-width:48px !important;font-size:14px !important;}
 }
 [data-railitem]{transition:background-color .2s ease,opacity .25s ease,transform .25s ease;}
@@ -142,7 +162,7 @@ a:hover{color:#2b2419;}
 <span style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:'EB Garamond',serif;font-size:13px;letter-spacing:.1em;font-variant:small-caps;">vi<span style="width:70%;display:flex;flex-direction:column;gap:3px;"><span style="height:1px;background:#f1e8d4;opacity:.7;"></span><span style="height:1px;background:#f1e8d4;opacity:.7;"></span></span></span>
 </button>
           <div style="flex-shrink:0;margin-left:28px;display:flex;flex-direction:column;align-items:flex-start;">
-<button data-vase="" onClick="{{ tapVase }}" aria-label="Rearrange the flowers" title="Rearrange the flowers" style="position:relative;display:block;width:96px;height:156px;margin-left:48px;padding:0;border:none;background:none;cursor:pointer;">
+<button data-vase="" onClick="{{ tapVase }}" aria-label="Pick a hardware fun fact" title="A hardware fun fact" style="position:relative;display:block;width:96px;height:156px;margin-left:48px;padding:0;border:none;background:none;cursor:pointer;">
 <div data-stem="" style="position:absolute;bottom:74px;left:44px;width:1.5px;height:66px;background:#6b7f55;transform-origin:bottom center;transform:rotate(-20deg);"><span style="position:absolute;top:-13px;left:-6.75px;width:15px;height:15px;border-radius:50%;background:#e3a33b;" data-bloom=""></span></div>
 <div data-stem="" style="position:absolute;bottom:74px;left:44px;width:1.5px;height:80px;background:#6b7f55;transform-origin:bottom center;transform:rotate(3deg);"><span style="position:absolute;top:-15px;left:-7.75px;width:17px;height:17px;border-radius:50%;background:#9b86b8;" data-bloom=""></span><span style="position:absolute;top:36px;left:1px;width:14px;height:6px;border-radius:50%;background:#6b7f55;transform:rotate(-30deg);transform-origin:left center;"></span></div>
 <div data-stem="" style="position:absolute;bottom:74px;left:44px;width:1.5px;height:56px;background:#6b7f55;transform-origin:bottom center;transform:rotate(22deg);"><span style="position:absolute;top:-11px;left:-5.75px;width:13px;height:13px;border-radius:50%;background:#c4553b;" data-bloom=""></span></div>
@@ -160,6 +180,12 @@ a:hover{color:#2b2419;}
       </div>
     </div>
   </main>
+  <div data-note="" role="dialog" aria-label="Hardware fun fact">
+    <button data-noteclose="" onClick="{{ closeNote }}" aria-label="Close">×</button>
+    <p data-notehead="">hardware fun fact <span>{{ noteCount }}</span></p>
+    <p data-notetext="">{{ noteText }}</p>
+    <button data-notenext="" onClick="{{ nextNote }}">another →</button>
+  </div>
 
   <div data-overlay="" onClick="{{ overlayClick }}" style="position:fixed;inset:0;z-index:50;display:none;opacity:0;transition:opacity .35s ease;background:rgba(58,42,22,.6);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);flex-direction:column;align-items:center;justify-content:center;gap:22px;">
     <div data-spot="" style="position:absolute;inset:0;pointer-events:none;">
@@ -531,6 +557,8 @@ class Component extends DCLogic {
     this.setMode(saved === 'on');
     window.addEventListener('keydown', this.onKey);
     window.addEventListener('resize', this.fit);
+    document.addEventListener('pointerdown', this.onDocDown);
+    window.addEventListener('resize', this.closeNote);
     this.fit();
     if (document.fonts) document.fonts.ready.then(this.fit);
     const o = this.props.openOnLoad;
@@ -539,6 +567,8 @@ class Component extends DCLogic {
   componentWillUnmount() {
     window.removeEventListener('keydown', this.onKey);
     window.removeEventListener('resize', this.fit);
+    document.removeEventListener('pointerdown', this.onDocDown);
+    window.removeEventListener('resize', this.closeNote);
     this.clearTimers();
   }
 
@@ -693,6 +723,7 @@ class Component extends DCLogic {
   };
 
   onKey = (e) => {
+    if (this.noteOpen && e.key === 'Escape') { this.closeNote(); if (!this.book) return; }
     if (!this.book) return;
     if (/^(INPUT|TEXTAREA)$/.test(e.target.tagName)) { if (e.key === 'Escape') e.target.blur(); return; }
     if (e.key === 'ArrowRight') this.next();
@@ -706,16 +737,103 @@ class Component extends DCLogic {
     }
   };
 
-  // spring, summer, fall, winter
-  bouquets = [['#e3a33b', '#9b86b8', '#c4553b'], ['#f2c230', '#f08a5d', '#e8d44d'], ['#c8702a', '#8b4a36', '#d9a441'], ['#faf7f0', '#b7c7d6', '#d3c9e6']];
-  season = 0;
-  tapVase = (e) => {
-    const vase = e.currentTarget;
-    this.season = (this.season + 1) % this.bouquets.length;
-    vase.querySelectorAll('[data-bloom]').forEach((b, i) => { b.style.background = this.bouquets[this.season][i]; });
-    vase.removeAttribute('data-pop');
-    void vase.offsetWidth;
-    vase.setAttribute('data-pop', '');
+  // hardware fun facts for the vase note; add more to the list
+  facts = [
+      "The first logged computer “bug” was a real moth, taped into the Harvard Mark II logbook in 1947 as the “first actual case of bug being found.”",
+      "Intel’s 4004 (1971), the first commercial microprocessor, had about 2,300 transistors and was built for a Busicom desk calculator.",
+      "NVIDIA’s Blackwell B200 packs 208 billion transistors across two dies, roughly 90 million times the 4004.",
+      "The Apollo Guidance Computer’s program memory was core rope: wires threaded through or around magnetic cores by hand, one bit at a time.",
+      "RISC-V started as a summer project at UC Berkeley in 2010. The “V” marks it as Berkeley’s fifth RISC instruction set.",
+      "RV32I, the RISC-V base integer ISA, has fewer than 50 instructions. An x86 instruction alone can be anywhere from 1 to 15 bytes long.",
+      "The first ARM chip worked on its first power-up in 1985, and was later found to be running even with its power pin disconnected, fed by leakage from its I/O lines.",
+      "ARM originally stood for Acorn RISC Machine.",
+      "ENIAC used about 17,500 vacuum tubes and weighed around 27 tonnes.",
+      "The first transistor, a point-contact device, was demonstrated at Bell Labs in December 1947.",
+      "Jack Kilby built the first integrated circuit at Texas Instruments in 1958, in germanium. Robert Noyce’s silicon version followed in 1959.",
+      "Moore’s 1965 prediction was that component counts would double every year. He revised it to every two years in 1975.",
+      "Light covers about 30 cm in a nanosecond, so at 3 GHz it only gets about 10 cm per clock cycle, and on-chip signals are slower still.",
+      "Grace Hopper handed out 11.8-inch pieces of wire to show how far electricity travels in one nanosecond.",
+      "Intel’s 1994 Pentium FDIV bug came from a few missing entries in a division lookup table. The recall cost Intel about $475 million.",
+      "The word “bit” is credited to John Tukey. Claude Shannon put it in print in 1948.",
+      "“Byte” was coined by Werner Buchholz at IBM in 1956, spelled with a y so it would not be mistaken for “bite.”",
+      "NVIDIA marketed the GeForce 256 in 1999 as “the world’s first GPU.”",
+      "A warp is 32 threads on NVIDIA GPUs. The name comes from weaving, where the warp is the set of parallel threads on a loom.",
+      "Chip-grade silicon is purified to about 99.9999999% or better, “nine nines” and beyond.",
+      "EUV lithography makes 13.5 nm light by hitting droplets of molten tin with a laser, tens of thousands of times per second.",
+      "Process names like “3 nm” are marketing labels now. No feature on the chip is actually 3 nm wide.",
+      "A modern chip is wired up with more than a dozen stacked metal layers above the transistors.",
+      "Konrad Zuse’s Z3 (1941) was the first working programmable, fully automatic digital computer, built from about 2,600 relays.",
+      "Tomasulo’s algorithm, the basis of out-of-order execution, was designed in 1967 for the IBM System/360 Model 91.",
+      "Seymour Cray’s CDC 6600 (1964) was the fastest computer of its day and introduced the scoreboard for dynamic scheduling.",
+      "The Cray-1 (1976) was built in a C shape to keep its wires short, and cost around $8 million.",
+      "The Harvard architecture is named after the Harvard Mark I, which read instructions from punched tape and kept data separately.",
+      "The “von Neumann architecture” comes from his 1945 First Draft of a Report on the EDVAC, where program and data share one memory.",
+      "An SRAM cell usually takes 6 transistors. A DRAM cell takes 1 transistor and 1 capacitor, which is why DRAM is so much denser.",
+      "DRAM forgets. Every row has to be refreshed within 64 ms under the standard specs, or its capacitors leak their charge away.",
+      "Rowhammer (2014) showed that hammering one DRAM row with reads can flip bits in the rows next to it.",
+      "Spectre and Meltdown (2018) turned speculative execution, a core performance trick, into a way to leak secret data.",
+      "IBM’s 1956 RAMAC disk stored about 3.75 MB and weighed about a ton.",
+      "IEEE 754 floating point (1985), led by William Kahan, has both +0 and −0, and NaN is the only value not equal to itself.",
+      "The MOS 6502 sold for $25 in 1975 when rivals cost about $175. Its descendants powered the Apple II, the Commodore 64 and the NES.",
+      "The NES used a 6502 variant with the decimal mode removed.",
+      "A flip-flop sampling a signal from another clock domain can go metastable, stuck between 0 and 1, which is why clock-crossing paths use two-flop synchronizers.",
+      "Ethernet’s frame check is CRC-32 with the polynomial 0x04C11DB7.",
+      "MIPS originally stood for Microprocessor without Interlocked Pipeline Stages.",
+      "Booth’s multiplication algorithm dates to 1950, from Andrew Donald Booth. The Wallace tree followed in 1964.",
+      "Gordon Moore and Robert Noyce founded Intel in 1968.",
+      "The first 1 GHz consumer CPU was AMD’s Athlon in March 2000, just ahead of Intel.",
+      "GPGPU-Sim, the GPU simulator under Accel-Sim, was introduced at ISPASS in 2009.",
+      "SkyWater and Google released the Sky130 PDK in 2020, the first open-source process design kit you can actually tape out on.",
+      "Verilog was created around 1984 at Gateway Design Automation. VHDL came out of a U.S. Department of Defense program."
+  ];
+  factOrder = [];
+  factAt = -1;
+  tapVase = () => {
+    const vase = this.q('[data-vase]');
+    const blooms = vase ? [...vase.querySelectorAll('[data-bloom]')] : [];
+    if (blooms.length) {
+      const b = blooms[Math.floor(Math.random() * blooms.length)], r = b.getBoundingClientRect();
+      const petal = document.createElement('span');
+      petal.setAttribute('data-petal', '');
+      Object.assign(petal.style, { left: r.left + r.width * .3 + 'px', top: r.top + r.height * .4 + 'px', width: r.width * .55 + 'px', height: r.height * .55 + 'px', background: getComputedStyle(b).backgroundColor });
+      petal.style.setProperty('--dx', (Math.random() * 40 - 20).toFixed(0) + 'px');
+      document.body.appendChild(petal);
+      setTimeout(() => petal.remove(), 1000);
+      b.removeAttribute('data-regrow'); void b.offsetWidth; b.setAttribute('data-regrow', '');
+    }
+    this.later(() => this.showNote(), this.noteOpen ? 0 : 380);
+  };
+  nextFact() {
+    if (!this.factOrder.length || this.factAt >= this.factOrder.length - 1) {
+      this.factOrder = this.facts.map((_, i) => i).sort(() => Math.random() - 0.5);
+      this.factAt = -1;
+    }
+    this.factAt += 1;
+    return this.factOrder[this.factAt];
+  }
+  showNote() {
+    const note = this.q('[data-note]'), vase = this.q('[data-vase]');
+    if (!note || !vase) return;
+    const i = this.nextFact();
+    this.setState({ noteText: this.facts[i], noteCount: `${this.factAt + 1} / ${this.facts.length}` }, () => {
+      const v = vase.getBoundingClientRect(), w = note.offsetWidth, h = note.offsetHeight;
+      const left = Math.max(12, Math.min(window.innerWidth - w - 12, v.left + v.width / 2 - w / 2));
+      let top = v.top - h - 14;
+      if (top < 12) top = Math.min(window.innerHeight - h - 12, v.bottom + 14);
+      note.style.left = left + 'px';
+      note.style.top = top + 'px';
+      note.setAttribute('data-show', '');
+      this.noteOpen = true;
+    });
+  }
+  nextNote = () => this.tapVase();
+  closeNote = () => {
+    const note = this.q('[data-note]');
+    if (note) note.removeAttribute('data-show');
+    this.noteOpen = false;
+  };
+  onDocDown = (e) => {
+    if (this.noteOpen && !e.target.closest('[data-note],[data-vase]')) this.closeNote();
   };
 
   toContents = () => {
@@ -773,7 +891,8 @@ class Component extends DCLogic {
     const atContents = !this.toc || turned === 0 || (turned === this.toc.t && (!mobile || side === this.toc.side));
     return {
       rootRef: this.rootRef,
-      openBook: this.openBook, tapVase: this.tapVase, switchBook: this.switchBook, toggleLamp: this.toggleLamp, overlayClick: this.overlayClick, bookClick: this.bookClick,
+      openBook: this.openBook, tapVase: this.tapVase, nextNote: this.nextNote, closeNote: this.closeNote,
+      noteText: this.state.noteText || '', noteCount: this.state.noteCount || '', switchBook: this.switchBook, toggleLamp: this.toggleLamp, overlayClick: this.overlayClick, bookClick: this.bookClick,
       next: this.next, prev: this.prev, close: this.close,
       toContents: this.toContents,
       atContents, contentsOpacity: atContents ? 0.35 : 1,
