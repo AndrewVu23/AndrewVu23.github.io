@@ -42,6 +42,28 @@ a:hover{color:#2b2419;}
 [data-railcover]{position:relative;width:30px;height:42px;flex-shrink:0;border-radius:1px 3px 3px 1px;background-image:linear-gradient(90deg,rgba(0,0,0,.3),rgba(255,255,255,.08) 10%,rgba(0,0,0,0) 22%);box-shadow:0 4px 10px rgba(0,0,0,.3);transition:transform .25s ease;}
 [data-railitem][data-active] [data-railcover]{transform:translateY(-3px);}
 [data-railtext]{display:flex;flex-direction:column;}
+/* vase: sway on hover, new bouquet on click */
+[data-vase]:focus-visible{outline:1px solid #8b4a36;outline-offset:4px;border-radius:4px;}
+[data-bloom]{transition:background-color .5s ease;box-shadow:0 0 0 .5px rgba(60,50,35,.18);}
+@keyframes sway{0%,100%{rotate:0deg}50%{rotate:6deg}}
+@keyframes bloom{0%{scale:.2}60%{scale:1.25}100%{scale:1}}
+@media (hover:hover){[data-vase]:hover [data-stem]{animation:sway 1.8s ease-in-out infinite;}}
+[data-vase] [data-stem]:nth-of-type(2){animation-delay:-.6s;}
+[data-vase] [data-stem]:nth-of-type(3){animation-delay:-1.2s;}
+[data-vase][data-pop] [data-bloom]{animation:bloom .55s cubic-bezier(.3,1.4,.5,1) both;}
+@media (prefers-reduced-motion:reduce){[data-vase] [data-stem],[data-vase][data-pop] [data-bloom]{animation:none !important;}}
+/* keep the reader controls on one row on phones */
+@media (max-width:719px){
+  [data-overlay] > [data-keep]:not([data-rail]){gap:6px !important;}
+  [data-overlay] > [data-keep]:not([data-rail]) > button{padding:6px 10px !important;font-size:14px !important;margin-left:0 !important;}
+  [data-overlay] > [data-keep]:not([data-rail]) > span{min-width:48px !important;font-size:14px !important;}
+}
+[data-railitem]{transition:background-color .2s ease,opacity .25s ease,transform .25s ease;}
+@media (hover:hover){
+  [data-rail]:has([data-railitem]:hover) [data-railitem]:not(:hover){opacity:.4;}
+  [data-railitem]:hover{background:rgba(243,233,210,.1);}
+  [data-railitem]:hover [data-railcover]{transform:translateY(-4px) scale(1.06);box-shadow:0 10px 18px rgba(0,0,0,.38);}
+}
 @media (min-width:1000px){
   [data-overlay]{padding-right:260px;}
   [data-overlay] > [data-rail]{position:absolute;top:50%;right:28px;transform:translateY(-50%);width:210px;max-height:calc(100vh - 80px);flex-direction:column;gap:4px;overflow-x:hidden;overflow-y:auto;padding:4px 0 4px 18px;border-left:1px solid rgba(243,233,210,.16);scroll-snap-type:y proximity;}
@@ -49,6 +71,8 @@ a:hover{color:#2b2419;}
   [data-railitem]{padding:8px 10px;}
   [data-railcover]{width:40px;height:56px;}
   [data-railitem][data-active] [data-railcover]{transform:translateX(-5px);}
+  [data-railitem]:hover{transform:translateX(-4px);}
+  [data-railitem]:hover [data-railcover]{transform:translateX(-5px) scale(1.06);}
   [data-spot]{right:260px !important;}
 }
 [data-spot]{display:none;}
@@ -118,13 +142,13 @@ a:hover{color:#2b2419;}
 <span style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:'EB Garamond',serif;font-size:13px;letter-spacing:.1em;font-variant:small-caps;">vi<span style="width:70%;display:flex;flex-direction:column;gap:3px;"><span style="height:1px;background:#f1e8d4;opacity:.7;"></span><span style="height:1px;background:#f1e8d4;opacity:.7;"></span></span></span>
 </button>
           <div style="flex-shrink:0;margin-left:28px;display:flex;flex-direction:column;align-items:flex-start;">
-<div style="position:relative;width:96px;height:156px;margin-left:48px;">
-<div style="position:absolute;bottom:74px;left:44px;width:1.5px;height:66px;background:#6b7f55;transform-origin:bottom center;transform:rotate(-20deg);"><span style="position:absolute;top:-13px;left:-6.75px;width:15px;height:15px;border-radius:50%;background:#e3a33b;"></span></div>
-<div style="position:absolute;bottom:74px;left:44px;width:1.5px;height:80px;background:#6b7f55;transform-origin:bottom center;transform:rotate(3deg);"><span style="position:absolute;top:-15px;left:-7.75px;width:17px;height:17px;border-radius:50%;background:#9b86b8;"></span><span style="position:absolute;top:36px;left:1px;width:14px;height:6px;border-radius:50%;background:#6b7f55;transform:rotate(-30deg);transform-origin:left center;"></span></div>
-<div style="position:absolute;bottom:74px;left:44px;width:1.5px;height:56px;background:#6b7f55;transform-origin:bottom center;transform:rotate(22deg);"><span style="position:absolute;top:-11px;left:-5.75px;width:13px;height:13px;border-radius:50%;background:#c4553b;"></span></div>
+<button data-vase="" onClick="{{ tapVase }}" aria-label="Rearrange the flowers" title="Rearrange the flowers" style="position:relative;display:block;width:96px;height:156px;margin-left:48px;padding:0;border:none;background:none;cursor:pointer;">
+<div data-stem="" style="position:absolute;bottom:74px;left:44px;width:1.5px;height:66px;background:#6b7f55;transform-origin:bottom center;transform:rotate(-20deg);"><span style="position:absolute;top:-13px;left:-6.75px;width:15px;height:15px;border-radius:50%;background:#e3a33b;" data-bloom=""></span></div>
+<div data-stem="" style="position:absolute;bottom:74px;left:44px;width:1.5px;height:80px;background:#6b7f55;transform-origin:bottom center;transform:rotate(3deg);"><span style="position:absolute;top:-15px;left:-7.75px;width:17px;height:17px;border-radius:50%;background:#9b86b8;" data-bloom=""></span><span style="position:absolute;top:36px;left:1px;width:14px;height:6px;border-radius:50%;background:#6b7f55;transform:rotate(-30deg);transform-origin:left center;"></span></div>
+<div data-stem="" style="position:absolute;bottom:74px;left:44px;width:1.5px;height:56px;background:#6b7f55;transform-origin:bottom center;transform:rotate(22deg);"><span style="position:absolute;top:-11px;left:-5.75px;width:13px;height:13px;border-radius:50%;background:#c4553b;" data-bloom=""></span></div>
 <div style="position:absolute;bottom:68px;left:36px;width:18px;height:10px;background:#4f6f8f;border-radius:2px 2px 0 0;"></div>
 <div style="position:absolute;bottom:0;left:20px;width:50px;height:72px;background:#4f6f8f;background-image:radial-gradient(circle at 32% 34%,rgba(255,255,255,.28),rgba(255,255,255,0) 42%),linear-gradient(90deg,rgba(0,0,0,0) 60%,rgba(0,0,0,.18));border-radius:42% 42% 38% 38% / 50% 50% 40% 40%;"></div>
-</div>
+</button>
 
 <a href="https://github.com/AndrewVu23" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;width:196px;height:36px;padding:0 16px;margin-left:6px;background-color:#34302a;background-image:linear-gradient(180deg,rgba(255,255,255,.1),rgba(0,0,0,.18));color:#f1e8d4;border-radius:2px 4px 4px 2px;font-size:14px;letter-spacing:.12em;font-variant:small-caps;transition:transform .2s ease;" style-hover="transform:translateX(10px);color:#f1e8d4;"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61a3.18 3.18 0 00-1.33-1.76c-1.09-.74.08-.73.08-.73a2.52 2.52 0 011.840 1.24 2.56 2.56 0 003.5 1 2.56 2.56 0 01.76-1.61c-2.67-.3-5.470-1.33-5.47-5.93a4.64 4.64 0 011.24-3.22 4.3 4.3 0 01.12-3.18s1-.33 3.3 1.23a11.38 11.38 0 016 0c2.28-1.56 3.29-1.23 3.29-1.23a4.3 4.3 0 01.12 3.18 4.64 4.64 0 011.23 3.22c0 4.61-2.8 5.63-5.48 5.92a2.87 2.87 0 01.82 2.23v3.29c0 .32.21.7.82.58A12 12 0 0012 .3"></path></svg>github</a>
 <a href="https://www.linkedin.com/in/andrew-vu23/" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;width:214px;height:34px;padding:0 16px;margin-left:0px;background-color:#8b4a36;background-image:linear-gradient(180deg,rgba(255,255,255,.1),rgba(0,0,0,.18));color:#f1e8d4;border-radius:2px 4px 4px 2px;font-size:14px;letter-spacing:.12em;font-variant:small-caps;transition:transform .2s ease;" style-hover="transform:translateX(10px);color:#f1e8d4;"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05a3.74 3.74 0 013.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 11-.01-4.13 2.06 2.06 0 01.01 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77A1.75 1.75 0 000 1.73v20.54A1.75 1.75 0 001.77 24h20.45A1.76 1.76 0 0024 22.27V1.73A1.76 1.76 0 0022.22 0z"></path></svg>linkedin</a>
@@ -238,7 +262,7 @@ a:hover{color:#2b2419;}
 </div>
 <div data-face="l" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#fbf6ea;background-image:linear-gradient(270deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:4px 0 0 4px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 52px 54px 46px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
 <span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">projects</span>
-<p style="font-size:12.5px;letter-spacing:.14em;font-variant:small-caps;color:#8b4a36;margin:8px 0 8px;">no. 02</p><h4 style="font-size:26px;font-weight:500;font-style:italic;line-height:1.15;color:#2b2419;margin-bottom:6px;text-wrap:balance;">32-bit RISC-V Pipelined Processor</h4><p style="font-size:12.5px;letter-spacing:.06em;font-variant:small-caps;color:#9a8d76;margin-bottom:14px;">systemverilog · computer architecture &nbsp;—&nbsp; feb – mar 2026</p><div style="margin:auto 0;display:flex;justify-content:center;"><figure style="margin:0;width:270px;"><a href="img/riscv/gdsii-layout.jpg" target="_blank" rel="noopener" title="Open full size" style="display:block;background:#fff;padding:6px;box-shadow:0 2px 10px rgba(40,25,5,.22);"><img src="img/riscv/gdsii-layout.jpg" width="882" height="900" loading="lazy" alt="GDSII layout · Sky130" style="display:block;width:100%;height:auto;"></a><figcaption style="font-size:12.5px;font-style:italic;color:#8a7d66;margin-top:7px;text-align:center;">GDSII layout · Sky130</figcaption></figure></div>
+<p style="font-size:12.5px;letter-spacing:.14em;font-variant:small-caps;color:#8b4a36;margin:8px 0 8px;">no. 02</p><h4 style="font-size:26px;font-weight:500;font-style:italic;line-height:1.15;color:#2b2419;margin-bottom:6px;text-wrap:balance;">32-bit RISC-V Pipelined Processor</h4><p style="font-size:12.5px;letter-spacing:.06em;font-variant:small-caps;color:#9a8d76;margin-bottom:14px;">systemverilog · computer architecture &nbsp;—&nbsp; feb – mar 2026</p><div style="margin:auto 0;display:flex;justify-content:center;"><figure style="margin:0;width:322px;"><a href="img/riscv/gdsii-layout.jpg" target="_blank" rel="noopener" title="Open full size" style="display:block;background:#fff;padding:6px;box-shadow:0 2px 10px rgba(40,25,5,.22);"><img src="img/riscv/gdsii-layout.jpg" width="882" height="900" loading="lazy" alt="GDSII layout · Sky130" style="display:block;width:100%;height:auto;"></a><figcaption style="font-size:12.5px;font-style:italic;color:#8a7d66;margin-top:7px;text-align:center;">GDSII layout · Sky130</figcaption></figure></div>
 <span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">5</span>
 </div>
 </div>
@@ -479,6 +503,7 @@ a:hover{color:#2b2419;}
       <button onClick="{{ prev }}" disabled="{{ noPrev }}" style="font-family:inherit;font-size:15px;font-style:italic;padding:7px 16px;border-radius:2px;border:1px solid rgba(243,233,210,.35);background:rgba(243,233,210,.08);color:#f3e9d2;cursor:pointer;opacity:{{ prevOpacity }};" style-hover="background:rgba(243,233,210,.18);">{{ prevText }}</button>
       <span style="min-width:70px;text-align:center;font-size:15px;color:#e8dcc0;">{{ pageLabel }}</span>
       <button onClick="{{ next }}" disabled="{{ noNext }}" style="font-family:inherit;font-size:15px;font-style:italic;padding:7px 16px;border-radius:2px;border:1px solid rgba(243,233,210,.35);background:rgba(243,233,210,.08);color:#f3e9d2;cursor:pointer;opacity:{{ nextOpacity }};" style-hover="background:rgba(243,233,210,.18);">next →</button>
+      <button onClick="{{ toContents }}" disabled="{{ atContents }}" style="font-family:inherit;font-size:15px;font-style:italic;padding:7px 16px;border-radius:2px;border:1px solid rgba(243,233,210,.35);background:transparent;color:#f3e9d2;cursor:pointer;opacity:{{ contentsOpacity }};" style-hover="background:rgba(243,233,210,.12);">{{ contentsText }}</button>
       <button onClick="{{ close }}" style="font-family:inherit;font-size:15px;font-style:italic;padding:7px 16px;border-radius:2px;border:1px solid rgba(243,233,210,.35);background:rgba(243,233,210,.08);color:#f3e9d2;cursor:pointer;margin-left:14px;background:transparent;" style-hover="background:rgba(243,233,210,.12);">{{ closeText }}</button>
     </div>
     <div data-rail="" data-keep=""><p data-railhead="">the shelf</p><button data-railitem="" data-switch="about" onClick="{{ switchBook }}" aria-label="Open About"><span data-railcover="" style="background-color:#8b4a36;"><span style="position:absolute;inset:5px 4px 5px 7px;border:1px solid #f1e8d4;opacity:.5;"></span><span style="position:absolute;left:0;right:0;bottom:7px;text-align:center;font-size:9px;letter-spacing:.14em;font-variant:small-caps;color:#f1e8d4;opacity:.85;">i</span></span><span data-railtext=""><span style="font-size:11px;letter-spacing:.2em;font-variant:small-caps;opacity:.65;">vol. i</span><span style="font-size:17px;font-style:italic;line-height:1.2;">About</span></span></button><button data-railitem="" data-switch="projects" onClick="{{ switchBook }}" aria-label="Open Projects"><span data-railcover="" style="background-color:#d8cbae;"><span style="position:absolute;inset:5px 4px 5px 7px;border:1px solid #2b2419;opacity:.5;"></span><span style="position:absolute;left:0;right:0;bottom:7px;text-align:center;font-size:9px;letter-spacing:.14em;font-variant:small-caps;color:#2b2419;opacity:.85;">ii</span></span><span data-railtext=""><span style="font-size:11px;letter-spacing:.2em;font-variant:small-caps;opacity:.65;">vol. ii</span><span style="font-size:17px;font-style:italic;line-height:1.2;">Projects</span></span></button><button data-railitem="" data-switch="experience" onClick="{{ switchBook }}" aria-label="Open Experience"><span data-railcover="" style="background-color:#34302a;"><span style="position:absolute;inset:5px 4px 5px 7px;border:1px solid #f1e8d4;opacity:.5;"></span><span style="position:absolute;left:0;right:0;bottom:7px;text-align:center;font-size:9px;letter-spacing:.14em;font-variant:small-caps;color:#f1e8d4;opacity:.85;">iii</span></span><span data-railtext=""><span style="font-size:11px;letter-spacing:.2em;font-variant:small-caps;opacity:.65;">vol. iii</span><span style="font-size:17px;font-style:italic;line-height:1.2;">Experience</span></span></button><button data-railitem="" data-switch="diary" onClick="{{ switchBook }}" aria-label="Open Diary"><span data-railcover="" style="background-color:#d8cbae;"><span style="position:absolute;inset:5px 4px 5px 7px;border:1px solid #2b2419;opacity:.5;"></span><span style="position:absolute;left:0;right:0;bottom:7px;text-align:center;font-size:9px;letter-spacing:.14em;font-variant:small-caps;color:#2b2419;opacity:.85;">iv</span></span><span data-railtext=""><span style="font-size:11px;letter-spacing:.2em;font-variant:small-caps;opacity:.65;">vol. iv</span><span style="font-size:17px;font-style:italic;line-height:1.2;">Diary</span></span></button><button data-railitem="" data-switch="blog" onClick="{{ switchBook }}" aria-label="Open Blog"><span data-railcover="" style="background-color:#34302a;"><span style="position:absolute;inset:5px 4px 5px 7px;border:1px solid #f1e8d4;opacity:.5;"></span><span style="position:absolute;left:0;right:0;bottom:7px;text-align:center;font-size:9px;letter-spacing:.14em;font-variant:small-caps;color:#f1e8d4;opacity:.85;">v</span></span><span data-railtext=""><span style="font-size:11px;letter-spacing:.2em;font-variant:small-caps;opacity:.65;">vol. v</span><span style="font-size:17px;font-style:italic;line-height:1.2;">Blog</span></span></button><button data-railitem="" data-switch="contact" onClick="{{ switchBook }}" aria-label="Open Contact"><span data-railcover="" style="background-color:#8b4a36;"><span style="position:absolute;inset:5px 4px 5px 7px;border:1px solid #f1e8d4;opacity:.5;"></span><span style="position:absolute;left:0;right:0;bottom:7px;text-align:center;font-size:9px;letter-spacing:.14em;font-variant:small-caps;color:#f1e8d4;opacity:.85;">vi</span></span><span data-railtext=""><span style="font-size:11px;letter-spacing:.2em;font-variant:small-caps;opacity:.65;">vol. vi</span><span style="font-size:17px;font-style:italic;line-height:1.2;">Contact</span></span></button></div>
@@ -604,6 +629,12 @@ class Component extends DCLogic {
     if (!this.book) return;
     this.turned = 0; this.side = 'l';
     const L = this.leaves();
+    // where "contents" goes: the page holding the table of contents, else the first spread
+    const g = this.book.querySelector('[data-leaf] [data-goto]');
+    if (g) {
+      const k = L.indexOf(g.closest('[data-leaf]'));
+      this.toc = g.closest('[data-face]').dataset.face === 'r' ? { t: k, side: 'r', label: 'contents' } : { t: k + 1, side: 'l', label: 'contents' };
+    } else this.toc = { t: 1, side: 'l', label: 'first page' };
     L.forEach((el, i) => { el.style.transition = 'none'; el.style.transform = 'perspective(2400px) rotateY(0deg)'; el.style.zIndex = this.z(i, 0, L.length); });
     wrap.style.transition = 'none';
     wrap.style.transform = 'translateX(-220px)';
@@ -675,8 +706,27 @@ class Component extends DCLogic {
     }
   };
 
+  // spring, summer, fall, winter
+  bouquets = [['#e3a33b', '#9b86b8', '#c4553b'], ['#f2c230', '#f08a5d', '#e8d44d'], ['#c8702a', '#8b4a36', '#d9a441'], ['#faf7f0', '#b7c7d6', '#d3c9e6']];
+  season = 0;
+  tapVase = (e) => {
+    const vase = e.currentTarget;
+    this.season = (this.season + 1) % this.bouquets.length;
+    vase.querySelectorAll('[data-bloom]').forEach((b, i) => { b.style.background = this.bouquets[this.season][i]; });
+    vase.removeAttribute('data-pop');
+    void vase.offsetWidth;
+    vase.setAttribute('data-pop', '');
+  };
+
+  toContents = () => {
+    if (!this.book || !this.toc) return;
+    this.side = this.toc.side;
+    this.apply(this.toc.t, 60);
+  };
+
   switchTo(id) {
     if (!this.book || this.book.dataset.book === id) return;
+    try { navigator.vibrate && navigator.vibrate(8); } catch (e) {}
     this.clearTimers();
     const pop = this.q('[data-pop]');
     pop.style.transition = 'transform .26s ease, opacity .22s ease';
@@ -720,10 +770,14 @@ class Component extends DCLogic {
       noPrev = turned <= 1; noNext = turned === 0 || turned >= total;
       label = turned > 0 ? `${turned} / ${total}` : '';
     }
+    const atContents = !this.toc || turned === 0 || (turned === this.toc.t && (!mobile || side === this.toc.side));
     return {
       rootRef: this.rootRef,
-      openBook: this.openBook, switchBook: this.switchBook, toggleLamp: this.toggleLamp, overlayClick: this.overlayClick, bookClick: this.bookClick,
+      openBook: this.openBook, tapVase: this.tapVase, switchBook: this.switchBook, toggleLamp: this.toggleLamp, overlayClick: this.overlayClick, bookClick: this.bookClick,
       next: this.next, prev: this.prev, close: this.close,
+      toContents: this.toContents,
+      atContents, contentsOpacity: atContents ? 0.35 : 1,
+      contentsText: this.toc ? this.toc.label : 'contents',
       noPrev, noNext, prevOpacity: noPrev ? 0.35 : 1, nextOpacity: noNext ? 0.35 : 1,
       pageLabel: label,
       prevText: mobile ? '← prev' : '← previous',
