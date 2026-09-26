@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>robomaster_boards — Kiet Vu</title>
+<link rel="stylesheet" href="theme.css">
+<script src="./image-slot.js"></script>
+</helmet>
+
+<div style="max-width:760px;margin:0 auto;padding:2rem 1.5rem 3rem;">
+
+  <nav style="display:flex;align-items:baseline;gap:6px;font-size:12px;color:var(--text3);flex-wrap:wrap;margin-bottom:2rem;">
+    <a href="index.html" style="color:var(--text2);">~</a><span>/</span><a href="index.html" style="color:var(--text2);">projects</a><span>/</span><span style="color:var(--text);font-weight:500;">robomaster_boards</span>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:14px;">
+      <button onClick="{{ toggleTheme }}" title="Toggle theme" style="background:none;border:none;color:var(--text3);cursor:pointer;display:inline-flex;padding:0;"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"></path></svg></button>
+    </div>
+  </nav>
+
+  <p style="font-size:12px;color:var(--text3);margin-bottom:2px;"><span style="color:var(--term);">module</span> robomaster_boards</p>
+  <h1 style="font-family:var(--sans);font-size:26px;font-weight:600;letter-spacing:-0.5px;color:var(--text);margin-bottom:8px;">Three boards for a combat robot</h1>
+  <p style="font-size:13.5px;color:var(--text2);line-height:1.65;max-width:62ch;margin-bottom:1.6rem;text-wrap:pretty;">Before I knew I wanted to do RTL, I was on the electrical team at Purdue RoboMaster drawing schematics and laying out PCBs. Three boards came out of it. One got fabricated, soldered, and tested; the other two stopped at a finished layout.</p>
+
+  <div style="border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:2.4rem;">
+    <div style="display:flex;flex-wrap:wrap;">
+      <div style="flex:1;min-width:150px;padding:11px 14px;border-bottom:0.5px solid var(--border);">
+        <p style="font-size:10px;color:var(--text3);margin-bottom:3px;">role</p>
+        <p style="font-size:12px;color:var(--text);">Electrical team</p>
+      </div>
+      <div style="flex:1;min-width:150px;padding:11px 14px;border-bottom:0.5px solid var(--border);border-left:0.5px solid var(--border);">
+        <p style="font-size:10px;color:var(--text3);margin-bottom:3px;">timeline</p>
+        <p style="font-size:12px;color:var(--text);">Aug 2025 – May 2026</p>
+      </div>
+      <div style="flex:1;min-width:150px;padding:11px 14px;border-bottom:0.5px solid var(--border);border-left:0.5px solid var(--border);">
+        <p style="font-size:10px;color:var(--text3);margin-bottom:3px;">boards</p>
+        <p style="font-size:12px;color:var(--text);">3 designed · 1 fabricated</p>
+      </div>
+    </div>
+    <div style="padding:11px 14px;">
+      <p style="font-size:10px;color:var(--text3);margin-bottom:5px;">tools</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <span style="font-size:11px;padding:2px 8px;border:0.5px solid var(--border);border-radius:4px;color:var(--text2);white-space:nowrap;">EasyEDA</span>
+        <span style="font-size:11px;padding:2px 8px;border:0.5px solid var(--border);border-radius:4px;color:var(--text2);white-space:nowrap;">hand soldering</span>
+        <span style="font-size:11px;padding:2px 8px;border:0.5px solid var(--border);border-radius:4px;color:var(--text2);white-space:nowrap;">bench debug</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:12px;color:var(--term-dim);margin-bottom:10px;">// 01 — audio visualizer</p>
+  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px;">
+    <span style="font-size:14.5px;font-weight:500;color:var(--text);">audio_visualizer</span>
+    <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:var(--coral-bg);color:var(--coral-text);white-space:nowrap;">fabricated + working</span>
+  </div>
+  
+  <p style="font-size:13px;color:var(--text);line-height:1.8;max-width:64ch;margin-bottom:14px;text-wrap:pretty;">This was part of the onboarding project, and it was the one that taught me the most about circuit and PCB design. This product uses an LM3915 LED driver, a microphone and different op-amps to amplify the input audio, resulting in the LED lighting up.</p>
+  <div style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:2.4rem;">
+    <div style="flex:1;min-width:220px;height:200px;position:relative;">
+      <image-slot id="robomaster-boards-1" shape="rounded" radius="6" fit="contain" src="img/audio-visualizer-schematic.png" placeholder="schematic"></image-slot>
+    </div>
+    <div style="flex:1;min-width:220px;height:200px;position:relative;">
+      <image-slot id="robomaster-boards-2" shape="rounded" radius="6" fit="contain" placeholder="assembled board photo"></image-slot>
+    </div>
+  </div>
+  <div style="display:flex;gap:14px;flex-wrap:wrap;align-items:stretch;margin-bottom:2.4rem;">
+    <div style="width:250px;flex-shrink:0;border:0.5px solid var(--border);border-radius:6px;overflow:hidden;background:var(--bg3);">
+      <video src="media/audio-visualizer.mp4" controls="" autoplay="{{ true }}" muted="{{ true }}" loop="{{ true }}" playsInline="{{ true }}" preload="auto" style="display:block;width:100%;height:auto;"></video>
+    </div>
+    
+  </div>
+
+  <p style="font-size:12px;color:var(--term-dim);margin-bottom:10px;">// 02 — armor power system</p>
+  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px;">
+    <span style="font-size:14.5px;font-weight:500;color:var(--text);">armor_plate_v1</span>
+    <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:var(--blue-bg);color:var(--blue-text);white-space:nowrap;">PCB designed, not fabricated</span>
+  </div>
+  <p style="font-size:13px;color:var(--text);line-height:1.8;max-width:64ch;margin-bottom:14px;text-wrap:pretty;">A rechargeable power system for the robot’s armor plates. The armor modules take hits and have to keep reporting, so the board’s job is delivering stable power to them without a harness running back to the main battery. Designed and routed, but was never used since the team decided that they did not need it anymore.</p>
+  <p style="font-size:12.5px;color:var(--text3);line-height:1.75;max-width:64ch;margin-bottom:14px;font-style:italic;text-wrap:pretty;">// notes on the design decisions go here — cell choice, charge circuit, protection, what I would verify first on a real board</p>
+  <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:2.4rem;">
+    <div style="height:200px;position:relative;">
+      <image-slot id="robomaster-boards-4" shape="rounded" radius="6" fit="contain" placeholder="schematic — sheet 1"></image-slot>
+    </div>
+    <div style="height:200px;position:relative;">
+      <image-slot id="robomaster-boards-armor-s2" shape="rounded" radius="6" fit="contain" placeholder="schematic — sheet 2"></image-slot>
+    </div>
+    <image-slot id="robomaster-boards-5" shape="rounded" radius="6" fit="contain" placeholder="PCB — top layer"></image-slot>
+    
+  </div>
+
+  <p style="font-size:12px;color:var(--term-dim);margin-bottom:10px;">// 03 — projectile charger</p>
+  <div style="display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:8px;">
+    <span style="font-size:14.5px;font-weight:500;color:var(--text);">fluo_charger</span>
+    <span style="font-size:10px;padding:2px 8px;border-radius:4px;background:var(--blue-bg);color:var(--blue-text);white-space:nowrap;">PCB designed, not fabricated</span>
+  </div>
+  <p style="font-size:13px;color:var(--text);line-height:1.8;max-width:64ch;margin-bottom:14px;text-wrap:pretty;">A charger circuit for the fluorescent projectiles, so the rounds glow under the arena’s UV lighting and stay trackable by the referee system. Layout also complete, never fabricated since the group</p>
+  <p style="font-size:12.5px;color:var(--text3);line-height:1.75;max-width:64ch;margin-bottom:14px;font-style:italic;text-wrap:pretty;">// notes go here — UV LED driver topology, current limiting, thermals, how long a charge should hold</p>
+  <div style="display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin-bottom: 2.4rem; width: 687px; height: 207px">
+    <div style="height:200px;position:relative;">
+      <image-slot id="robomaster-boards-6" shape="rounded" radius="6" fit="contain" placeholder="schematic — sheet 1"></image-slot>
+    </div>
+    <div style="height:200px;position:relative;">
+      <image-slot id="robomaster-boards-charger-s2" shape="rounded" radius="6" fit="contain" placeholder="schematic — sheet 2"></image-slot>
+    </div>
+    
+    <div style="height:200px;position:relative;">
+      
+    </div>
+  </div>
+
+  <p style="font-size:12px;color:var(--term-dim);margin-bottom:10px;">// what I took from it</p>
+  <p style="font-size:13.5px;color:var(--text);line-height:1.8;max-width:64ch;margin-bottom:2.6rem;text-wrap:pretty;">Board-level design is where I learned that a design is not done when the schematic is done. On the one board I actually built, footprints were wrong and the first revision did not behave, and I only found out by probing it. That habit — assume it is broken until measured — is the same one I now bring to RTL and to simulator correlation work.</p>
+
+  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:0.5px solid var(--border);padding-top:12px;font-size:11px;color:var(--text3);">
+    <a href="index.html" style="color:var(--text2);">← all projects</a>
+    <a href="RISC-V Core.dc.html" style="color:var(--text2);">next: risc_v_core →</a>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    const t = localStorage.getItem('kv-theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+    const v = document.querySelector('video');
+    if (v) { v.muted = true; v.loop = true; v.play().catch(() => {}); }
+  }
+  toggleTheme = () => {
+    const el = document.documentElement;
+    const dark = el.getAttribute('data-theme') === 'dark' ||
+      (!el.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    const next = dark ? 'light' : 'dark';
+    el.setAttribute('data-theme', next);
+    localStorage.setItem('kv-theme', next);
+  };
+  renderVals() { return { toggleTheme: this.toggleTheme }; }
+}
+</script>
+</body>
+</html>

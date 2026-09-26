@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<title>cache_simulator — Kiet Vu</title>
+<link rel="stylesheet" href="theme.css" />
+<script src="./image-slot.js"></script>
+</helmet>
+
+<div style="max-width:760px;margin:0 auto;padding:2rem 1.5rem 3rem;">
+
+  <nav style="display:flex;align-items:baseline;gap:6px;font-size:12px;color:var(--text3);flex-wrap:wrap;margin-bottom:2rem;">
+    <a href="index.html" style="color:var(--text2);">~</a><span>/</span><a href="index.html" style="color:var(--text2);">projects</a><span>/</span><span style="color:var(--text);font-weight:500;">cache_simulator</span>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:14px;">
+      <button onClick="{{ toggleTheme }}" title="Toggle theme" style="background:none;border:none;color:var(--text3);cursor:pointer;display:inline-flex;padding:0;"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg></button>
+    </div>
+  </nav>
+
+  <p style="font-size:12px;color:var(--text3);margin-bottom:2px;"><span style="color:var(--term);">module</span> cache_simulator</p>
+  <h1 style="font-family:var(--sans);font-size:26px;font-weight:600;letter-spacing:-0.5px;color:var(--text);margin-bottom:8px;">A cache you can argue with</h1>
+  <p style="font-size:13.5px;color:var(--text2);line-height:1.65;max-width:62ch;margin-bottom:1.6rem;text-wrap:pretty;">Textbooks assert that associativity stops paying off around eight ways. I wanted a tool that would let me sweep the parameter and see the curve flatten myself.</p>
+
+  <div style="border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:1.6rem;">
+    <div style="display:flex;flex-wrap:wrap;">
+      <div style="flex:1;min-width:150px;padding:11px 14px;border-bottom:0.5px solid var(--border);">
+        <p style="font-size:10px;color:var(--text3);margin-bottom:3px;">scope</p>
+        <p style="font-size:12px;color:var(--text);">Solo</p>
+      </div>
+      <div style="flex:1;min-width:150px;padding:11px 14px;border-bottom:0.5px solid var(--border);border-left:0.5px solid var(--border);">
+        <p style="font-size:10px;color:var(--text3);margin-bottom:3px;">timeline</p>
+        <p style="font-size:12px;color:var(--text);">Jun 2026</p>
+      </div>
+      <div style="flex:1;min-width:150px;padding:11px 14px;border-bottom:0.5px solid var(--border);border-left:0.5px solid var(--border);">
+        <p style="font-size:10px;color:var(--text3);margin-bottom:3px;">status</p>
+        <p style="font-size:12px;color:var(--success);">complete</p>
+      </div>
+    </div>
+    <div style="padding:11px 14px;">
+      <p style="font-size:10px;color:var(--text3);margin-bottom:5px;">stack</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;">
+        <span style="font-size:11px;padding:2px 8px;border:0.5px solid var(--border);border-radius:4px;color:var(--text2);white-space:nowrap;">C++</span>
+        <span style="font-size:11px;padding:2px 8px;border:0.5px solid var(--border);border-radius:4px;color:var(--text2);white-space:nowrap;">doctest</span>
+        <span style="font-size:11px;padding:2px 8px;border:0.5px solid var(--border);border-radius:4px;color:var(--text2);white-space:nowrap;">Python</span>
+        <span style="font-size:11px;padding:2px 8px;border:0.5px solid var(--border);border-radius:4px;color:var(--text2);white-space:nowrap;">matplotlib</span>
+      </div>
+    </div>
+  </div>
+
+  <p style="font-size:12px;color:var(--term-dim);margin-bottom:10px;">// what it models</p>
+  <div style="border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:1.6rem;">
+    <div style="display:flex;gap:12px;padding:10px 14px;border-bottom:0.5px solid var(--border);font-size:12px;flex-wrap:wrap;">
+      <span style="color:var(--text2);min-width:130px;">geometry</span>
+      <span style="color:var(--text);flex:1;">configurable set count, associativity, line size</span>
+    </div>
+    <div style="display:flex;gap:12px;padding:10px 14px;border-bottom:0.5px solid var(--border);font-size:12px;flex-wrap:wrap;">
+      <span style="color:var(--text2);min-width:130px;">write policies</span>
+      <span style="color:var(--text);flex:1;">4 &mdash; through / back &times; allocate / no-allocate</span>
+    </div>
+    <div style="display:flex;gap:12px;padding:10px 14px;border-bottom:0.5px solid var(--border);font-size:12px;flex-wrap:wrap;">
+      <span style="color:var(--text2);min-width:130px;">replacement</span>
+      <span style="color:var(--text);flex:1;">LRU, FIFO, tree-based PLRU, random &mdash; pluggable behind one interface</span>
+    </div>
+    <div style="display:flex;gap:12px;padding:10px 14px;font-size:12px;flex-wrap:wrap;">
+      <span style="color:var(--text2);min-width:130px;">reporting</span>
+      <span style="color:var(--text);flex:1;">3C&rsquo;s miss classification, AMAT profiling</span>
+    </div>
+  </div>
+  <p style="font-size:13.5px;color:var(--text);line-height:1.8;max-width:64ch;margin-bottom:2.4rem;text-wrap:pretty;">Replacement policies sit behind a common interface, so adding a fifth is one file and no changes to the cache itself. Behaviour is pinned by a doctest unit-test suite rather than by me eyeballing hit rates.</p>
+
+  <p style="font-size:12px;color:var(--term-dim);margin-bottom:10px;">// the sweep</p>
+  <p style="font-size:13.5px;color:var(--text);line-height:1.8;max-width:64ch;margin-bottom:14px;text-wrap:pretty;">The part I actually built it for: a design-space sweep that runs one workload across a grid of cache configurations and emits CSV, which a matplotlib script turns into miss-rate-versus-associativity and miss-rate-versus-size curves. The knee in those curves is the whole point.</p>
+
+  <div style="height:200px;position:relative;">
+      <image-slot id="cache-simulator-1" shape="rounded" radius="6" fit="contain" placeholder="miss rate vs associativity, one line per cache size"></image-slot>
+    </div>
+  <div style="height:200px;position:relative;">
+      <image-slot id="cache-simulator-2" shape="rounded" radius="6" fit="contain" placeholder="3C&rsquo;s breakdown &mdash; compulsory / capacity / conflict as size grows"></image-slot>
+    </div>
+
+  <p style="font-size:12px;color:var(--term-dim);margin-bottom:10px;">// next</p>
+  <p style="font-size:13.5px;color:var(--text);line-height:1.8;max-width:64ch;margin-bottom:2.6rem;text-wrap:pretty;">Single level for now. Multi-level with inclusion policies is the obvious extension, and it would let me sanity-check the L2 write behaviour I have been chasing in <a href="GPU Research.dc.html">Accel-Sim</a> against a model I fully control.</p>
+
+  <div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;border-top:0.5px solid var(--border);padding-top:12px;font-size:11px;color:var(--text3);">
+    <a href="index.html" style="color:var(--text2);">&larr; all projects</a>
+    <a href="GPU Research.dc.html" style="color:var(--text2);">next: gpu research &rarr;</a>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    const t = localStorage.getItem('kv-theme');
+    if (t) document.documentElement.setAttribute('data-theme', t);
+  }
+  toggleTheme = () => {
+    const el = document.documentElement;
+    const dark = el.getAttribute('data-theme') === 'dark' ||
+      (!el.getAttribute('data-theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    const next = dark ? 'light' : 'dark';
+    el.setAttribute('data-theme', next);
+    localStorage.setItem('kv-theme', next);
+  };
+  renderVals() { return { toggleTheme: this.toggleTheme }; }
+}
+</script>
+</body>
+</html>

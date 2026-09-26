@@ -1,241 +1,538 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>andrewvu.netlify.app</title>
-  <link rel="stylesheet" href="style.css">
-  <script>var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t);</script>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
 </head>
 <body>
-<div id="bg-effects"></div>
-<div class="site-wrap">
+<x-dc>
+<helmet>
+<title>Kiet Vu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,500;1,400;1,500&amp;family=Great+Vibes&amp;display=swap">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'EB Garamond',Georgia,serif;background:#efe7d4;color:#2b2419;font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+a{color:#8b4a36;text-decoration:none;}
+a:hover{color:#2b2419;}
+</style>
+</helmet>
 
-  <nav class="nav">
-    <a href="index.html" style="color:var(--text2);text-decoration:none;">~</a><span>/</span><span class="nav-current">top</span>
-    <div class="nav-right">
-      <a href="about.html">/about</a>
-      <a href="cv.html">/cv</a>
-      <a href="projects.html">/projects</a>
-      <a href="blog.html">/blog</a>
-      <span class="nav-sep">|</span>
-      <a href="https://github.com/AndrewVu23" class="nav-social" target="_blank" title="GitHub"><svg viewBox="0 0 24 24"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61a3.18 3.18 0 00-1.33-1.76c-1.09-.74.08-.73.08-.73a2.52 2.52 0 011.84 1.24 2.56 2.56 0 003.5 1 2.56 2.56 0 01.76-1.61c-2.67-.3-5.47-1.33-5.47-5.93a4.64 4.64 0 011.24-3.22 4.3 4.3 0 01.12-3.18s1-.33 3.3 1.23a11.38 11.38 0 016 0c2.28-1.56 3.29-1.23 3.29-1.23a4.3 4.3 0 01.12 3.18 4.64 4.64 0 011.23 3.22c0 4.61-2.8 5.63-5.48 5.92a2.87 2.87 0 01.82 2.23v3.29c0 .32.21.7.82.58A12 12 0 0012 .3"/></svg></a>
-      <a href="https://www.linkedin.com/in/andrew-vu23/" class="nav-social" target="_blank" title="LinkedIn"><svg viewBox="0 0 24 24"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05a3.74 3.74 0 013.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 11-.01-4.13 2.06 2.06 0 01.01 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77A1.75 1.75 0 000 1.73v20.54A1.75 1.75 0 001.77 24h20.45A1.76 1.76 0 0024 22.27V1.73A1.76 1.76 0 0022.22 0z"/></svg></a>
-      <a href="https://x.com/AndrewVu237" class="nav-social" target="_blank" title="X"><svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-      <span class="nav-sep">|</span>
-      <button class="theme-toggle" id="theme-toggle" title="Toggle theme"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.389 5.389 0 01-4.4 2.26 5.403 5.403 0 01-3.14-9.8c-.44-.06-.9-.1-1.36-.1z"/></svg></button>
-    </div>
-  </nav>
-  <div class="nav-email"><a href="mailto:vu89@purdue.edu">vu89@purdue.edu</a></div>
+<div ref="{{ rootRef }}" style="min-height:100vh;display:flex;flex-direction:column;background:#efe7d4;background-image:radial-gradient(ellipse at 50% 20%,rgba(255,250,238,.9),rgba(239,231,212,0) 60%);">
 
-  <div class="waveform-banner">
-    <div class="waveform-labels">
-      <span class="waveform-label" style="color:var(--term);">clk</span>
-      <span class="waveform-label" style="color:var(--text3);">en</span>
-    </div>
-    <div class="waveform-signals">
-    <div class="waveform-track waveform-clk">
-      <svg width="2400" height="20" viewBox="0 0 2400 40" preserveAspectRatio="none"><polyline fill="none" stroke="var(--term)" stroke-width="2" opacity="0.4" points="0,28 0,12 15,12 15,28 30,28 30,12 45,12 45,28 60,28 60,12 75,12 75,28 90,28 90,12 105,12 105,28 120,28 120,12 135,12 135,28 150,28 150,12 165,12 165,28 180,28 180,12 195,12 195,28 210,28 210,12 225,12 225,28 240,28 240,12 255,12 255,28 270,28 270,12 285,12 285,28 300,28 300,12 315,12 315,28 330,28 330,12 345,12 345,28 360,28 360,12 375,12 375,28 390,28 390,12 405,12 405,28 420,28 420,12 435,12 435,28 450,28 450,12 465,12 465,28 480,28 480,12 495,12 495,28 510,28 510,12 525,12 525,28 540,28 540,12 555,12 555,28 570,28 570,12 585,12 585,28 600,28 600,12 615,12 615,28 630,28 630,12 645,12 645,28 660,28 660,12 675,12 675,28 690,28 690,12 705,12 705,28 720,28 720,12 735,12 735,28 750,28 750,12 765,12 765,28 780,28 780,12 795,12 795,28 810,28 810,12 825,12 825,28 840,28 840,12 855,12 855,28 870,28 870,12 885,12 885,28 900,28 900,12 915,12 915,28 930,28 930,12 945,12 945,28 960,28 960,12 975,12 975,28 990,28 990,12 1005,12 1005,28 1020,28 1020,12 1035,12 1035,28 1050,28 1050,12 1065,12 1065,28 1080,28 1080,12 1095,12 1095,28 1110,28 1110,12 1125,12 1125,28 1140,28 1140,12 1155,12 1155,28 1170,28 1170,12 1185,12 1185,28 1200,28 1200,12 1215,12 1215,28 1230,28 1230,12 1245,12 1245,28 1260,28 1260,12 1275,12 1275,28 1290,28 1290,12 1305,12 1305,28 1320,28 1320,12 1335,12 1335,28 1350,28 1350,12 1365,12 1365,28 1380,28 1380,12 1395,12 1395,28 1410,28 1410,12 1425,12 1425,28 1440,28 1440,12 1455,12 1455,28 1470,28 1470,12 1485,12 1485,28 1500,28 1500,12 1515,12 1515,28 1530,28 1530,12 1545,12 1545,28 1560,28 1560,12 1575,12 1575,28 1590,28 1590,12 1605,12 1605,28 1620,28 1620,12 1635,12 1635,28 1650,28 1650,12 1665,12 1665,28 1680,28 1680,12 1695,12 1695,28 1710,28 1710,12 1725,12 1725,28 1740,28 1740,12 1755,12 1755,28 1770,28 1770,12 1785,12 1785,28 1800,28 1800,12 1815,12 1815,28 1830,28 1830,12 1845,12 1845,28 1860,28 1860,12 1875,12 1875,28 1890,28 1890,12 1905,12 1905,28 1920,28 1920,12 1935,12 1935,28 1950,28 1950,12 1965,12 1965,28 1980,28 1980,12 1995,12 1995,28 2010,28 2010,12 2025,12 2025,28 2040,28 2040,12 2055,12 2055,28 2070,28 2070,12 2085,12 2085,28 2100,28 2100,12 2115,12 2115,28 2130,28 2130,12 2145,12 2145,28 2160,28 2160,12 2175,12 2175,28 2190,28 2190,12 2205,12 2205,28 2220,28 2220,12 2235,12 2235,28 2250,28 2250,12 2265,12 2265,28 2280,28 2280,12 2295,12 2295,28 2310,28 2310,12 2325,12 2325,28 2340,28 2340,12 2355,12 2355,28 2370,28 2370,12 2385,12 2385,28 2400,28"/></svg>
-      <svg width="2400" height="20" viewBox="0 0 2400 40" preserveAspectRatio="none"><polyline fill="none" stroke="var(--term)" stroke-width="2" opacity="0.4" points="0,28 0,12 15,12 15,28 30,28 30,12 45,12 45,28 60,28 60,12 75,12 75,28 90,28 90,12 105,12 105,28 120,28 120,12 135,12 135,28 150,28 150,12 165,12 165,28 180,28 180,12 195,12 195,28 210,28 210,12 225,12 225,28 240,28 240,12 255,12 255,28 270,28 270,12 285,12 285,28 300,28 300,12 315,12 315,28 330,28 330,12 345,12 345,28 360,28 360,12 375,12 375,28 390,28 390,12 405,12 405,28 420,28 420,12 435,12 435,28 450,28 450,12 465,12 465,28 480,28 480,12 495,12 495,28 510,28 510,12 525,12 525,28 540,28 540,12 555,12 555,28 570,28 570,12 585,12 585,28 600,28 600,12 615,12 615,28 630,28 630,12 645,12 645,28 660,28 660,12 675,12 675,28 690,28 690,12 705,12 705,28 720,28 720,12 735,12 735,28 750,28 750,12 765,12 765,28 780,28 780,12 795,12 795,28 810,28 810,12 825,12 825,28 840,28 840,12 855,12 855,28 870,28 870,12 885,12 885,28 900,28 900,12 915,12 915,28 930,28 930,12 945,12 945,28 960,28 960,12 975,12 975,28 990,28 990,12 1005,12 1005,28 1020,28 1020,12 1035,12 1035,28 1050,28 1050,12 1065,12 1065,28 1080,28 1080,12 1095,12 1095,28 1110,28 1110,12 1125,12 1125,28 1140,28 1140,12 1155,12 1155,28 1170,28 1170,12 1185,12 1185,28 1200,28 1200,12 1215,12 1215,28 1230,28 1230,12 1245,12 1245,28 1260,28 1260,12 1275,12 1275,28 1290,28 1290,12 1305,12 1305,28 1320,28 1320,12 1335,12 1335,28 1350,28 1350,12 1365,12 1365,28 1380,28 1380,12 1395,12 1395,28 1410,28 1410,12 1425,12 1425,28 1440,28 1440,12 1455,12 1455,28 1470,28 1470,12 1485,12 1485,28 1500,28 1500,12 1515,12 1515,28 1530,28 1530,12 1545,12 1545,28 1560,28 1560,12 1575,12 1575,28 1590,28 1590,12 1605,12 1605,28 1620,28 1620,12 1635,12 1635,28 1650,28 1650,12 1665,12 1665,28 1680,28 1680,12 1695,12 1695,28 1710,28 1710,12 1725,12 1725,28 1740,28 1740,12 1755,12 1755,28 1770,28 1770,12 1785,12 1785,28 1800,28 1800,12 1815,12 1815,28 1830,28 1830,12 1845,12 1845,28 1860,28 1860,12 1875,12 1875,28 1890,28 1890,12 1905,12 1905,28 1920,28 1920,12 1935,12 1935,28 1950,28 1950,12 1965,12 1965,28 1980,28 1980,12 1995,12 1995,28 2010,28 2010,12 2025,12 2025,28 2040,28 2040,12 2055,12 2055,28 2070,28 2070,12 2085,12 2085,28 2100,28 2100,12 2115,12 2115,28 2130,28 2130,12 2145,12 2145,28 2160,28 2160,12 2175,12 2175,28 2190,28 2190,12 2205,12 2205,28 2220,28 2220,12 2235,12 2235,28 2250,28 2250,12 2265,12 2265,28 2280,28 2280,12 2295,12 2295,28 2310,28 2310,12 2325,12 2325,28 2340,28 2340,12 2355,12 2355,28 2370,28 2370,12 2385,12 2385,28 2400,28"/></svg>
-    </div>
-    <div class="waveform-track waveform-en">
-      <svg width="2400" height="20" viewBox="0 0 2400 40" preserveAspectRatio="none"><polyline fill="none" stroke="var(--text3)" stroke-width="2" opacity="0.5" points="0,26 80,26 80,14 200,14 200,26 310,26 310,14 390,14 390,26 500,26 500,14 560,14 560,26 700,26 700,14 820,14 820,26 910,26 910,14 970,14 970,26 1080,26 1080,14 1250,14 1250,26 1340,26 1340,14 1430,14 1430,26 1530,26 1530,14 1610,14 1610,26 1720,26 1720,14 1830,14 1830,26 1940,26 1940,14 2020,14 2020,26 2130,26 2130,14 2260,14 2260,26 2400,26"/></svg>
-      <svg width="2400" height="20" viewBox="0 0 2400 40" preserveAspectRatio="none"><polyline fill="none" stroke="var(--text3)" stroke-width="2" opacity="0.5" points="0,26 80,26 80,14 200,14 200,26 310,26 310,14 390,14 390,26 500,26 500,14 560,14 560,26 700,26 700,14 820,14 820,26 910,26 910,14 970,14 970,26 1080,26 1080,14 1250,14 1250,26 1340,26 1340,14 1430,14 1430,26 1530,26 1530,14 1610,14 1610,26 1720,26 1720,14 1830,14 1830,26 1940,26 1940,14 2020,14 2020,26 2130,26 2130,14 2260,14 2260,26 2400,26"/></svg>
-    </div>
-    </div>
-  </div>
+  <header style="width:100%;padding:3.2rem 1.5rem 0;text-align:center;">
+    <h1 style="font-family:'Great Vibes',cursive;font-size:clamp(64px,17vw,104px);font-weight:400;line-height:1.1;color:#2b2419;">Kiet Vu</h1>
+  </header>
 
-  <div class="hero-row">
-    <div>
-      <p class="mod-decl"><span class="kw">module</span> andrew_vu <span style="color:var(--text3);">#(parameter BIRTHDATE = 03_02_2007)</span></p>
-      <h1 class="mod-title">Andrew Vu<span class="cursor"></span></h1>
-      <p class="mod-desc">Computer Engineering @ Purdue &rsquo;29.<br>Designing silicon, one flip-flop at a time.</p>
-    </div>
-    <div class="chip-frame">
-      <div class="chip-pins chip-pins-top"></div>
-      <div class="chip-pins chip-pins-bottom"></div>
-      <div class="chip-pins chip-pins-left"></div>
-      <div class="chip-pins chip-pins-right"></div>
-      <div class="chip-die">
-        <img src="profile.jpg" alt="Andrew Vu" />
-      </div>
-      <span class="chip-label">DIE_PHOTO</span>
-    </div>
-  </div>
-
-  <div class="port-map">
-    <span><span class="key">.status</span>(<span class="val-green">seeking_opportunities</span>)</span>&nbsp;&nbsp;
-    <span><span class="key">.focus</span>(RTL_design, computer_architecture)</span>
-    <br>
-    <span><span class="key">.tools</span>(SystemVerilog/Verilog, Verilator, cocotb, Librelane toolchain)</span>&nbsp;&nbsp;
-    <span><span class="key">.also</span>(Python, C/C++)</span>
-  </div>
-
-  <p class="section-comment">// system architecture &mdash; hover to explore</p>
-  <div class="card-wrap arch-breakout">
-    <div class="card-body">
-      <svg id="soc-svg" width="100%" viewBox="0 0 900 330" xmlns="http://www.w3.org/2000/svg" style="display:block;">
-        <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="context-stroke" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
-        <!-- SoC domain outline -->
-        <a href="https://github.com/AndrewVu23/HOMEMADE-SoC" target="_blank" style="cursor:pointer;">
-        <rect rx="14" x="20" y="16" width="620" height="280" fill="transparent" stroke="var(--text3)" stroke-width="0.5" stroke-dasharray="4 3" opacity="0.5"/>
-        <text x="34" y="36" fill="var(--text3)" font-size="13" font-family="var(--mono)" opacity="0.6" text-decoration="none">SoC domain</text>
-        </a>
-        <!-- Standalone outline -->
-        <rect rx="14" x="660" y="16" width="220" height="300" fill="none" stroke="var(--text3)" stroke-width="0.5" stroke-dasharray="4 3" opacity="0.5"/>
-        <text x="674" y="36" fill="var(--text3)" font-size="13" font-family="var(--mono)" opacity="0.6">Standalone</text>
-
-        <!-- Connection lines (all centered on x=240) -->
-        <!-- core -> booth_mult -->
-        <line class="soc-line" data-from="core" data-to="mult" x1="380" y1="68" x2="420" y2="68" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
-        <text class="soc-intf" data-line="core-mult" x="400" y="62" fill="var(--text3)" font-size="10" font-family="var(--mono)" opacity="0" text-anchor="middle">EX</text>
-        <!-- core -> cache -->
-        <line class="soc-line" data-from="core" data-to="cache" x1="240" y1="90" x2="240" y2="116" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
-        <text class="soc-intf" data-line="core-cache" x="254" y="106" fill="var(--text3)" font-size="10" font-family="var(--mono)" opacity="0">IF / MEM</text>
-        <!-- cache -> bus -->
-        <line class="soc-line" data-from="cache" data-to="bus" x1="240" y1="160" x2="240" y2="182" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
-        <text class="soc-intf" data-line="cache-bus" x="254" y="174" fill="var(--text3)" font-size="10" font-family="var(--mono)" opacity="0">bus</text>
-        <!-- bus -> uart -->
-        <line class="soc-line" data-from="bus" data-to="uart" x1="240" y1="206" x2="240" y2="228" stroke="var(--text2)" stroke-width="1.5" marker-end="url(#arr)"/>
-        <text class="soc-intf" data-line="bus-uart" x="254" y="220" fill="var(--text3)" font-size="10" font-family="var(--mono)" opacity="0">APB</text>
-
-        <!-- risc_v_core (centered at x=240) -->
-        <g class="soc-block" data-id="core" style="cursor:pointer">
-          <rect x="100" y="46" width="280" height="44" rx="6" fill="var(--purple-bg)" stroke="var(--purple)" stroke-width="0.5"/>
-          <text x="240" y="62" text-anchor="middle" dominant-baseline="central" fill="var(--purple-text)" font-size="13" font-weight="500" font-family="var(--mono)">risc_v_core</text>
-          <text x="240" y="80" text-anchor="middle" dominant-baseline="central" fill="var(--purple)" font-size="10" font-family="var(--mono)">5-stage pipelined RV32IM</text>
-        </g>
-        <!-- booth_mult (right of core, gap for label) -->
-        <g class="soc-block" data-id="mult" style="cursor:pointer">
-          <rect x="420" y="46" width="80" height="44" rx="6" fill="var(--coral-bg)" stroke="var(--coral)" stroke-width="0.5"/>
-          <text x="460" y="62" text-anchor="middle" dominant-baseline="central" fill="var(--coral-text)" font-size="10" font-weight="500" font-family="var(--mono)">booth_mult</text>
-          <text x="460" y="78" text-anchor="middle" dominant-baseline="central" fill="var(--coral)" font-size="8" font-family="var(--mono)">Radix-4</text>
-        </g>
-        <!-- cache (centered at x=240) -->
-        <g class="soc-block" data-id="cache" style="cursor:pointer">
-          <rect x="120" y="116" width="240" height="44" rx="6" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="0.5"/>
-          <text x="240" y="132" text-anchor="middle" dominant-baseline="central" fill="var(--teal-text)" font-size="13" font-weight="500" font-family="var(--mono)">cache</text>
-          <text x="240" y="150" text-anchor="middle" dominant-baseline="central" fill="var(--teal)" font-size="10" font-family="var(--mono)">4-bank direct-mapped</text>
-        </g>
-        <!-- bus (centered at x=240, full SoC width) -->
-        <g class="soc-block" data-id="bus" style="cursor:pointer">
-          <rect x="40" y="182" width="560" height="24" rx="4" fill="var(--gray-bg)" stroke="var(--gray)" stroke-width="0.5"/>
-          <text x="320" y="194" text-anchor="middle" dominant-baseline="central" fill="var(--gray)" font-size="12" font-weight="500" font-family="var(--mono)">bus interconnect</text>
-        </g>
-        <!-- uart (centered at x=240) -->
-        <g class="soc-block" data-id="uart" style="cursor:pointer">
-          <rect x="180" y="228" width="120" height="44" rx="6" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="0.5"/>
-          <text x="240" y="244" text-anchor="middle" dominant-baseline="central" fill="var(--blue-text)" font-size="13" font-weight="500" font-family="var(--mono)">uart</text>
-          <text x="240" y="262" text-anchor="middle" dominant-baseline="central" fill="var(--blue)" font-size="10" font-family="var(--mono)">8-bit TX/RX</text>
-        </g>
-
-        <!-- Standalone placeholder blocks -->
-        <g opacity="0.35">
-          <rect x="682" y="50" width="176" height="70" rx="6" fill="none" stroke="var(--text3)" stroke-width="0.5" stroke-dasharray="4 3"/>
-          <text x="770" y="78" text-anchor="middle" dominant-baseline="central" fill="var(--text3)" font-size="10" font-family="var(--mono)">// syntax error:</text>
-          <text x="770" y="94" text-anchor="middle" dominant-baseline="central" fill="var(--text3)" font-size="10" font-family="var(--mono)">module not found</text>
-        </g>
-        <g opacity="0.35">
-          <rect x="682" y="140" width="176" height="70" rx="6" fill="none" stroke="var(--text3)" stroke-width="0.5" stroke-dasharray="4 3"/>
-          <text x="770" y="168" text-anchor="middle" dominant-baseline="central" fill="var(--text3)" font-size="10" font-family="var(--mono)">// WNS: -0.42ns</text>
-          <text x="770" y="184" text-anchor="middle" dominant-baseline="central" fill="var(--text3)" font-size="10" font-family="var(--mono)">timing not met</text>
-        </g>
-        <g opacity="0.35">
-          <rect x="682" y="230" width="176" height="70" rx="6" fill="none" stroke="var(--text3)" stroke-width="0.5" stroke-dasharray="4 3"/>
-          <text x="770" y="258" text-anchor="middle" dominant-baseline="central" fill="var(--text3)" font-size="10" font-family="var(--mono)">// elaboration</text>
-          <text x="770" y="274" text-anchor="middle" dominant-baseline="central" fill="var(--text3)" font-size="10" font-family="var(--mono)">pending...</text>
-        </g>
-      </svg>
-    </div>
-    <div class="card-detail" id="soc-detail" style="opacity:0.5;">
-      <span id="soc-detail-text">Hover an IP block to see details</span>
-    </div>
-  </div>
-
-  <p class="section-comment">// SKILL_REG[31:0] &mdash; capability register</p>
-  <div class="card-wrap">
-    <div class="card-body">
-      <svg width="100%" viewBox="0 0 680 56" xmlns="http://www.w3.org/2000/svg" style="display:block;">
-        <g class="reg-field" data-field="rtl" style="cursor:pointer">
-          <rect x="30" y="6" width="182" height="42" rx="4" fill="var(--purple-bg)" stroke="var(--purple)" stroke-width="0.5"/>
-          <text x="121" y="20" text-anchor="middle" dominant-baseline="central" fill="var(--purple-text)" font-size="12" font-weight="500" font-family="var(--mono)">RTL_DESIGN</text>
-          <text x="121" y="38" text-anchor="middle" dominant-baseline="central" fill="var(--purple)" font-size="10" font-family="var(--mono)">[31:22]  10b</text>
-        </g>
-        <g class="reg-field" data-field="arch" style="cursor:pointer">
-          <rect x="220" y="6" width="130" height="42" rx="4" fill="var(--teal-bg)" stroke="var(--teal)" stroke-width="0.5"/>
-          <text x="285" y="20" text-anchor="middle" dominant-baseline="central" fill="var(--teal-text)" font-size="12" font-weight="500" font-family="var(--mono)">COMP_ARCH</text>
-          <text x="285" y="38" text-anchor="middle" dominant-baseline="central" fill="var(--teal)" font-size="10" font-family="var(--mono)">[21:15]  7b</text>
-        </g>
-        <g class="reg-field" data-field="verif" style="cursor:pointer">
-          <rect x="358" y="6" width="108" height="42" rx="4" fill="var(--coral-bg)" stroke="var(--coral)" stroke-width="0.5"/>
-          <text x="412" y="20" text-anchor="middle" dominant-baseline="central" fill="var(--coral-text)" font-size="12" font-weight="500" font-family="var(--mono)">VERIF</text>
-          <text x="412" y="38" text-anchor="middle" dominant-baseline="central" fill="var(--coral)" font-size="10" font-family="var(--mono)">[14:9]  6b</text>
-        </g>
-        <g class="reg-field" data-field="sta" style="cursor:pointer">
-          <rect x="474" y="6" width="108" height="42" rx="4" fill="var(--blue-bg)" stroke="var(--blue)" stroke-width="0.5"/>
-          <text x="528" y="20" text-anchor="middle" dominant-baseline="central" fill="var(--blue-text)" font-size="12" font-weight="500" font-family="var(--mono)">STA_SYNTH</text>
-          <text x="528" y="38" text-anchor="middle" dominant-baseline="central" fill="var(--blue)" font-size="10" font-family="var(--mono)">[8:3]  6b</text>
-        </g>
-        <g class="reg-field" data-field="sw" style="cursor:pointer">
-          <rect x="590" y="6" width="60" height="42" rx="4" fill="var(--gray-bg)" stroke="var(--gray)" stroke-width="0.5"/>
-          <text x="620" y="20" text-anchor="middle" dominant-baseline="central" fill="var(--gray)" font-size="10" font-weight="500" font-family="var(--mono)">SW</text>
-          <text x="620" y="38" text-anchor="middle" dominant-baseline="central" fill="var(--gray)" font-size="10" font-family="var(--mono)">[2:0]</text>
-        </g>
-      </svg>
-    </div>
-    <div class="card-detail" id="reg-detail" style="opacity:0.5;">
-      <span id="reg-detail-text">Hover a bitfield &mdash; wider fields = deeper expertise</span>
-    </div>
-  </div>
-
-  <p class="section-comment">// $display &mdash; simulation log</p>
-  <div class="commit-wrap">
-    <div class="commit-row">
-      <span class="commit-time">2026-03-17</span>
-      <span class="commit-msg">andrewvu.netlify.app goes live &mdash; first synthesis run complete</span>
-      <span class="commit-repo">milestone</span>
-    </div>
-  </div>
-
-  <p class="section-comment">// waveform dump &mdash; contribution activity</p>
-  <div class="contrib-wrap">
-    <a href="https://github.com/AndrewVu23" target="_blank">
-      <img src="https://ghchart.rshah.org/27500A/AndrewVu23" alt="Andrew Vu's GitHub contribution graph" />
-    </a>
-    <p style="margin-top:8px;font-size:11px;color:var(--text3);opacity:0.5;">Live from GitHub &middot; click to view profile</p>
-  </div>
-
-  <p class="section-comment">// mailbox #(msg) &mdash; inter-process communication</p>
-  <div class="card-wrap" style="margin-bottom:2rem;">
-    <div class="card-body" style="padding:20px;">
-      <p style="font-size:11px;color:var(--text3);margin-bottom:16px;font-style:italic;">I read every message. Drop me a line and I'll get back to you soon.</p>
-      <form name="contact" netlify data-netlify="true" style="display:flex;flex-direction:column;gap:12px;">
-        <div style="display:flex;gap:12px;">
-          <div style="flex:1;">
-            <label style="font-size:10px;color:var(--text3);display:block;margin-bottom:4px;">// subject</label>
-            <input type="text" name="subject" placeholder="re: collaboration" required style="width:100%;font-family:var(--mono);font-size:12px;padding:10px 12px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;transition:border-color 0.15s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--purple)'" onblur="this.style.borderColor='var(--border)'" />
-          </div>
-          <div style="flex:1;">
-            <label style="font-size:10px;color:var(--text3);display:block;margin-bottom:4px;">// email</label>
-            <input type="email" name="email" placeholder="you@example.com" required style="width:100%;font-family:var(--mono);font-size:12px;padding:10px 12px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;transition:border-color 0.15s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--purple)'" onblur="this.style.borderColor='var(--border)'" />
-          </div>
-        </div>
-        <div>
-          <label style="font-size:10px;color:var(--text3);display:block;margin-bottom:4px;">// message</label>
-          <textarea name="message" rows="4" placeholder="$display(&quot;your message here&quot;);" required style="width:100%;font-family:var(--mono);font-size:12px;padding:10px 12px;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);color:var(--text);outline:none;resize:vertical;transition:border-color 0.15s;box-sizing:border-box;" onfocus="this.style.borderColor='var(--purple)'" onblur="this.style.borderColor='var(--border)'"></textarea>
-        </div>
-        <button type="submit" style="align-self:flex-end;font-family:var(--mono);font-size:11px;padding:8px 20px;background:var(--purple-bg);color:var(--purple-text);border:0.5px solid var(--purple);border-radius:var(--radius);cursor:pointer;transition:all 0.15s;" onmouseover="this.style.background='var(--purple)';this.style.color='var(--bg)'" onmouseout="this.style.background='var(--purple-bg)';this.style.color='var(--purple-text)'">&gt; mailbox.put(msg)</button>
-      </form>
-    </div>
-  </div>
-
-  <div class="bottom-nav-wrap"><svg class="bottom-nav-svg"></svg><div class="bottom-nav"><span class="current">top</span><span class="sep">·</span><a href="about.html">about</a><span class="sep">·</span><a href="cv.html">cv</a><span class="sep">·</span><a href="projects.html">projects</a><span class="sep">·</span><a href="blog.html">blog</a></div></div>
-  <footer class="site-footer">
-    <span><span class="kw">endmodule</span> // built with care, verified with cocotb</span>
-    <span style="opacity:0.5;">andrewvu.netlify.app</span>
-  </footer>
-
+  <main style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:1.5rem 0 4rem;">
+    <div data-shelfbox="" style="position:relative;padding-top:40px;">
+      <div data-shelf="" style="display:inline-flex;flex-direction:column;padding:0 24px;transform-origin:top left;">
+        <div style="display:flex;align-items:flex-end;gap:4px;padding:0 30px;">
+<button data-open="about" onClick="{{ openBook }}" style="position:relative;overflow:hidden;flex-shrink:0;box-shadow:inset 2px 0 0 rgba(255,240,210,.08),inset -2px 0 0 rgba(0,0,0,.16);width:82px;height:356px;background-color:#8b4a36;background-image:linear-gradient(90deg,rgba(0,0,0,.28),rgba(255,255,255,.1) 22%,rgba(255,255,255,0) 45%,rgba(0,0,0,.2));color:#f1e8d4;border:none;border-radius:3px 3px 1px 1px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:18px 0 16px;transition:transform .25s ease;" style-hover="transform:translateY(-16px);">
+<span style="position:absolute;left:0;right:0;top:0;height:70px;background:linear-gradient(180deg,rgba(255,244,218,.2),rgba(255,244,218,0));pointer-events:none;"></span><span style="position:absolute;bottom:0;left:0;width:16px;height:16px;background:linear-gradient(45deg,rgba(255,240,210,.3) 0 42%,rgba(255,240,210,0) 52%);pointer-events:none;"></span>
+<span style="width:70%;display:flex;flex-direction:column;gap:3px;"><span style="height:1px;background:#f1e8d4;opacity:.7;"></span><span style="height:1px;background:#f1e8d4;opacity:.7;"></span></span>
+<span style="writing-mode:vertical-rl;font-family:'EB Garamond',serif;font-size:15px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;line-height:1;">About</span>
+<span style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:'EB Garamond',serif;font-size:13px;letter-spacing:.1em;font-variant:small-caps;">i<span style="width:70%;display:flex;flex-direction:column;gap:3px;"><span style="height:1px;background:#f1e8d4;opacity:.7;"></span><span style="height:1px;background:#f1e8d4;opacity:.7;"></span></span></span>
+</button>
+<button data-open="projects" onClick="{{ openBook }}" style="position:relative;overflow:hidden;flex-shrink:0;box-shadow:inset 2px 0 0 rgba(255,240,210,.08),inset -2px 0 0 rgba(0,0,0,.16);width:96px;height:388px;background-color:#d8cbae;background-image:linear-gradient(90deg,rgba(0,0,0,.28),rgba(255,255,255,.1) 22%,rgba(255,255,255,0) 45%,rgba(0,0,0,.2));color:#2b2419;border:none;border-radius:3px 3px 1px 1px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:18px 0 16px;transition:transform .25s ease;" style-hover="transform:translateY(-16px);">
+<span style="position:absolute;top:58%;left:14%;width:46%;height:1px;background:rgba(255,240,210,.22);transform:rotate(-9deg);pointer-events:none;"></span><span style="position:absolute;top:0;right:0;width:14px;height:14px;background:linear-gradient(225deg,rgba(255,240,210,.28) 0 42%,rgba(255,240,210,0) 52%);pointer-events:none;"></span><span style="position:absolute;top:24%;right:10%;width:30%;height:1px;background:rgba(255,240,210,.16);transform:rotate(6deg);pointer-events:none;"></span>
+<span style="width:70%;display:flex;flex-direction:column;gap:3px;"><span style="height:1px;background:#2b2419;opacity:.7;"></span><span style="height:1px;background:#2b2419;opacity:.7;"></span></span>
+<span style="writing-mode:vertical-rl;font-family:'EB Garamond',serif;font-size:15px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;line-height:1;">Projects</span>
+<span style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:'EB Garamond',serif;font-size:13px;letter-spacing:.1em;font-variant:small-caps;">ii<span style="width:70%;display:flex;flex-direction:column;gap:3px;"><span style="height:1px;background:#2b2419;opacity:.7;"></span><span style="height:1px;background:#2b2419;opacity:.7;"></span></span></span>
+</button>
+<button data-open="experience" onClick="{{ openBook }}" style="position:relative;overflow:hidden;flex-shrink:0;box-shadow:inset 2px 0 0 rgba(255,240,210,.08),inset -2px 0 0 rgba(0,0,0,.16);width:70px;height:326px;background-color:#34302a;background-image:linear-gradient(90deg,rgba(0,0,0,.28),rgba(255,255,255,.1) 22%,rgba(255,255,255,0) 45%,rgba(0,0,0,.2));color:#f1e8d4;border:none;border-radius:3px 3px 1px 1px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:18px 0 16px;transition:transform .25s ease;" style-hover="transform:translateY(-16px);">
+<span style="position:absolute;left:0;right:0;top:0;height:70px;background:linear-gradient(180deg,rgba(255,244,218,.2),rgba(255,244,218,0));pointer-events:none;"></span>
+<span style="width:70%;display:flex;flex-direction:column;gap:3px;"><span style="height:1px;background:#f1e8d4;opacity:.7;"></span><span style="height:1px;background:#f1e8d4;opacity:.7;"></span></span>
+<span style="writing-mode:vertical-rl;font-family:'EB Garamond',serif;font-size:15px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;line-height:1;">Experience</span>
+<span style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:'EB Garamond',serif;font-size:13px;letter-spacing:.1em;font-variant:small-caps;">iii<span style="width:70%;display:flex;flex-direction:column;gap:3px;"><span style="height:1px;background:#f1e8d4;opacity:.7;"></span><span style="height:1px;background:#f1e8d4;opacity:.7;"></span></span></span>
+</button>
+<button data-open="diary" onClick="{{ openBook }}" style="position:relative;overflow:hidden;flex-shrink:0;box-shadow:inset 2px 0 0 rgba(255,240,210,.08),inset -2px 0 0 rgba(0,0,0,.16);width:88px;height:282px;background-color:#d8cbae;background-image:linear-gradient(90deg,rgba(0,0,0,.28),rgba(255,255,255,.1) 22%,rgba(255,255,255,0) 45%,rgba(0,0,0,.2));color:#2b2419;border:none;border-radius:3px 3px 1px 1px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:18px 0 16px;transition:transform .25s ease;" style-hover="transform:translateY(-16px);">
+<span style="position:absolute;bottom:0;left:0;width:16px;height:16px;background:linear-gradient(45deg,rgba(255,240,210,.3) 0 42%,rgba(255,240,210,0) 52%);pointer-events:none;"></span><span style="position:absolute;top:0;right:0;width:14px;height:14px;background:linear-gradient(225deg,rgba(255,240,210,.28) 0 42%,rgba(255,240,210,0) 52%);pointer-events:none;"></span><span style="position:absolute;top:58%;left:14%;width:46%;height:1px;background:rgba(255,240,210,.22);transform:rotate(-9deg);pointer-events:none;"></span>
+<span style="width:70%;display:flex;flex-direction:column;gap:3px;"><span style="height:1px;background:#2b2419;opacity:.7;"></span><span style="height:1px;background:#2b2419;opacity:.7;"></span></span>
+<span style="writing-mode:vertical-rl;font-family:'EB Garamond',serif;font-size:15px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;line-height:1;">Diary</span>
+<span style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:'EB Garamond',serif;font-size:13px;letter-spacing:.1em;font-variant:small-caps;">iv<span style="width:70%;display:flex;flex-direction:column;gap:3px;"><span style="height:1px;background:#2b2419;opacity:.7;"></span><span style="height:1px;background:#2b2419;opacity:.7;"></span></span></span>
+</button>
+<button data-open="blog" onClick="{{ openBook }}" style="flex-shrink:0;width:60px;height:338px;background-color:#34302a;background-image:linear-gradient(90deg,rgba(0,0,0,.28),rgba(255,255,255,.1) 22%,rgba(255,255,255,0) 45%,rgba(0,0,0,.2));color:#f1e8d4;border:none;border-radius:3px 3px 1px 1px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:18px 0 16px;transition:transform .25s ease;" style-hover="transform:translateY(-16px);">
+<span style="width:70%;display:flex;flex-direction:column;gap:3px;"><span style="height:1px;background:#f1e8d4;opacity:.7;"></span><span style="height:1px;background:#f1e8d4;opacity:.7;"></span></span>
+<span style="writing-mode:vertical-rl;font-family:'EB Garamond',serif;font-size:15px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;line-height:1;">Blog</span>
+<span style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:'EB Garamond',serif;font-size:13px;letter-spacing:.1em;font-variant:small-caps;">v<span style="width:70%;display:flex;flex-direction:column;gap:3px;"><span style="height:1px;background:#f1e8d4;opacity:.7;"></span><span style="height:1px;background:#f1e8d4;opacity:.7;"></span></span></span>
+</button>
+<button data-open="contact" onClick="{{ openBook }}" style="position:relative;overflow:hidden;flex-shrink:0;box-shadow:inset 2px 0 0 rgba(255,240,210,.08),inset -2px 0 0 rgba(0,0,0,.16);width:76px;height:300px;background-color:#8b4a36;background-image:linear-gradient(90deg,rgba(0,0,0,.28),rgba(255,255,255,.1) 22%,rgba(255,255,255,0) 45%,rgba(0,0,0,.2));color:#f1e8d4;border:none;border-radius:3px 3px 1px 1px;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:18px 0 16px;transition:transform .25s ease;" style-hover="transform:translateY(-16px);">
+<span style="position:absolute;left:0;right:0;top:0;height:70px;background:linear-gradient(180deg,rgba(255,244,218,.2),rgba(255,244,218,0));pointer-events:none;"></span><span style="position:absolute;bottom:0;left:0;width:16px;height:16px;background:linear-gradient(45deg,rgba(255,240,210,.3) 0 42%,rgba(255,240,210,0) 52%);pointer-events:none;"></span><span style="position:absolute;top:24%;right:10%;width:30%;height:1px;background:rgba(255,240,210,.16);transform:rotate(6deg);pointer-events:none;"></span>
+<span style="width:70%;display:flex;flex-direction:column;gap:3px;"><span style="height:1px;background:#f1e8d4;opacity:.7;"></span><span style="height:1px;background:#f1e8d4;opacity:.7;"></span></span>
+<span style="writing-mode:vertical-rl;font-family:'EB Garamond',serif;font-size:15px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;line-height:1;">Contact</span>
+<span style="width:100%;display:flex;flex-direction:column;align-items:center;gap:10px;font-family:'EB Garamond',serif;font-size:13px;letter-spacing:.1em;font-variant:small-caps;">vi<span style="width:70%;display:flex;flex-direction:column;gap:3px;"><span style="height:1px;background:#f1e8d4;opacity:.7;"></span><span style="height:1px;background:#f1e8d4;opacity:.7;"></span></span></span>
+</button>
+          <div style="flex-shrink:0;margin-left:28px;display:flex;flex-direction:column;align-items:flex-start;">
+<div style="position:relative;width:96px;height:156px;margin-left:48px;">
+<div style="position:absolute;bottom:74px;left:44px;width:1.5px;height:66px;background:#6b7f55;transform-origin:bottom center;transform:rotate(-20deg);"><span style="position:absolute;top:-13px;left:-6.75px;width:15px;height:15px;border-radius:50%;background:#e3a33b;"></span></div>
+<div style="position:absolute;bottom:74px;left:44px;width:1.5px;height:80px;background:#6b7f55;transform-origin:bottom center;transform:rotate(3deg);"><span style="position:absolute;top:-15px;left:-7.75px;width:17px;height:17px;border-radius:50%;background:#9b86b8;"></span><span style="position:absolute;top:36px;left:1px;width:14px;height:6px;border-radius:50%;background:#6b7f55;transform:rotate(-30deg);transform-origin:left center;"></span></div>
+<div style="position:absolute;bottom:74px;left:44px;width:1.5px;height:56px;background:#6b7f55;transform-origin:bottom center;transform:rotate(22deg);"><span style="position:absolute;top:-11px;left:-5.75px;width:13px;height:13px;border-radius:50%;background:#c4553b;"></span></div>
+<div style="position:absolute;bottom:68px;left:36px;width:18px;height:10px;background:#4f6f8f;border-radius:2px 2px 0 0;"></div>
+<div style="position:absolute;bottom:0;left:20px;width:50px;height:72px;background:#4f6f8f;background-image:radial-gradient(circle at 32% 34%,rgba(255,255,255,.28),rgba(255,255,255,0) 42%),linear-gradient(90deg,rgba(0,0,0,0) 60%,rgba(0,0,0,.18));border-radius:42% 42% 38% 38% / 50% 50% 40% 40%;"></div>
 </div>
-<script src="script.js"></script>
+
+<a href="https://github.com/AndrewVu23" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;width:196px;height:36px;padding:0 16px;margin-left:6px;background-color:#34302a;background-image:linear-gradient(180deg,rgba(255,255,255,.1),rgba(0,0,0,.18));color:#f1e8d4;border-radius:2px 4px 4px 2px;font-size:14px;letter-spacing:.12em;font-variant:small-caps;transition:transform .2s ease;" style-hover="transform:translateX(10px);color:#f1e8d4;"><svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M12 .3a12 12 0 00-3.8 23.38c.6.11.82-.26.82-.58v-2.02c-3.34.73-4.04-1.61-4.04-1.61a3.18 3.18 0 00-1.33-1.76c-1.09-.74.08-.73.08-.73a2.52 2.52 0 011.840 1.24 2.56 2.56 0 003.5 1 2.56 2.56 0 01.76-1.61c-2.67-.3-5.470-1.33-5.47-5.93a4.64 4.64 0 011.24-3.22 4.3 4.3 0 01.12-3.18s1-.33 3.3 1.23a11.38 11.38 0 016 0c2.28-1.56 3.29-1.23 3.29-1.23a4.3 4.3 0 01.12 3.18 4.64 4.64 0 011.23 3.22c0 4.61-2.8 5.63-5.48 5.92a2.87 2.87 0 01.82 2.23v3.29c0 .32.21.7.82.58A12 12 0 0012 .3"></path></svg>github</a>
+<a href="https://www.linkedin.com/in/andrew-vu23/" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;width:214px;height:34px;padding:0 16px;margin-left:0px;background-color:#8b4a36;background-image:linear-gradient(180deg,rgba(255,255,255,.1),rgba(0,0,0,.18));color:#f1e8d4;border-radius:2px 4px 4px 2px;font-size:14px;letter-spacing:.12em;font-variant:small-caps;transition:transform .2s ease;" style-hover="transform:translateX(10px);color:#f1e8d4;"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.34V9h3.41v1.56h.05a3.74 3.74 0 013.37-1.85c3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 11-.01-4.13 2.06 2.06 0 01.01 4.13zm1.78 13.02H3.56V9h3.56v11.45zM22.22 0H1.77A1.75 1.75 0 000 1.73v20.54A1.75 1.75 0 001.77 24h20.45A1.76 1.76 0 0024 22.27V1.73A1.76 1.76 0 0022.22 0z"></path></svg>linkedin</a>
+<a href="KietVu_CV.pdf" target="_blank" rel="noopener" style="display:flex;align-items:center;gap:10px;width:204px;height:40px;padding:0 16px;margin-left:3px;background-color:#d8cbae;background-image:linear-gradient(180deg,rgba(255,255,255,.1),rgba(0,0,0,.18));color:#2b2419;border-radius:2px 4px 4px 2px;font-size:14px;letter-spacing:.12em;font-variant:small-caps;transition:transform .2s ease;" style-hover="transform:translateX(10px);color:#2b2419;"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="3" width="14" height="18" rx="1"></rect></svg>resume</a>
+          </div>
+        </div>
+        <div style="height:20px;background:#8a6a48;background-image:linear-gradient(180deg,rgba(255,255,255,.14),rgba(0,0,0,.12));border-radius:2px;box-shadow:0 20px 30px -16px rgba(60,40,15,.55);"></div>
+        <div style="height:6px;margin:0 6px;background:#5e4329;border-radius:0 0 3px 3px;"></div>
+      </div>
+    </div>
+  </main>
+
+  <div data-overlay="" onClick="{{ overlayClick }}" style="position:fixed;inset:0;z-index:50;display:none;opacity:0;transition:opacity .35s ease;background:rgba(58,42,22,.6);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);flex-direction:column;align-items:center;justify-content:center;gap:22px;">
+    <div data-stagebox="" style="position:relative;width:880px;height:600px;">
+      <div data-keep="" style="position:absolute;top:0;left:0;width:880px;height:600px;transform-origin:top left;">
+        <div data-pop="" style="position:absolute;inset:0;">
+          <div data-wrap="" onClick="{{ bookClick }}" style="position:absolute;inset:0;transform:translateX(-220px);">
+<div data-edge="l" style="position:absolute;top:5px;bottom:5px;right:100%;width:0;background:repeating-linear-gradient(90deg,#f6efdf 0 1.5px,#d4c5a3 1.5px 2.5px);border-radius:4px 0 0 4px;box-shadow:-4px 10px 18px -8px rgba(40,25,5,.45);"></div>
+<div data-edge="r" style="position:absolute;top:5px;bottom:5px;left:100%;width:0;background:repeating-linear-gradient(90deg,#d4c5a3 0 1px,#f6efdf 1px 2.5px);border-radius:0 4px 4px 0;box-shadow:4px 10px 18px -8px rgba(40,25,5,.45);"></div>
+<div data-book="about" style="display:none;position:absolute;inset:0;">
+<div style="position:absolute;top:0;left:50%;width:50%;height:100%;z-index:1;"><div data-face="r" style="position:absolute;inset:0;background:#fbf6ea;background-image:linear-gradient(90deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:0 4px 4px 0;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 46px 54px 52px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">about</span>
+<p style="font-size:12.5px;letter-spacing:.14em;font-variant:small-caps;color:#8b4a36;margin-bottom:6px;">Quirks</p><p style="font-size:14.5px;line-height:1.6;color:#2b2419;text-wrap:pretty;margin-bottom:14px;">I prefix my repos with <em>HOMEMADE-</em> because that is literally what they are: no templates, no IP catalog shortcuts, my own microarchitecture every time. Downside: I think in state machines now. Probably not healthy.</p><div style="height:10px"></div><p style="font-size:12.5px;letter-spacing:.14em;font-variant:small-caps;color:#8b4a36;margin-bottom:6px;">Motivation</p><p style="font-size:14.5px;line-height:1.6;color:#2b2419;text-wrap:pretty;margin-bottom:14px;">Long term: work on real silicon at a company whose chips people actually run, travel a lot, and stop being afraid of tipping. Short term: survive coursework while doing all of these side quests.</p>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">4</span>
+</div></div>
+<div data-leaf="" style="position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transform:perspective(2400px) rotateY(0deg);">
+<div data-face="c" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background-color:#8b4a36;background-image:linear-gradient(90deg,rgba(0,0,0,.3),rgba(255,255,255,.08) 3%,rgba(0,0,0,0) 8%),radial-gradient(ellipse at 70% 30%,rgba(255,255,255,.07),rgba(0,0,0,.12));color:#f1e8d4;border-radius:2px 6px 6px 2px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:70px 56px;display:flex;flex-direction:column;align-items:center;text-align:center;">
+<div style="position:absolute;inset:22px 22px 22px 30px;border:1px solid #f1e8d4;opacity:.55;"></div>
+<p style="font-size:13px;letter-spacing:.3em;font-variant:small-caps;margin-top:30px;">volume i</p>
+<h2 style="font-family:'EB Garamond',serif;font-size:40px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;line-height:1.15;margin-top:auto;">About</h2>
+<p style="font-size:15px;font-style:italic;opacity:.9;margin-top:10px;">who, where from, and why chips</p>
+<p style="margin-top:auto;margin-bottom:24px;font-size:12px;letter-spacing:.3em;font-variant:small-caps;">kiet vu</p>
+</div>
+<div data-face="l" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#fbf6ea;background-image:linear-gradient(270deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:4px 0 0 4px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 52px 54px 46px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">about</span>
+<div style="width:100%;height:240px;overflow:hidden;background:#e9dfc9;margin:6px 0 22px;box-shadow:0 0 0 6px #fff, 0 2px 10px rgba(40,25,5,.25);"><img src="profile.jpg" alt="Kiet Vu" style="width:100%;height:100%;object-fit:cover;display:block;filter:sepia(.18) contrast(.96);"></div><h3 style="font-family:'EB Garamond',serif;font-size:34px;font-weight:400;font-style:italic;line-height:1.1;margin-bottom:10px;">Kiet Vu</h3><p style="font-size:15px;color:#5f5444;line-height:1.55;">Computer Engineering, Purdue ’28 · GPA 3.93<br>Computer architecture: GPUs, processors, memory systems.</p><p style="font-size:14px;font-style:italic;color:#8b4a36;margin-top:auto;">Currently seeking summer 2027 internships.</p>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">1</span>
+</div>
+</div>
+<div data-leaf="" style="position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transform:perspective(2400px) rotateY(0deg);">
+<div data-face="r" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#fbf6ea;background-image:linear-gradient(90deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:0 4px 4px 0;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 46px 54px 52px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">about</span>
+<p style="font-size:16.5px;line-height:1.65;color:#2b2419;text-wrap:pretty;margin-top:14px;"><span style="float:left;font-family:'EB Garamond',serif;font-size:64px;line-height:.8;margin:6px 8px 0 0;color:#8b4a36;">I</span>'m currently a sophomore at Purdue. I love understanding how machines and processors actually work. My work revolves around exploring and modeling different architectures, from building a RV32I CPU from scratch to modifying memory systems in the most cited GPU simulator.</p><div style="height:1px;background:rgba(43,36,25,.16);margin:18px 0;"></div><p style="font-size:14px;color:#5f5444;line-height:1.7;"><span style="font-variant:small-caps;letter-spacing:.08em;color:#9a8d76;">focus</span> — computer architecture, GPU microarchitecture, RTL<br><span style="font-variant:small-caps;letter-spacing:.08em;color:#9a8d76;">tools</span> — SystemVerilog, Accel-Sim, LibreLane, CUDA, C++</p><div style="display:flex;gap:18px;flex-wrap:wrap;font-size:14px;font-style:italic;margin-top:auto;padding-top:14px;"><a href="KietVu_CV.pdf" target="_blank" rel="noopener">Resume</a><a href="mailto:vu89@purdue.edu">vu89@purdue.edu</a></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">2</span>
+</div>
+<div data-face="l" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#fbf6ea;background-image:linear-gradient(270deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:4px 0 0 4px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 52px 54px 46px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">about</span>
+<p style="font-size:12.5px;letter-spacing:.14em;font-variant:small-caps;color:#8b4a36;margin-bottom:6px;">Origin</p><p style="font-size:14.5px;line-height:1.6;color:#2b2419;text-wrap:pretty;margin-bottom:14px;">Born and raised in <em>Vietnam</em>, moved to the US for college. I picked Purdue because it is a good engineering school, not because I knew what I wanted to do. No regrets. Also, learning about US tip culture is why I have barely eaten out since my first semester.</p><div style="height:10px"></div><p style="font-size:12.5px;letter-spacing:.14em;font-variant:small-caps;color:#8b4a36;margin-bottom:6px;">Hardware</p><p style="font-size:14.5px;line-height:1.6;color:#2b2419;text-wrap:pretty;margin-bottom:14px;">Everyone around me just said <em>“get into semiconductor”</em>, which I barely understood. Freshman year was a wander through board-level PCB design, RFIC, analog. Then over winter break I installed <em>XSchem</em>, tinkered for a week, and decided I would never touch analog again. Picked up Harris &amp; Harris instead. The rest is history.</p>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">3</span>
+</div>
+</div>
+</div>
+<div data-book="projects" style="display:none;position:absolute;inset:0;">
+<div style="position:absolute;top:0;left:50%;width:50%;height:100%;z-index:1;"><div data-face="r" style="position:absolute;inset:0;background:#fbf6ea;background-image:linear-gradient(90deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:0 4px 4px 0;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 46px 54px 52px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">projects</span>
+<div style="margin:auto 0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;"><p style="font-family:'EB Garamond',serif;font-style:italic;font-size:30px;color:#5f5444;">fin.</p><p style="font-size:15px;font-style:italic;color:#5f5444;max-width:30ch;line-height:1.5;">Smaller experiments, and everything prefixed HOMEMADE-, live on GitHub.</p><a href="https://github.com/AndrewVu23" target="_blank" rel="noopener" style="font-size:15px;font-style:italic;">github.com/AndrewVu23</a></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">8</span>
+</div></div>
+<div data-leaf="" style="position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transform:perspective(2400px) rotateY(0deg);">
+<div data-face="c" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background-color:#d8cbae;background-image:linear-gradient(90deg,rgba(0,0,0,.3),rgba(255,255,255,.08) 3%,rgba(0,0,0,0) 8%),radial-gradient(ellipse at 70% 30%,rgba(255,255,255,.07),rgba(0,0,0,.12));color:#2b2419;border-radius:2px 6px 6px 2px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:70px 56px;display:flex;flex-direction:column;align-items:center;text-align:center;">
+<div style="position:absolute;inset:22px 22px 22px 30px;border:1px solid #2b2419;opacity:.55;"></div>
+<p style="font-size:13px;letter-spacing:.3em;font-variant:small-caps;margin-top:30px;">volume ii</p>
+<h2 style="font-family:'EB Garamond',serif;font-size:40px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;line-height:1.15;margin-top:auto;">Projects</h2>
+<p style="font-size:15px;font-style:italic;opacity:.9;margin-top:10px;">silicon, simulation, and systems</p>
+<p style="margin-top:auto;margin-bottom:24px;font-size:12px;letter-spacing:.3em;font-variant:small-caps;">kiet vu</p>
+</div>
+<div data-face="l" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#fbf6ea;background-image:linear-gradient(270deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:4px 0 0 4px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 52px 54px 46px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">projects</span>
+<h3 style="font-family:'EB Garamond',serif;font-size:40px;font-weight:400;font-style:italic;line-height:1.1;color:#2b2419;margin:10px 0 28px;">Projects</h3><div style="display:flex;flex-direction:column;gap:2px;"><button data-goto="0" style="display:flex;align-items:baseline;gap:8px;background:none;border:none;padding:8px 0;font-family:inherit;font-size:15px;color:#2b2419;cursor:pointer;text-align:left;" style-hover="color:#8b4a36;"><span>GPU Microarchitecture Research</span><span style="flex:1;border-bottom:1px dotted rgba(43,36,25,.35);transform:translateY(-4px);"></span><span style="color:#9a8d76;">2</span></button><button data-goto="1" style="display:flex;align-items:baseline;gap:8px;background:none;border:none;padding:8px 0;font-family:inherit;font-size:15px;color:#2b2419;cursor:pointer;text-align:left;" style-hover="color:#8b4a36;"><span>32-bit RISC-V Pipelined Processor</span><span style="flex:1;border-bottom:1px dotted rgba(43,36,25,.35);transform:translateY(-4px);"></span><span style="color:#9a8d76;">3</span></button><button data-goto="1" style="display:flex;align-items:baseline;gap:8px;background:none;border:none;padding:8px 0;font-family:inherit;font-size:15px;color:#2b2419;cursor:pointer;text-align:left;" style-hover="color:#8b4a36;"><span>KV-PIMple</span><span style="flex:1;border-bottom:1px dotted rgba(43,36,25,.35);transform:translateY(-4px);"></span><span style="color:#9a8d76;">4</span></button><button data-goto="2" style="display:flex;align-items:baseline;gap:8px;background:none;border:none;padding:8px 0;font-family:inherit;font-size:15px;color:#2b2419;cursor:pointer;text-align:left;" style-hover="color:#8b4a36;"><span>ASIC Reverse Engineering</span><span style="flex:1;border-bottom:1px dotted rgba(43,36,25,.35);transform:translateY(-4px);"></span><span style="color:#9a8d76;">5</span></button><button data-goto="2" style="display:flex;align-items:baseline;gap:8px;background:none;border:none;padding:8px 0;font-family:inherit;font-size:15px;color:#2b2419;cursor:pointer;text-align:left;" style-hover="color:#8b4a36;"><span>Cache Simulator</span><span style="flex:1;border-bottom:1px dotted rgba(43,36,25,.35);transform:translateY(-4px);"></span><span style="color:#9a8d76;">6</span></button><button data-goto="3" style="display:flex;align-items:baseline;gap:8px;background:none;border:none;padding:8px 0;font-family:inherit;font-size:15px;color:#2b2419;cursor:pointer;text-align:left;" style-hover="color:#8b4a36;"><span>Homemade Digital Components</span><span style="flex:1;border-bottom:1px dotted rgba(43,36,25,.35);transform:translateY(-4px);"></span><span style="color:#9a8d76;">7</span></button></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">1</span>
+</div>
+</div>
+<div data-leaf="" style="position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transform:perspective(2400px) rotateY(0deg);">
+<div data-face="r" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#fbf6ea;background-image:linear-gradient(90deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:0 4px 4px 0;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 46px 54px 52px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">projects</span>
+<h4 style="font-size:25px;font-weight:500;font-style:italic;line-height:1.15;color:#2b2419;margin-bottom:6px;text-wrap:balance;">GPU Microarchitecture Research</h4><p style="font-size:12.5px;letter-spacing:.06em;font-variant:small-caps;color:#9a8d76;margin-bottom:14px;">accel-sim · cuda · nsight · ptx/sass &nbsp;—&nbsp; jul – aug 2026</p><div style="display:flex;flex-direction:column;gap:9px;"><p style="display:flex;gap:10px;font-size:12.8px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Restored PTX-mode simulation on all CUDA 11+ toolchains by fixing an Accel-Sim/GPGPU-Sim parser bug, and added an L2 write-hit counter comparable to NVIDIA’s profiler; both merged upstream</span></p><p style="display:flex;gap:10px;font-size:12.8px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Root-caused a SIGSEGV in the FP64 pipeline model (out-of-bounds index when a functional unit’s initiation interval exceeds its latency) and fixed a correlation bug that mis-attributed local-memory traffic, cutting L2 write error on one benchmark from -94.0% to +2.6%</span></p><p style="display:flex;gap:10px;font-size:12.8px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Investigated an unmodeled 4x over-count in L1-to-L2 write traffic; built a microbenchmark to confirm the merging mechanism; prototyped a merge buffer, reducing mean L2 write error from 19.48% to 2.40% and L2 write-hit error from 19.10% to 2.33% across 32 benchmarks, with 19 benchmarks bit-identical and worst collateral change -0.2%</span></p></div><div style="display:flex;gap:18px;flex-wrap:wrap;font-size:14px;font-style:italic;margin-top:auto;padding-top:14px;"><a href="GPU Research.dc.html">Read the write-up</a><a href="https://github.com/accel-sim/gpgpu-sim_distribution" target="_blank" rel="noopener">Upstream repo</a></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">2</span>
+</div>
+<div data-face="l" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#fbf6ea;background-image:linear-gradient(270deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:4px 0 0 4px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 52px 54px 46px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">projects</span>
+<h4 style="font-size:25px;font-weight:500;font-style:italic;line-height:1.15;color:#2b2419;margin-bottom:6px;text-wrap:balance;">32-bit RISC-V Pipelined Processor</h4><p style="font-size:12.5px;letter-spacing:.06em;font-variant:small-caps;color:#9a8d76;margin-bottom:14px;">systemverilog · computer architecture &nbsp;—&nbsp; feb – mar 2026</p><div style="display:flex;flex-direction:column;gap:9px;"><p style="display:flex;gap:10px;font-size:14px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Architected a 5-stage pipelined RV32I processor using Harvard memory architecture with a Hazard Control Unit; supported the complete base integer instruction set, achieving 100% architectural compliance via the RISCOF framework by co-simulating against Spike reference model</span></p><p style="display:flex;gap:10px;font-size:14px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Synthesized the core targeting the Sky130 node via LibreLane to generate a verified GDSII layout; optimized PPA trade-offs using high-speed standard cells to achieve a peak frequency of 95.2 MHz (0.551 mm²), alongside a high-density variant reaching 58.8 MHz (0.427 mm²), both with clean STA and LVS signoffs</span></p></div><div style="display:flex;gap:18px;flex-wrap:wrap;font-size:14px;font-style:italic;margin-top:auto;padding-top:14px;"><a href="RISC-V Core.dc.html">Read the write-up</a><a href="https://github.com/AndrewVu23/HOMEMADE-5-STAGE-PIPELINED-RISC-V" target="_blank" rel="noopener">GitHub</a></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">3</span>
+</div>
+</div>
+<div data-leaf="" style="position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transform:perspective(2400px) rotateY(0deg);">
+<div data-face="r" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#fbf6ea;background-image:linear-gradient(90deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:0 4px 4px 0;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 46px 54px 52px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">projects</span>
+<h4 style="font-size:25px;font-weight:500;font-style:italic;line-height:1.15;color:#2b2419;margin-bottom:6px;text-wrap:balance;">KV-PIMple</h4><p style="font-size:12.5px;letter-spacing:.06em;font-variant:small-caps;color:#9a8d76;margin-bottom:14px;">pim-aware kv-allocation for llm decode · hbm · pim · ai systems &nbsp;—&nbsp; sep 2026</p><div style="display:flex;flex-direction:column;gap:9px;"><p style="display:flex;gap:10px;font-size:12.4px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Discovered the DRAM row alignment that paged KV-cache allocation destroys for processing-in-memory (PIM) attention, raising simulated all-bank row-hit rate from 0.77 to 0.96, and modeled effective PIM bandwidth 2.3× at vLLM’s standard 16-token block by designing an allocator that fills one geometry-derived region</span></p><p style="display:flex;gap:10px;font-size:12.4px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Built a simulator of continuous-batching LLM decode, porting vLLM v0.2.7’s block allocator and covering four workloads: preempt-by-recompute, speculative decoding and MQA/GQA/MHA shapes; Verified with 85 tests including five validation gates (best/worst-case anchors, monotonicity, determinism, block conservation)</span></p><p style="display:flex;gap:10px;font-size:12.4px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Established the model’s credibility against two external cycle-level DRAM simulators by replaying its own block tables through Ramulator 2 and AttAcc’s all-bank PIM extension: placement agreed to 0.0023 mean row-hit across 9 samples on Ramulator, while timing is 1.4× more on AttAcc due to differences in policy assumption</span></p></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">4</span>
+</div>
+<div data-face="l" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#fbf6ea;background-image:linear-gradient(270deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:4px 0 0 4px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 52px 54px 46px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">projects</span>
+<h4 style="font-size:25px;font-weight:500;font-style:italic;line-height:1.15;color:#2b2419;margin-bottom:6px;text-wrap:balance;">ASIC Reverse Engineering</h4><p style="font-size:12.5px;letter-spacing:.06em;font-variant:small-caps;color:#9a8d76;margin-bottom:14px;">verilog · formal verification · rtl-to-gds &nbsp;—&nbsp; aug 2026</p><div style="display:flex;flex-direction:column;gap:9px;"><p style="display:flex;gap:10px;font-size:14px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Jane Street ASIC challenge. Built a GDSII parser and cycle-accurate gate-level simulator against Sky130 behavioral models, recovered the full schematic architecture, and replayed waveforms bit-exact for 312 cycles across 9 outputs.</span></p><p style="display:flex;gap:10px;font-size:14px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Reimplemented it in SystemVerilog, closed it at 12 ns with zero DRC/LVS/antenna violations, and proved equivalence with a Yosys SAT miter over a 145-cycle unrolling.</span></p></div><p style="font-size:14px;font-style:italic;color:#9a8d76;margin-top:auto;">Write-up on request.</p>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">5</span>
+</div>
+</div>
+<div data-leaf="" style="position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transform:perspective(2400px) rotateY(0deg);">
+<div data-face="r" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#fbf6ea;background-image:linear-gradient(90deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:0 4px 4px 0;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 46px 54px 52px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">projects</span>
+<h4 style="font-size:25px;font-weight:500;font-style:italic;line-height:1.15;color:#2b2419;margin-bottom:6px;text-wrap:balance;">Cache Simulator</h4><p style="font-size:12.5px;letter-spacing:.06em;font-variant:small-caps;color:#9a8d76;margin-bottom:14px;">c++ · doctest · matplotlib &nbsp;—&nbsp; jun 2026</p><div style="display:flex;flex-direction:column;gap:9px;"><p style="display:flex;gap:10px;font-size:14px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Configurable single-level cache model: set count, associativity, line size, four write policies, and pluggable replacement (LRU, FIFO, tree-PLRU, random) behind one interface.</span></p><p style="display:flex;gap:10px;font-size:14px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">3C’s miss classification, AMAT profiling, and a design-space sweep that emits CSV for the plots.</span></p></div><div style="display:flex;gap:18px;flex-wrap:wrap;font-size:14px;font-style:italic;margin-top:auto;padding-top:14px;"><a href="Cache Simulator.dc.html">Read the write-up</a></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">6</span>
+</div>
+<div data-face="l" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#fbf6ea;background-image:linear-gradient(270deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:4px 0 0 4px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 52px 54px 46px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">projects</span>
+<h4 style="font-size:25px;font-weight:500;font-style:italic;line-height:1.15;color:#2b2419;margin-bottom:6px;text-wrap:balance;">Homemade Digital Components</h4><p style="font-size:12.5px;letter-spacing:.06em;font-variant:small-caps;color:#9a8d76;margin-bottom:14px;">systemverilog &nbsp;—&nbsp; feb 2026 – present</p><div style="display:flex;flex-direction:column;gap:9px;"><p style="display:flex;gap:10px;font-size:14px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">One repo for the standalone RTL blocks: a radix-4 Booth multiplier with Wallace tree reduction, a 4-bank direct-mapped cache, an 8-bit UART transceiver, and the smaller datapath pieces they share.</span></p></div><div style="display:flex;gap:18px;flex-wrap:wrap;font-size:14px;font-style:italic;margin-top:auto;padding-top:14px;"><a href="https://github.com/AndrewVu23/HOMEMADE-DIGITAL-COMPONENTS/tree/main" target="_blank" rel="noopener">GitHub</a></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">7</span>
+</div>
+</div>
+</div>
+<div data-book="experience" style="display:none;position:absolute;inset:0;">
+<div style="position:absolute;top:0;left:50%;width:50%;height:100%;z-index:1;"><div data-face="r" style="position:absolute;inset:0;background:#fbf6ea;background-image:linear-gradient(90deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:0 4px 4px 0;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 46px 54px 52px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">experience</span>
+<div style="margin:auto 0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;"><p style="font-family:'EB Garamond',serif;font-style:italic;font-size:30px;color:#5f5444;">fin.</p><p style="font-size:15px;font-style:italic;color:#5f5444;max-width:30ch;line-height:1.5;">The full record, on one page.</p><a href="KietVu_CV.pdf" target="_blank" style="font-size:15px;font-style:italic;">Download the resume</a></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">6</span>
+</div></div>
+<div data-leaf="" style="position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transform:perspective(2400px) rotateY(0deg);">
+<div data-face="c" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background-color:#34302a;background-image:linear-gradient(90deg,rgba(0,0,0,.3),rgba(255,255,255,.08) 3%,rgba(0,0,0,0) 8%),radial-gradient(ellipse at 70% 30%,rgba(255,255,255,.07),rgba(0,0,0,.12));color:#f1e8d4;border-radius:2px 6px 6px 2px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:70px 56px;display:flex;flex-direction:column;align-items:center;text-align:center;">
+<div style="position:absolute;inset:22px 22px 22px 30px;border:1px solid #f1e8d4;opacity:.55;"></div>
+<p style="font-size:13px;letter-spacing:.3em;font-variant:small-caps;margin-top:30px;">volume iii</p>
+<h2 style="font-family:'EB Garamond',serif;font-size:40px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;line-height:1.15;margin-top:auto;">Experience</h2>
+<p style="font-size:15px;font-style:italic;opacity:.9;margin-top:10px;">research, teams, and the lab bench</p>
+<p style="margin-top:auto;margin-bottom:24px;font-size:12px;letter-spacing:.3em;font-variant:small-caps;">kiet vu</p>
+</div>
+<div data-face="l" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#fbf6ea;background-image:linear-gradient(270deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:4px 0 0 4px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 52px 54px 46px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">experience</span>
+<h3 style="font-family:'EB Garamond',serif;font-size:40px;font-weight:400;font-style:italic;line-height:1.1;color:#2b2419;margin:10px 0 28px;">Experience</h3><div style="display:flex;flex-direction:column;gap:2px;"><button data-goto="0" style="display:flex;align-items:baseline;gap:8px;background:none;border:none;padding:8px 0;font-family:inherit;font-size:15px;color:#2b2419;cursor:pointer;text-align:left;" style-hover="color:#8b4a36;"><span>Purdue SoCET — GPU Team</span><span style="flex:1;border-bottom:1px dotted rgba(43,36,25,.35);transform:translateY(-4px);"></span><span style="color:#9a8d76;">2</span></button><button data-goto="1" style="display:flex;align-items:baseline;gap:8px;background:none;border:none;padding:8px 0;font-family:inherit;font-size:15px;color:#2b2419;cursor:pointer;text-align:left;" style-hover="color:#8b4a36;"><span>Purdue EPICS</span><span style="flex:1;border-bottom:1px dotted rgba(43,36,25,.35);transform:translateY(-4px);"></span><span style="color:#9a8d76;">3</span></button><button data-goto="1" style="display:flex;align-items:baseline;gap:8px;background:none;border:none;padding:8px 0;font-family:inherit;font-size:15px;color:#2b2419;cursor:pointer;text-align:left;" style-hover="color:#8b4a36;"><span>Purdue RoboMaster</span><span style="flex:1;border-bottom:1px dotted rgba(43,36,25,.35);transform:translateY(-4px);"></span><span style="color:#9a8d76;">4</span></button><button data-goto="2" style="display:flex;align-items:baseline;gap:8px;background:none;border:none;padding:8px 0;font-family:inherit;font-size:15px;color:#2b2419;cursor:pointer;text-align:left;" style-hover="color:#8b4a36;"><span>Education</span><span style="flex:1;border-bottom:1px dotted rgba(43,36,25,.35);transform:translateY(-4px);"></span><span style="color:#9a8d76;">5</span></button></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">1</span>
+</div>
+</div>
+<div data-leaf="" style="position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transform:perspective(2400px) rotateY(0deg);">
+<div data-face="r" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#fbf6ea;background-image:linear-gradient(90deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:0 4px 4px 0;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 46px 54px 52px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">experience</span>
+<p style="font-size:12.5px;letter-spacing:.06em;font-variant:small-caps;color:#9a8d76;margin-bottom:14px;">aug 2026 – present</p><h4 style="font-size:23px;font-weight:500;font-style:italic;line-height:1.15;color:#2b2419;margin-bottom:6px;text-wrap:balance;">Purdue System-on-Chip Extension Technologies (SoCET) GPU Team</h4><p style="font-size:14px;font-style:italic;color:#5f5444;margin-bottom:18px;">Undergraduate Researcher · West Lafayette, IN</p><div style="display:flex;flex-direction:column;gap:9px;"><p style="display:flex;gap:10px;font-size:13.8px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Architected the Ethernet RX datapath for a fixed-function GPU on DE2-115; derived specs from IEEE 802.3, produced RTL block diagrams and state machines for frame detection, CRC-32 validation, address filtering, and CDC buffering</span></p><p style="display:flex;gap:10px;font-size:13.8px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Designed a custom host-to-GPU command protocol over raw Ethernet with register-write and vertex-stream</span></p></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">2</span>
+</div>
+<div data-face="l" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#fbf6ea;background-image:linear-gradient(270deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:4px 0 0 4px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 52px 54px 46px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">experience</span>
+<p style="font-size:12.5px;letter-spacing:.06em;font-variant:small-caps;color:#9a8d76;margin-bottom:14px;">aug 2025 – may 2026</p><h4 style="font-size:23px;font-weight:500;font-style:italic;line-height:1.15;color:#2b2419;margin-bottom:6px;text-wrap:balance;">Purdue EPICS Harnessing Data Revolution</h4><p style="font-size:14px;font-style:italic;color:#5f5444;margin-bottom:18px;">Undergraduate Researcher · West Lafayette, IN</p><div style="display:flex;flex-direction:column;gap:9px;"><p style="display:flex;gap:10px;font-size:13.8px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Refactored multiple legacy data source modules to standardized abstract base class architecture, implementing consistent data pipeline, improving maintainability and code reusability</span></p><p style="display:flex;gap:10px;font-size:13.8px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Eliminating NULL overwrites and integrating 1,800+ historical records into SQLite; centralized configuration consolidating 59 SQL field mappings, 1,000+ station IDs, and 7 database schemas across 7 data sources for 53+ monitoring locations</span></p></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">3</span>
+</div>
+</div>
+<div data-leaf="" style="position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transform:perspective(2400px) rotateY(0deg);">
+<div data-face="r" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#fbf6ea;background-image:linear-gradient(90deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:0 4px 4px 0;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 46px 54px 52px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">experience</span>
+<p style="font-size:12.5px;letter-spacing:.06em;font-variant:small-caps;color:#9a8d76;margin-bottom:14px;">aug 2025 – may 2026</p><h4 style="font-size:23px;font-weight:500;font-style:italic;line-height:1.15;color:#2b2419;margin-bottom:6px;text-wrap:balance;">Purdue RoboMaster</h4><p style="font-size:14px;font-style:italic;color:#5f5444;margin-bottom:18px;">Extracurricular · PCB, Robotics, Engineering</p><div style="display:flex;flex-direction:column;gap:9px;"><p style="display:flex;gap:10px;font-size:13.8px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Engineered custom PCBs for a rechargeable armor power system and fluorescent projectile charger, integrating TP4056 chargers, TPS63002 buck-boost converters, ESP32 monitoring, and MOSFET/Zener-based battery protection</span></p><p style="display:flex;gap:10px;font-size:13.8px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Engineered an audio visualizer circuit, amplifying a microphone signal by 45x with a cascaded LM358 op-amp and driving a 10-segment LED display with an LM3915 IC</span></p></div><div style="display:flex;gap:18px;flex-wrap:wrap;font-size:14px;font-style:italic;margin-top:auto;padding-top:14px;"><a href="RoboMaster Boards.dc.html">Read the board write-up</a></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">4</span>
+</div>
+<div data-face="l" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#fbf6ea;background-image:linear-gradient(270deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:4px 0 0 4px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 52px 54px 46px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">experience</span>
+<p style="font-size:12.5px;letter-spacing:.06em;font-variant:small-caps;color:#9a8d76;margin-bottom:14px;">expected dec 2028</p><h4 style="font-size:23px;font-weight:500;font-style:italic;line-height:1.15;color:#2b2419;margin-bottom:6px;text-wrap:balance;">Purdue University</h4><p style="font-size:14px;font-style:italic;color:#5f5444;margin-bottom:18px;">B.Sc. in Computer Engineering · West Lafayette, IN</p><div style="display:flex;flex-direction:column;gap:9px;"><p style="display:flex;gap:10px;font-size:13.8px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">GPA: 3.93/4.0</span></p><p style="display:flex;gap:10px;font-size:13.8px;line-height:1.5;color:#2b2419;"><span style="color:#8b4a36;flex-shrink:0;">•</span><span style="text-wrap:pretty;">Expected Coursework: ASIC Design Laboratory, Microprocessor Systems and Interfacing, Computer Design and Prototyping, Semiconductor Devices, Advanced C Programming</span></p></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">5</span>
+</div>
+</div>
+</div>
+<div data-book="diary" style="display:none;position:absolute;inset:0;">
+<div style="position:absolute;top:0;left:50%;width:50%;height:100%;z-index:1;"><div data-face="r" style="position:absolute;inset:0;background:#fbf6ea;background-image:linear-gradient(90deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:0 4px 4px 0;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 46px 54px 52px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">diary</span>
+<div style="margin:auto 0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:14px;"><p style="font-family:'EB Garamond',serif;font-style:italic;font-size:30px;color:#5f5444;">fin.</p><p style="font-size:15px;font-style:italic;color:#5f5444;max-width:30ch;line-height:1.5;">To be continued.</p></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">6</span>
+</div></div>
+<div data-leaf="" style="position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transform:perspective(2400px) rotateY(0deg);">
+<div data-face="c" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background-color:#d8cbae;background-image:linear-gradient(90deg,rgba(0,0,0,.3),rgba(255,255,255,.08) 3%,rgba(0,0,0,0) 8%),radial-gradient(ellipse at 70% 30%,rgba(255,255,255,.07),rgba(0,0,0,.12));color:#2b2419;border-radius:2px 6px 6px 2px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:70px 56px;display:flex;flex-direction:column;align-items:center;text-align:center;">
+<div style="position:absolute;inset:22px 22px 22px 30px;border:1px solid #2b2419;opacity:.55;"></div>
+<p style="font-size:13px;letter-spacing:.3em;font-variant:small-caps;margin-top:30px;">volume iv</p>
+<h2 style="font-family:'EB Garamond',serif;font-size:40px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;line-height:1.15;margin-top:auto;">Diary</h2>
+<p style="font-size:15px;font-style:italic;opacity:.9;margin-top:10px;">notes, semester by semester</p>
+<p style="margin-top:auto;margin-bottom:24px;font-size:12px;letter-spacing:.3em;font-variant:small-caps;">kiet vu</p>
+</div>
+<div data-face="l" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#fbf6ea;background-image:linear-gradient(270deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:4px 0 0 4px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 52px 54px 46px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">diary</span>
+<h3 style="font-family:'EB Garamond',serif;font-size:40px;font-weight:400;font-style:italic;line-height:1.1;color:#2b2419;margin:10px 0 28px;">Diary</h3><div style="display:flex;flex-direction:column;gap:2px;"><button data-goto="0" style="display:flex;align-items:baseline;gap:8px;background:none;border:none;padding:8px 0;font-family:inherit;font-size:15px;color:#2b2419;cursor:pointer;text-align:left;" style-hover="color:#8b4a36;"><span>Fall 2025 — First semester</span><span style="flex:1;border-bottom:1px dotted rgba(43,36,25,.35);transform:translateY(-4px);"></span><span style="color:#9a8d76;">2</span></button><button data-goto="1" style="display:flex;align-items:baseline;gap:8px;background:none;border:none;padding:8px 0;font-family:inherit;font-size:15px;color:#2b2419;cursor:pointer;text-align:left;" style-hover="color:#8b4a36;"><span>Spring 2026 — The core</span><span style="flex:1;border-bottom:1px dotted rgba(43,36,25,.35);transform:translateY(-4px);"></span><span style="color:#9a8d76;">3</span></button><button data-goto="1" style="display:flex;align-items:baseline;gap:8px;background:none;border:none;padding:8px 0;font-family:inherit;font-size:15px;color:#2b2419;cursor:pointer;text-align:left;" style-hover="color:#8b4a36;"><span>Summer 2026 — Simulators</span><span style="flex:1;border-bottom:1px dotted rgba(43,36,25,.35);transform:translateY(-4px);"></span><span style="color:#9a8d76;">4</span></button><button data-goto="2" style="display:flex;align-items:baseline;gap:8px;background:none;border:none;padding:8px 0;font-family:inherit;font-size:15px;color:#2b2419;cursor:pointer;text-align:left;" style-hover="color:#8b4a36;"><span>Fall 2026 — Now</span><span style="flex:1;border-bottom:1px dotted rgba(43,36,25,.35);transform:translateY(-4px);"></span><span style="color:#9a8d76;">5</span></button></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">1</span>
+</div>
+</div>
+<div data-leaf="" style="position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transform:perspective(2400px) rotateY(0deg);">
+<div data-face="r" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#fbf6ea;background-image:linear-gradient(90deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:0 4px 4px 0;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 46px 54px 52px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">diary</span>
+<p style="font-family:'EB Garamond',serif;font-style:italic;font-size:40px;color:#8b4a36;line-height:1;margin:6px 0 4px;">Fall 2025</p><p style="font-size:13px;letter-spacing:.14em;font-variant:small-caps;color:#9a8d76;margin-bottom:18px;">first semester</p><p style="font-size:15px;line-height:1.6;color:#2b2419;text-wrap:pretty;margin-bottom:14px;">Started my first semester at Purdue exploring board-level PCB design with RoboMaster, data pipelines and collection with EPICS, and a look at RFIC and analog with IEEE MTT-S. At this point I still had no clue about chip design.</p>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">2</span>
+</div>
+<div data-face="l" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#fbf6ea;background-image:linear-gradient(270deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:4px 0 0 4px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 52px 54px 46px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">diary</span>
+<p style="font-family:'EB Garamond',serif;font-style:italic;font-size:40px;color:#8b4a36;line-height:1;margin:6px 0 4px;">Spring 2026</p><p style="font-size:13px;letter-spacing:.14em;font-variant:small-caps;color:#9a8d76;margin-bottom:18px;">the core</p><p style="font-size:15px;line-height:1.6;color:#2b2419;text-wrap:pretty;margin-bottom:14px;">Through further exploring during winter break, I read DDCA by Harris &amp; Harris cover to cover, then built the RV32I pipeline in February and pushed it through LibreLane to a signed-off Sky130 layout by March. This marks the first start to my chip design journey.</p><p style="font-size:15px;line-height:1.6;color:#2b2419;text-wrap:pretty;margin-bottom:14px;">Apart from that, I also presented my research at the Spring Undergraduate Research Conference on my work at EPICS, which earned us the Presentation with Distinction award. This was my first ever research conference.</p>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">3</span>
+</div>
+</div>
+<div data-leaf="" style="position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transform:perspective(2400px) rotateY(0deg);">
+<div data-face="r" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:#fbf6ea;background-image:linear-gradient(90deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:0 4px 4px 0;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 46px 54px 52px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">diary</span>
+<p style="font-family:'EB Garamond',serif;font-style:italic;font-size:40px;color:#8b4a36;line-height:1;margin:6px 0 4px;">Summer 2026</p><p style="font-size:13px;letter-spacing:.14em;font-variant:small-caps;color:#9a8d76;margin-bottom:18px;">simulators</p><p style="font-size:15px;line-height:1.6;color:#2b2419;text-wrap:pretty;margin-bottom:14px;">With no internship secured, I tried to equip myself with more knowledge by writing a configurable cache simulator in C++ in June, before digging into Accel-Sim / GPGPU-Sim in July.</p><p style="font-size:15px;line-height:1.6;color:#2b2419;text-wrap:pretty;margin-bottom:14px;">Moreover, I also tackled the ASIC reverse engineering challenge by Jane Street, which taught me a lot about the whole chip design flow. The result is coming.</p>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">4</span>
+</div>
+<div data-face="l" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#fbf6ea;background-image:linear-gradient(270deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:4px 0 0 4px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 52px 54px 46px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">diary</span>
+<p style="font-family:'EB Garamond',serif;font-style:italic;font-size:40px;color:#8b4a36;line-height:1;margin:6px 0 4px;">Fall 2026</p><p style="font-size:13px;letter-spacing:.14em;font-variant:small-caps;color:#9a8d76;margin-bottom:18px;">now</p><p style="font-size:15px;line-height:1.6;color:#2b2419;text-wrap:pretty;margin-bottom:14px;">Right now, I'm working on the GPU subteam at SoCET, trying to explore the new version of Accel-Sim / GPGPU-Sim while trying to land a research position at AALP (the group that is maintaining this simulator).</p>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">5</span>
+</div>
+</div>
+</div>
+<div data-book="blog" style="display:none;position:absolute;inset:0;">
+<div style="position:absolute;top:0;left:50%;width:50%;height:100%;z-index:1;"><div data-face="r" style="position:absolute;inset:0;background:#fbf6ea;background-image:linear-gradient(90deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:0 4px 4px 0;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 46px 54px 52px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">blog</span>
+<div style="margin:auto 0;display:flex;flex-direction:column;align-items:center;text-align:center;gap:10px;"><p style="font-family:'EB Garamond',serif;font-style:italic;font-size:28px;color:#9a8d76;">blank pages</p><p style="font-size:15px;font-style:italic;color:#5f5444;">The simulation has not started yet. Check back soon.</p></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">2</span>
+</div></div>
+<div data-leaf="" style="position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transform:perspective(2400px) rotateY(0deg);">
+<div data-face="c" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background-color:#34302a;background-image:linear-gradient(90deg,rgba(0,0,0,.3),rgba(255,255,255,.08) 3%,rgba(0,0,0,0) 8%),radial-gradient(ellipse at 70% 30%,rgba(255,255,255,.07),rgba(0,0,0,.12));color:#f1e8d4;border-radius:2px 6px 6px 2px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:70px 56px;display:flex;flex-direction:column;align-items:center;text-align:center;">
+<div style="position:absolute;inset:22px 22px 22px 30px;border:1px solid #f1e8d4;opacity:.55;"></div>
+<p style="font-size:13px;letter-spacing:.3em;font-variant:small-caps;margin-top:30px;">volume v</p>
+<h2 style="font-family:'EB Garamond',serif;font-size:40px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;line-height:1.15;margin-top:auto;">Blog</h2>
+<p style="font-size:15px;font-style:italic;opacity:.9;margin-top:10px;">a simulation log</p>
+<p style="margin-top:auto;margin-bottom:24px;font-size:12px;letter-spacing:.3em;font-variant:small-caps;">kiet vu</p>
+</div>
+<div data-face="l" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#fbf6ea;background-image:linear-gradient(270deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:4px 0 0 4px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 52px 54px 46px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">blog</span>
+<h3 style="font-family:'EB Garamond',serif;font-size:40px;font-weight:400;font-style:italic;line-height:1.1;color:#2b2419;margin:10px 0 12px;">Simulation log</h3><p style="font-size:15px;font-style:italic;color:#5f5444;line-height:1.5;margin-bottom:26px;text-wrap:pretty;">Notes on computer architecture, RTL, and the things I break along the way.</p>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">1</span>
+</div>
+</div>
+</div>
+<div data-book="contact" style="display:none;position:absolute;inset:0;">
+<div style="position:absolute;top:0;left:50%;width:50%;height:100%;z-index:1;"><div data-face="r" style="position:absolute;inset:0;background:#fbf6ea;background-image:linear-gradient(90deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:0 4px 4px 0;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 46px 54px 52px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;cursor:default;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">contact</span>
+<form name="contact" method="POST" data-netlify="true" style="display:flex;flex-direction:column;gap:20px;flex:1;margin-top:8px;"><label style="display:flex;flex-direction:column;gap:6px;font-size:12.5px;letter-spacing:.12em;font-variant:small-caps;color:#9a8d76;">subject<input type="text" name="subject" placeholder="Re: collaboration" required="" style="font-family:inherit;font-size:15px;padding:6px 2px;background:transparent;border:none;border-bottom:1px solid rgba(43,36,25,.3);color:#2b2419;outline:none;letter-spacing:0;font-variant:normal;" style-focus="border-bottom-color:#8b4a36;"></label><label style="display:flex;flex-direction:column;gap:6px;font-size:12.5px;letter-spacing:.12em;font-variant:small-caps;color:#9a8d76;">email<input type="email" name="email" placeholder="you@example.com" required="" style="font-family:inherit;font-size:15px;padding:6px 2px;background:transparent;border:none;border-bottom:1px solid rgba(43,36,25,.3);color:#2b2419;outline:none;letter-spacing:0;font-variant:normal;" style-focus="border-bottom-color:#8b4a36;"></label><label style="flex:1;display:flex;flex-direction:column;gap:6px;font-size:12.5px;letter-spacing:.12em;font-variant:small-caps;color:#9a8d76;">message<textarea name="message" placeholder="Write here…" required="" style="flex:1;font-family:inherit;font-size:15px;padding:6px 2px;background:transparent;border:none;border-bottom:1px solid rgba(43,36,25,.3);color:#2b2419;outline:none;letter-spacing:0;font-variant:normal;resize:none;line-height:32px;background-image:repeating-linear-gradient(transparent 0 31px,rgba(43,36,25,.16) 31px 32px);border-bottom:none;"></textarea></label><button type="submit" style="align-self:flex-end;font-family:inherit;font-size:15px;font-style:italic;padding:8px 22px;background:#34302a;color:#f1e8d4;border:none;border-radius:2px;cursor:pointer;margin-bottom:6px;" style-hover="background:#8b4a36;">Send the letter</button></form>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">2</span>
+</div></div>
+<div data-leaf="" style="position:absolute;top:0;left:50%;width:50%;height:100%;transform-origin:left center;transform-style:preserve-3d;transform:perspective(2400px) rotateY(0deg);">
+<div data-face="c" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background-color:#8b4a36;background-image:linear-gradient(90deg,rgba(0,0,0,.3),rgba(255,255,255,.08) 3%,rgba(0,0,0,0) 8%),radial-gradient(ellipse at 70% 30%,rgba(255,255,255,.07),rgba(0,0,0,.12));color:#f1e8d4;border-radius:2px 6px 6px 2px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:70px 56px;display:flex;flex-direction:column;align-items:center;text-align:center;">
+<div style="position:absolute;inset:22px 22px 22px 30px;border:1px solid #f1e8d4;opacity:.55;"></div>
+<p style="font-size:13px;letter-spacing:.3em;font-variant:small-caps;margin-top:30px;">volume vi</p>
+<h2 style="font-family:'EB Garamond',serif;font-size:40px;font-weight:500;letter-spacing:.16em;text-transform:uppercase;line-height:1.15;margin-top:auto;">Contact</h2>
+<p style="font-size:15px;font-style:italic;opacity:.9;margin-top:10px;">say hi</p>
+<p style="margin-top:auto;margin-bottom:24px;font-size:12px;letter-spacing:.3em;font-variant:small-caps;">kiet vu</p>
+</div>
+<div data-face="l" style="position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;transform:rotateY(180deg);background:#fbf6ea;background-image:linear-gradient(270deg,rgba(90,65,30,.2),rgba(90,65,30,0) 9%);border-radius:4px 0 0 4px;box-shadow:0 22px 44px -14px rgba(40,25,5,.5);padding:56px 52px 54px 46px;display:flex;flex-direction:column;overflow:hidden;cursor:pointer;">
+<span style="position:absolute;top:22px;left:0;right:0;text-align:center;font-size:12px;letter-spacing:.16em;font-variant:small-caps;color:#9a8d76;">contact</span>
+<h3 style="font-family:'EB Garamond',serif;font-size:40px;font-weight:400;font-style:italic;line-height:1.1;color:#2b2419;margin:10px 0 12px;">Say hi</h3><p style="font-size:15px;font-style:italic;color:#5f5444;line-height:1.5;margin-bottom:26px;text-wrap:pretty;">I read every message. Drop me a line and I’ll get back to you.</p><div style="display:flex;flex-direction:column;border-top:1px solid rgba(43,36,25,.16);"><a href="mailto:vu89@purdue.edu" style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(43,36,25,.16);font-size:15px;color:#2b2419;" style-hover="color:#8b4a36;">Email<span style="font-style:italic;color:#5f5444;">vu89@purdue.edu</span></a><a href="https://github.com/AndrewVu23" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(43,36,25,.16);font-size:15px;color:#2b2419;" style-hover="color:#8b4a36;">GitHub<span style="font-style:italic;color:#5f5444;">AndrewVu23</span></a><a href="https://www.linkedin.com/in/andrew-vu23/" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(43,36,25,.16);font-size:15px;color:#2b2419;" style-hover="color:#8b4a36;">LinkedIn<span style="font-style:italic;color:#5f5444;">andrew-vu23</span></a><a href="KietVu_CV.pdf" target="_blank" rel="noopener" style="display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px solid rgba(43,36,25,.16);font-size:15px;color:#2b2419;" style-hover="color:#8b4a36;">Resume<span style="font-style:italic;color:#5f5444;">KietVu_CV.pdf</span></a></div>
+<span style="position:absolute;bottom:20px;left:0;right:0;text-align:center;font-size:12px;color:#9a8d76;">1</span>
+</div>
+</div>
+</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div data-keep="" style="display:flex;align-items:center;justify-content:center;flex-wrap:wrap;gap:8px;padding:0 12px;">
+      <button onClick="{{ prev }}" disabled="{{ noPrev }}" style="font-family:inherit;font-size:15px;font-style:italic;padding:7px 16px;border-radius:2px;border:1px solid rgba(243,233,210,.35);background:rgba(243,233,210,.08);color:#f3e9d2;cursor:pointer;opacity:{{ prevOpacity }};" style-hover="background:rgba(243,233,210,.18);">{{ prevText }}</button>
+      <span style="min-width:70px;text-align:center;font-size:15px;color:#e8dcc0;">{{ pageLabel }}</span>
+      <button onClick="{{ next }}" disabled="{{ noNext }}" style="font-family:inherit;font-size:15px;font-style:italic;padding:7px 16px;border-radius:2px;border:1px solid rgba(243,233,210,.35);background:rgba(243,233,210,.08);color:#f3e9d2;cursor:pointer;opacity:{{ nextOpacity }};" style-hover="background:rgba(243,233,210,.18);">next →</button>
+      <button onClick="{{ close }}" style="font-family:inherit;font-size:15px;font-style:italic;padding:7px 16px;border-radius:2px;border:1px solid rgba(243,233,210,.35);background:rgba(243,233,210,.08);color:#f3e9d2;cursor:pointer;margin-left:14px;background:transparent;" style-hover="background:rgba(243,233,210,.12);">{{ closeText }}</button>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;flipMs&quot;: {&quot;editor&quot;: &quot;range&quot;, &quot;default&quot;: 900, &quot;min&quot;: 400, &quot;max&quot;: 1800, &quot;step&quot;: 50, &quot;unit&quot;: &quot;ms&quot;, &quot;tsType&quot;: &quot;number&quot;}, &quot;openOnLoad&quot;: {&quot;editor&quot;: &quot;enum&quot;, &quot;default&quot;: &quot;none&quot;, &quot;options&quot;: [&quot;none&quot;, &quot;about&quot;, &quot;projects&quot;, &quot;experience&quot;, &quot;timeline&quot;, &quot;skills&quot;, &quot;blog&quot;, &quot;contact&quot;], &quot;tsType&quot;: &quot;string&quot;}}">
+class Component extends DCLogic {
+  state = { turned: 0, total: 0, side: 'l', mobile: false };
+  rootRef = React.createRef();
+  turned = 0; side = 'l'; mobile = false; k = 1;
+  book = null;
+  timers = [];
+  ease = 'cubic-bezier(.645,.045,.355,1)';
+
+  get ms() { return this.props.flipMs ?? 900; }
+  q = (s) => this.rootRef.current && this.rootRef.current.querySelector(s);
+  later(fn, t) { this.timers.push(setTimeout(fn, t)); }
+  clearTimers() { this.timers.forEach(clearTimeout); this.timers = []; }
+
+  componentDidMount() {
+    document.documentElement.removeAttribute('data-theme');
+    window.addEventListener('keydown', this.onKey);
+    window.addEventListener('resize', this.fit);
+    this.fit();
+    if (document.fonts) document.fonts.ready.then(this.fit);
+    const o = this.props.openOnLoad;
+    if (o && o !== 'none') setTimeout(() => this.open(o), 400);
+  }
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this.onKey);
+    window.removeEventListener('resize', this.fit);
+    this.clearTimers();
+  }
+
+  fit = () => {
+    const shelf = this.q('[data-shelf]'), sbox = this.q('[data-shelfbox]');
+    if (shelf && sbox) {
+      const w = shelf.offsetWidth, hh = shelf.offsetHeight;
+      const ks = Math.min(1, (window.innerWidth - 8) / w);
+      shelf.style.transform = ks < 1 ? `scale(${ks})` : 'none';
+      sbox.style.width = w * ks + 'px';
+      sbox.style.height = hh * ks + 40 + 'px';
+    }
+    const box = this.q('[data-stagebox]');
+    if (!box) return;
+    this.mobile = window.innerWidth < 720;
+    let k;
+    if (this.mobile) {
+      k = Math.min((window.innerWidth - 24) / 440, (window.innerHeight - 150) / 600);
+      box.style.width = 440 * k + 'px';
+      box.style.overflow = 'hidden';
+    } else {
+      k = Math.min(1.15, (window.innerWidth - 60) / 880, (window.innerHeight - 140) / 600);
+      box.style.width = 880 * k + 'px';
+      box.style.overflow = 'visible';
+    }
+    box.style.height = 600 * k + 'px';
+    this.k = k;
+    this.pan(false);
+    if (this.state.mobile !== this.mobile) this.setState({ mobile: this.mobile });
+  };
+
+  pan(animate = true) {
+    const box = this.q('[data-stagebox]');
+    if (!box) return;
+    const inner = box.firstElementChild;
+    const vx = !this.mobile ? 0 : (this.turned === 0 ? 220 : (this.side === 'r' ? 440 : 0));
+    inner.style.transition = animate ? `transform ${this.ms}ms ${this.ease}` : 'none';
+    inner.style.transform = `scale(${this.k}) translateX(${-vx}px)`;
+  }
+
+  leaves() { return this.book ? [...this.book.querySelectorAll(':scope > [data-leaf]')] : []; }
+  z(i, n, len) { return i < n ? 10 + i : 10 + len - i; }
+
+  apply(n, stagger = 0) {
+    const L = this.leaves(), len = L.length, ms = this.ms, prev = this.turned, ease = this.ease;
+    n = Math.max(0, Math.min(len, n));
+    this.turned = n;
+    L.forEach((el, i) => {
+      const on = i < n, was = i < prev;
+      el.style.transition = `transform ${ms}ms ${ease}`;
+      if (on !== was) {
+        const order = on ? i - prev : prev - 1 - i;
+        const d = order * stagger;
+        el.style.transitionDelay = d + 'ms';
+        this.later(() => { el.style.zIndex = 500 + (on ? i : len - i); }, d);
+        this.later(() => { el.style.zIndex = this.z(i, this.turned, len); }, ms + d + 30);
+      } else {
+        el.style.transitionDelay = '0ms';
+        el.style.zIndex = this.z(i, n, len);
+      }
+      el.style.transform = `perspective(2400px) rotateY(${on ? -180 : 0}deg)`;
+    });
+    const wrap = this.q('[data-wrap]');
+    wrap.style.transition = `transform ${ms}ms ${ease}`;
+    wrap.style.transform = n > 0 ? 'translateX(0)' : 'translateX(-220px)';
+    const el = this.q('[data-edge="l"]'), er = this.q('[data-edge="r"]'), t = 4;
+    [el, er].forEach((e) => { e.style.transition = `width ${ms}ms ${ease}`; });
+    el.style.width = (n > 0 ? 3 + (n - 1) * t : 0) + 'px';
+    er.style.width = (n > 0 ? 3 + (len - n) * t : 0) + 'px';
+    this.pan();
+    this.sync(len);
+  }
+
+  sync(len) { this.setState({ turned: this.turned, total: len ?? this.leaves().length, side: this.side }); }
+
+  open(id) {
+    this.clearTimers();
+    const ov = this.q('[data-overlay]'), pop = this.q('[data-pop]'), wrap = this.q('[data-wrap]');
+    this.rootRef.current.querySelectorAll('[data-book]').forEach((b) => { b.style.display = b.dataset.book === id ? 'block' : 'none'; });
+    this.book = this.q(`[data-book="${id}"]`);
+    if (!this.book) return;
+    this.turned = 0; this.side = 'l';
+    const L = this.leaves();
+    L.forEach((el, i) => { el.style.transition = 'none'; el.style.transform = 'perspective(2400px) rotateY(0deg)'; el.style.zIndex = this.z(i, 0, L.length); });
+    wrap.style.transition = 'none';
+    wrap.style.transform = 'translateX(-220px)';
+    this.rootRef.current.querySelectorAll('[data-edge]').forEach((e) => { e.style.transition = 'none'; e.style.width = '0'; });
+    pop.style.transition = 'none';
+    pop.style.transform = 'translateY(40px) scale(.82)';
+    pop.style.opacity = '0';
+    ov.style.display = 'flex';
+    this.fit();
+    void ov.offsetWidth;
+    ov.style.opacity = '1';
+    pop.style.transition = 'transform .45s cubic-bezier(.2,.8,.2,1), opacity .35s ease';
+    pop.style.transform = 'none';
+    pop.style.opacity = '1';
+    this.sync(L.length);
+    this.later(() => this.apply(1), 480);
+  }
+
+  close = () => {
+    if (!this.book) return;
+    this.clearTimers();
+    const n = this.turned, st = 70;
+    this.apply(0, st);
+    const wait = n > 0 ? this.ms + (n - 1) * st : 0;
+    this.later(() => {
+      const ov = this.q('[data-overlay]'), pop = this.q('[data-pop]');
+      pop.style.transform = 'translateY(30px) scale(.86)';
+      pop.style.opacity = '0';
+      ov.style.opacity = '0';
+      this.later(() => { ov.style.display = 'none'; this.book.style.display = 'none'; this.book = null; }, 380);
+    }, wait);
+  };
+
+  next = () => {
+    if (!this.book || this.turned === 0) return;
+    const len = this.leaves().length;
+    if (this.mobile) {
+      if (this.side === 'l') { this.side = 'r'; this.pan(); this.sync(len); }
+      else if (this.turned < len) { this.side = 'l'; this.apply(this.turned + 1); }
+      return;
+    }
+    if (this.turned < len) this.apply(this.turned + 1);
+  };
+  prev = () => {
+    if (!this.book) return;
+    if (this.mobile) {
+      if (this.side === 'r') { this.side = 'l'; this.pan(); this.sync(); }
+      else if (this.turned > 1) { this.side = 'r'; this.apply(this.turned - 1); }
+      return;
+    }
+    if (this.turned > 1) this.apply(this.turned - 1);
+  };
+
+  onKey = (e) => {
+    if (!this.book) return;
+    if (/^(INPUT|TEXTAREA)$/.test(e.target.tagName)) { if (e.key === 'Escape') e.target.blur(); return; }
+    if (e.key === 'ArrowRight') this.next();
+    else if (e.key === 'ArrowLeft') this.prev();
+    else if (e.key === 'Escape') this.close();
+  };
+
+  overlayClick = (e) => { if (e.target.closest('[data-keep]')) return; this.close(); };
+
+  bookClick = (e) => {
+    const g = e.target.closest('[data-goto]');
+    if (g) { this.side = 'l'; this.apply(+g.dataset.goto + 1, 90); return; }
+    if (e.target.closest('a,button,input,textarea,label,form')) return;
+    const f = e.target.closest('[data-face]');
+    if (!f) return;
+    if (f.dataset.face === 'r') this.next();
+    else if (f.dataset.face === 'l') this.prev();
+  };
+
+  openBook = (e) => this.open(e.currentTarget.dataset.open);
+
+  renderVals() {
+    const { turned, total, side, mobile } = this.state;
+    let label = '', noPrev, noNext;
+    if (mobile) {
+      const pages = total * 2, p = turned > 0 ? (turned - 1) * 2 + (side === 'r' ? 2 : 1) : 0;
+      noPrev = p <= 1; noNext = turned === 0 || p >= pages;
+      label = p ? `${p} / ${pages}` : '';
+    } else {
+      noPrev = turned <= 1; noNext = turned === 0 || turned >= total;
+      label = turned > 0 ? `${turned} / ${total}` : '';
+    }
+    return {
+      rootRef: this.rootRef,
+      openBook: this.openBook, overlayClick: this.overlayClick, bookClick: this.bookClick,
+      next: this.next, prev: this.prev, close: this.close,
+      noPrev, noNext, prevOpacity: noPrev ? 0.35 : 1, nextOpacity: noNext ? 0.35 : 1,
+      pageLabel: label,
+      prevText: mobile ? '← prev' : '← previous',
+      closeText: mobile ? 'close' : 'close the book',
+    };
+  }
+}
+</script>
 </body>
 </html>
