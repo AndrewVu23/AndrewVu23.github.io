@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>A Look Back at RoboMaster | Kiet Vu</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="name"><a href="../index.html">Kiet Vu</a></div>
+  <nav>
+    <a href="../index.html">About</a><span>|</span>
+    <a class="here" href="../blog.html">Blog</a><span>|</span>
+    <a href="../diary.html">Diary</a><span>|</span>
+    <a href="../KietVu_CV.pdf">CV</a>
+  </nav>
+</header>
+
+<article>
+  <h1>RoboMaster: A Retrospective Look</h1>
+  <div class="post-date">May 20, 2026 &nbsp;<span class="words"></span></div>
+
+  <p>Before I knew I wanted to do RTL, I was on the electrical team for Purdue RoboMaster, drawing schematics and laying out PCBs for the team&rsquo;s combat robot. 
+    I made three boards. One got fabricated, soldered and tested. The other two stopped at a finished layout.</p>
+
+  <h2>01 &middot; Audio visualizer</h2>
+  <p class="muted"><i>LM358, LM3915, fabricated</i></p>
+  <p>This was the onboarding project, and although this was not too challenging (since we had all those mentors and guides on how to do it, step by step), this was the one that taught me the most about schematic design, circuits, and PCBs. 
+    Two LM358 op-amp stages amplify a microphone 45&times;, and an LM3915 drives a 10-segment LED bar from that signal.</p>
+  <figure>
+    <img src="../img/robomaster/audio-visualizer-schematic.png" alt="Audio visualizer schematic">
+    <figcaption>Schematic.</figcaption>
+  </figure>
+  <figure class="small">
+    <img src="../img/robomaster/audio-visualizer-board.webp" alt="Audio visualizer board layout">
+    <figcaption>Board layout.</figcaption>
+  </figure>
+  <figure class="small">
+    <video src="../img/robomaster/audio-visualizer.mp4" poster="../img/robomaster/audio-visualizer-poster.jpg" controls muted playsinline preload="none"></video>
+    <figcaption>The finished board, reacting to music.</figcaption>
+  </figure>
+
+  <h2>02 &middot; Armor power system</h2>
+  <p class="muted"><i>layout only</i></p>
+  <p>This was the rechargeable power for the robot&rsquo;s armor plates, my first personal creation. The plates take hits and have to keep reporting them, so this board powers them without running a harness back to the main battery.</p>
+  <p>The first MVP was to make the board rechargable, but I implemented the ESP32 along with the LEDs for power tracking (high &rarr; mid &rarr; low = green &rarr; orange &rarr; red, with blue = charging). </p>
+  <p>There was no mentor, no guide, no tutorial, only me and a bunch of datasheets I got dumped on. But hey it was fun!</p>
+  <table>
+    <tr><td>charging</td><td>TP4056</td></tr>
+    <tr><td>regulation</td><td>TPS63002 buck-boost</td></tr>
+    <tr><td>monitoring</td><td>ESP32</td></tr>
+    <tr><td>protection</td><td>MOSFET + Zener</td></tr>
+  </table>
+  <p>I designed and routed it, then the team stopped needing it. That&rsquo;s kinda.... idk (actually the team lead did encourage me to send it to the factory, but due to some export control issues we couldn&rsquo;t source PCBs from China, which are dirt cheap, and I was too lazy to order and solder everything, so yeah).</p>
+  <figure class="small">
+    <img src="../img/robomaster/armor-pcb-top.webp" alt="Armor power board, top layer">
+    <figcaption>Top layer, 1.40 &times; 1.53 in.</figcaption>
+  </figure>
+  <figure>
+    <img src="../img/robomaster/armor-schematic-1.webp" alt="Armor power schematic">
+    <figcaption>Schematic.</figcaption>
+  </figure>
+
+  <h2>03 &middot; Projectile charger</h2>
+  <p class="muted"><i>layout only</i></p>
+  <p>Charges the fluorescent projectiles so they glow under the arena&rsquo;s UV lights, which lets the referee system track them. The layout is done but it was never fabricated (same reasons as above).</p>
+  <figure>
+    <img src="../img/robomaster/charger-schematic-1.webp" alt="Projectile charger schematic, sheet 1">
+    <figcaption>Schematic, sheet 1.</figcaption>
+  </figure>
+  <figure>
+    <img src="../img/robomaster/charger-schematic-2.webp" alt="Projectile charger schematic, sheet 2">
+    <figcaption>Schematic, sheet 2: the LED string.</figcaption>
+  </figure>
+
+  <h2>So What?</h2>
+  <p>Although PCB didn&rsquo;t end up becoming my main interest, I still learned a lot. This was my first time seeing my design alive, a rite of passage for an engineer.</p>
+  <p>A design isn&rsquo;t done when the schematic is done. On the audio visualizer, the footprints were wrong and the first revision didn&rsquo;t work, and I only found out by probing it. 
+    Me and my mentors spent so much time measuring everything, part by part, trying all different techniques, from thermal vision to solder bridge 
+    (I don&rsquo;t know what it&rsquo;s called but it&rsquo;s when you put a whole bunch of solder to bridge the gap between the traces or shorted components).</p>
+  <p>AND IT&rsquo;S TURNED OUT THE CHIP WAS COOOOOOKED. WE WASTED 4 HOURS. JUST FOR THE CHIP TO BE COOKED.
+</p>
+  <p>But yeah, this really gave me insights into debugging, which was the most crucial part before any design could truly work, and the patience going into each session like this. 
+    I carry this mindset all the time going into designing and verifying RTL code. And it was really fun learning from them! That&rsquo;s the best part for sure.</p>
+  <p>By the time these boards were finished I was already more into RTL than PCBs, so I never wrote them up properly. The schematics and layouts above are all there is.</p>
+  <p>I have to say: this was one of my most locked in period ever. Is it to farm projects, build connections, and boost resume? Was I this locked in just to get a job?</p>
+  <p>Yes.</p>
+  <p>That was my initial plan. But the process of learning, designing, building, and connecting with my mentors was so fun, I was just doing it for the love of the game.
+    Other reasons stopped mattering.
+  </p>
+  <p>And through the club, I met so many cool people. And I&rsquo;m grateful for that.</p> 
+  <p>Thank you Thomas (and Drew), my team leads, for enduring me and teaching me a lot along the way.</p>
+
+</article>
+
+<footer class="footer"><a href="../blog.html">&larr; back to Blog</a></footer>
+<script src="../words.js"></script>
+</body>
+</html>
