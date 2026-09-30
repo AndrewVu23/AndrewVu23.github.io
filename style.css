@@ -1,8 +1,8 @@
 /* ---------- font: Latin Modern (the LaTeX font) ---------- */
-@font-face { font-family: "Latin Modern"; src: url("fonts/LM-regular.woff2") format("woff2"); font-weight: 400; font-style: normal; }
-@font-face { font-family: "Latin Modern"; src: url("fonts/LM-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; }
-@font-face { font-family: "Latin Modern"; src: url("fonts/LM-bold.woff2") format("woff2"); font-weight: 700; font-style: normal; }
-@font-face { font-family: "Latin Modern"; src: url("fonts/LM-bold-italic.woff2") format("woff2"); font-weight: 700; font-style: italic; }
+@font-face { font-family: "Latin Modern"; src: url("fonts/LM-regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: "Latin Modern"; src: url("fonts/LM-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+@font-face { font-family: "Latin Modern"; src: url("fonts/LM-bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "Latin Modern"; src: url("fonts/LM-bold-italic.woff2") format("woff2"); font-weight: 700; font-style: italic; font-display: swap; }
 
 /* ---------- colors ---------- */
 :root {
@@ -30,6 +30,8 @@ body {
   margin: 0 auto;
   counter-reset: fig;
 }
+
+img, video { max-width: 100%; height: auto; }
 
 a { color: var(--link); text-decoration: none; }
 a:hover { text-decoration: underline; }
