@@ -3,7 +3,7 @@
 
 function countWords(doc) {
   var article = doc.querySelector('article').cloneNode(true);
-  article.querySelectorAll('h1, .post-date, figcaption, table').forEach(function (el) { el.remove(); });
+  article.querySelectorAll('h1, .post-date, figcaption, table, .contents').forEach(function (el) { el.remove(); });
   return article.textContent.trim().split(/\s+/).length;
 }
 

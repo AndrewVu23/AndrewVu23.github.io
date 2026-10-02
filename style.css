@@ -2,6 +2,7 @@
 @font-face { font-family: "Latin Modern"; src: url("fonts/LM-regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "Latin Modern"; src: url("fonts/LM-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
 @font-face { font-family: "Latin Modern"; src: url("fonts/LM-bold.woff2") format("woff2"); font-weight: 700; font-style: normal; font-display: swap; }
+@font-face { font-family: "CMU Typewriter"; src: url("fonts/CMU-typewriter.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
 @font-face { font-family: "Latin Modern"; src: url("fonts/LM-bold-italic.woff2") format("woff2"); font-weight: 700; font-style: italic; font-display: swap; }
 
 /* ---------- colors ---------- */
@@ -12,6 +13,7 @@
   --link: #3366cc;
   --bg: #fffffe;
   --highlight: #fff3b0;
+  --code-bg: #f5f4ef;
 }
 
 /* ---------- page ---------- */
@@ -38,6 +40,8 @@ a:hover { text-decoration: underline; }
 
 p { margin: 0 0 1em; }
 
+h2, h3 { scroll-margin-top: 90px; }
+
 h1 { font-size: 1.9em; line-height: 1.25; margin: 0 0 .2em; }
 h2 {
   font-size: 1.35em;
@@ -50,11 +54,14 @@ ul { padding-left: 1.3em; }
 li + li { margin-top: .35em; }
 
 .muted { color: var(--muted); }
+sup { white-space: nowrap; line-height: 0; }
 
 /* ---------- figures: numbered automatically (Fig. 1, Fig. 2, ...) ---------- */
 figure { margin: 1.4em 0; text-align: center; }
 figure img, figure video { max-width: 100%; height: auto; }
 figure.small img, figure.small video { width: 60%; }
+figure.smaller img { width: 42%; }
+figure.smallest img { width: 32%; }
 figcaption {
   counter-increment: fig;
   font-size: .85em;
@@ -152,9 +159,49 @@ figcaption::before {
 /* ---------- blog post ---------- */
 .post-date { color: var(--muted); margin-bottom: 1.5em; }
 
-table { border-collapse: collapse; margin: .8em 0 1.2em; }
-td { padding: 4px 14px 4px 0; border-bottom: 1px solid var(--rule); }
-td:first-child { font-style: italic; color: var(--muted); }
+/* small two-column spec table (RoboMaster post) */
+table.spec { border-collapse: collapse; margin: .8em 0 1.2em; }
+table.spec td { padding: 4px 14px 4px 0; border-bottom: 1px solid var(--rule); }
+table.spec td:first-child { font-style: italic; color: var(--muted); }
+
+/* LaTeX booktabs table: heavy top and bottom rules, thin rule under the header */
+.table-wrap { overflow-x: auto; margin: 1.2em 0 1.4em; }
+table.booktabs {
+  border-collapse: collapse;
+  margin: 0 auto;
+  font-size: .92em;
+  border-top: 1.5px solid var(--text);
+  border-bottom: 1.5px solid var(--text);
+}
+table.booktabs th, table.booktabs td { padding: 4px 12px; text-align: left; vertical-align: top; }
+table.booktabs thead th { border-bottom: 1px solid var(--text); font-weight: 700; }
+table.booktabs tbody tr:first-child td { padding-top: 6px; }
+table.booktabs tbody tr:last-child td { padding-bottom: 6px; }
+
+/* code, in Computer Modern Typewriter (LaTeX's \texttt) */
+code, pre { font-family: "CMU Typewriter", Menlo, Consolas, monospace; }
+code { font-size: .92em; line-height: 1; background: var(--code-bg); padding: 0 4px; border-radius: 3px; }
+pre {
+  overflow-x: auto;
+  margin: 1em 0 1.2em;
+  padding: .7em 1em;
+  background: var(--code-bg);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+  font-size: .8em;
+  line-height: 1.45;
+}
+pre code { font-size: 1em; background: none; padding: 0; border-radius: 0; }
+
+blockquote { margin: 1em 0; padding-left: 1em; border-left: 2px solid var(--rule); font-style: italic; }
+
+.contents { margin: 1.4em 0; }
+.contents p { margin: 0; }
+.contents ul { margin: .3em 0 0; }
+.contents li + li { margin-top: .1em; }
+
+figure .pair { display: flex; gap: 12px; justify-content: center; align-items: flex-start; }
+figure .pair img { width: calc(50% - 6px); }
 
 /* ---------- phones ---------- */
 @media (max-width: 600px) {
@@ -163,4 +210,8 @@ td:first-child { font-style: italic; color: var(--muted); }
   .list, .entry { grid-template-columns: 1fr; }
   .list dd { margin-bottom: .5em; }
   figure.small img, figure.small video { width: 100%; }
+  figure.smaller img { width: 75%; }
+  figure.smallest img { width: 60%; }
+  table.booktabs { font-size: .82em; }
+  table.booktabs th, table.booktabs td { padding: 4px 8px; }
 }

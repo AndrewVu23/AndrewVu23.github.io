@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reverse-Engineering Jane Street&rsquo;s 2026 ASIC Puzzle | Kiet Vu</title>
+<link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<header class="header">
+  <div class="name"><a href="../index.html">Kiet Vu</a></div>
+  <nav>
+    <a href="../index.html">About</a><span>|</span>
+    <a class="here" href="../blog.html">Blog</a><span>|</span>
+    <a href="../diary.html">Diary</a><span>|</span>
+    <a href="../KietVu_CV.pdf">CV</a>
+  </nav>
+</header>
+
+<article>
+  <h1>Reverse-Engineering Jane Street&rsquo;s 2026 ASIC Puzzle</h1>
+  <div class="post-date">Oct 2, 2026 &nbsp;<span class="words"></span></div>
+
+<!-- written in Word, converted to HTML. Edit the text right here. -->
+
+<p>This is my first time solving a Jane Street puzzle. I picked this specifically since it’s reverse engineering an ASIC, and I’m a wannabe hardware engineer.</p>
+<p>The problem: Jane Street provides us with a GDS file, the final file we send to a foundry to get our chip taped out. Our mission is to derive the purpose of the chip based on the layout and polygons.</p>
+<p>This writeup shows how the chip was cracked.</p>
+
+<nav class="contents">
+<p><b>Contents</b></p>
+<ul>
+  <li><a href="#tl-dr">TL; DR</a></li>
+  <li><a href="#what-we-are-given">1. What We Are Given</a></li>
+  <li><a href="#from-polygons-to-a-netlist">2. From Polygons to a Netlist</a></li>
+  <li><a href="#understanding-the-shape">3. Understanding the shape</a></li>
+  <li><a href="#the-verification">4. The Verification</a></li>
+  <li><a href="#reading-the-machine">5. Reading the Machine</a></li>
+  <li><a href="#solving-it">6. Solving it</a></li>
+  <li><a href="#proving-the-solution">7. Proving the Solution</a></li>
+  <li><a href="#rebuilding-the-machine">8. Rebuilding the Machine</a></li>
+  <li><a href="#formal-proving-the-machine">9. Formal Proving the Machine</a></li>
+  <li><a href="#the-easter-eggs">10. The Easter Eggs</a></li>
+  <li><a href="#reproducing-the-test">11. Reproducing the test</a></li>
+</ul>
+</nav>
+
+<h2 id="tl-dr">TL; DR</h2>
+<ul>
+<li><strong>The puzzle</strong>: an 11×11 Star Battle validator, synthesized to a real sky130 ASIC and shipped as raw layout. No RTL, no schematic, no netlist.</li>
+<li><strong>The method</strong>: write a GDSII parser and connectivity extractor from scratch, validate it against ground truth Jane Street themselves shipped, recover a 738-gate netlist, simulate it, and then measure the architecture out of it.</li>
+<li><strong>The proof</strong>: rebuild the chip forwards from the recovered architecture, from RTL, synthesis, PnR, to GDS, showing the rebuild is bit-identical to the original.</li>
+</ul>
+<h2 id="what-we-are-given">1. What We Are Given</h2>
+<p>The package contains:</p>
+<pre><code>puzzle.gds            the chip. 1.4 MB of geometry.
+example_inputs.vcd    the waveform: some stimulus, and what the chip did with it.
+warmup/               a small unrelated design, showing the whole chip design flow.</code></pre>
+<p>The warm-up which looks like a tutorial is actually an oracle, a design whose GDS &amp; correct netlist we have so we can run our extractor on the warm-up, diff the result against the answer, and validate the scripts. Everything downstream rests on this.</p>
+<h3 id="what-a-gds-actually-contains">What a GDS actually contains</h3>
+<p>A GDSII file is a flat stream of binary records describing shapes. The ones that matter:</p>
+<div class="table-wrap"><table class="booktabs">
+<thead>
+<tr>
+<th>Record</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>BGNSTR</code> / <code>STRNAME</code></td>
+<td>begin a structure: a reusable cell definition</td>
+</tr>
+<tr>
+<td><code>BOUNDARY</code> + <code>LAYER</code> + <code>XY</code></td>
+<td>a filled polygon on a layer</td>
+</tr>
+<tr>
+<td><code>PATH</code> + <code>WIDTH</code> + <code>XY</code></td>
+<td>a centerline with a width, or a wire</td>
+</tr>
+<tr>
+<td><code>SREF</code> + <code>SNAME</code> + <code>XY</code></td>
+<td>place an instance of another structure here</td>
+</tr>
+</tbody>
+</table></div>
+<p>Two things:</p>
+<p>First, hierarchy is by reference: the top structure <code>puzzle</code> contains 9,875 <code>SREF</code>s pointing at cell definitions, so to get absolute geometry we flatten the tree, composing transforms as we go.</p>
+<p>Second, a wire and a via are geometry. “Net” is not stored anywhere. Electrical connectivity is an emergent property of overlapping shapes, and we have to recompute it.</p>
+<p>The layer number alone is not enough either. A layer/datatype pair identifies meaning. <code>(67,20)</code> is local-interconnect metal, <code>(67,44)</code> is a contact cut through it, <code>(67,16)</code> is a pin marker, <code>(67,5)</code> is a text label. Same layer number but four different meanings.</p>
+<p>Before running anything, we have to check if the cell names survive.</p>
+<pre><code>structures: 81
+sample names: sky130_fd_sc_hd__nand2_2, sky130_fd_sc_hd__dfrtp_2, VIA_M1M2_PR, INTERNAL_7 ...</code></pre>
+<p>They did. And that’s so clutch. Had they been stripped, the job would have been transistor-level recognition where we have to pull diffusion and poly geometry, find where they cross (each crossing is a transistor) group those into gates by topology, and match against a library, which I don’t think I’d be able to do any of that (lol).</p>
+<h2 id="from-polygons-to-a-netlist">2. From Polygons to a Netlist</h2>
+<h3 id="parsing">Parsing</h3>
+<p>GDSII is a record of <code>[length][type][payload]</code>. I wrote my own rather than installing <code>gdstk</code>, mostly because I can know what is being silently dropped, partly because I didn’t want to deal with Python shenanigans (I did compare between the library and the DIY parser, and it matched perfectly).</p>
+<h3 id="connectivity">Connectivity</h3>
+<p>The physical rule is simple: two conductors are the same net if they touch.</p>
+<ol type="1">
+<li>Collect every conducting rectangle, local interconnect and metals 1 through 5, and flatten them to absolute coordinates.</li>
+<li>Union-find: same layer, overlapping or abutting =&gt; same net.</li>
+<li>Cut layers bridge vertically. A contact unions the shapes it overlaps on the layer below and the layer above.</li>
+</ol>
+<p>Two details decide whether this works at all:</p>
+<ul>
+<li><strong>Exclude</strong> <code>licon</code><strong>.</strong> That cut layer contacts poly and diffusion, the transistors themselves. We will bridge through it and every cell shorts through its own internals, collapsing the chip into one net.</li>
+</ul>
+<figure>
+  <img src="../img/jsasic/layer-stack.webp" alt="" width="1557" height="999" loading="lazy">
+  <figcaption>The sky130 layer stack. licon is the cut that connects poly to li1.</figcaption>
+</figure>
+<ul>
+<li><strong>Extract every conducting layer from inside cells, not just local interconnect.</strong> Most sky130 cells expose their pins on li1, but some (flip-flops and XORs among them) bring a pin up to metal-1 internally, and the router simply lands there. Pulling only li1 leaves those pins unreachable.</li>
+</ul>
+<p>This is where the warm-up came to clutch. It diff named the broken net and the count of fragments in one step, helping me fix the parser.</p>
+<h3 id="cell-function">Cell function</h3>
+<p>Since the sky130 PDK is open source, we can just fetch it and check:</p>
+<pre><code>and and0 (and0_out , A1, A2      );
+or  or0  (or0_out_X, and0_out, B1);
+buf buf0 (X        , or0_out_X   );</code></pre>
+<p>We then parse those primitives, evaluate them topologically. As a cross-check, 35 of the cells publish a closed form Boolean equation in their header comment, and all 35 agreed with the parsed version.</p>
+<p>The three flip-flops use table-driven primitives that are awkward to parse, so they are hand-coded: a plain D flop, one with asynchronous reset, one with asynchronous set.</p>
+<h3 id="simulation">Simulation</h3>
+<p>With a netlist and cell functions we can simulate. First, we split instances into combinational, sequential and physical-only. After that, we topologically sort the combinational cells, then per cycle, apply inputs, evaluate in order, apply the clock edge, update the flops.</p>
+<p>I wrote my own rather than using <code>iverilog</code> because the endgame needs two things a Verilog simulator makes awkward: read any internal net at any cycle, and drive stimulus programmatically inside a search loop.</p>
+<div class="table-wrap"><table class="booktabs">
+<thead>
+<tr>
+<th>Check</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Placements vs the DEF, including orientation</td>
+<td>230/230</td>
+</tr>
+<tr>
+<td>Pin coverage</td>
+<td>291/291 pin-instances located</td>
+</tr>
+<tr>
+<td>Net-by-net identity vs the DEF</td>
+<td>84/84</td>
+</tr>
+<tr>
+<td>Puzzle: drivers per net</td>
+<td>738/739</td>
+</tr>
+<tr>
+<td>Puzzle: replay <code>example_inputs.vcd</code></td>
+<td>312/312 cycles bit-exact on all 9 outputs</td>
+</tr>
+</tbody>
+</table></div>
+<p>The last one is decisive, since for passing by accident to happen, the placements, pin geometry, connectivity, cell functions, flop semantics and reset behavior would all have to be wrong in a mutually cancelling way, across 312 cycles and 9 output bits, including a non-trivial ASCII byte stream. That does not happen here.</p>
+<p>The driver count is worth a note here. Since the nearest unconnected output is 12.77 µm away, about 30 routing tracks, not a near miss, it’s a genuinely floating input in Jane Street’s design, not an extraction failure (they confirmed it <a href="https://blog.janestreet.com/asic-puzzle-results/">here</a>). But it’s chill since both its loads sit outside the <code>success</code> logic.</p>
+<h3 id="first-contact">First contact</h3>
+<p>Now we start poking it:</p>
+<div class="table-wrap"><table class="booktabs">
+<thead>
+<tr>
+<th>Stimulus</th>
+<th>Output as ASCII</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>the provided VCD</td>
+<td><code>TRY AGAIN</code></td>
+</tr>
+<tr>
+<td>all-zero input</td>
+<td><code>EMPTY SKY</code></td>
+</tr>
+<tr>
+<td>all-one input</td>
+<td><code>BIG BANG</code></td>
+</tr>
+<tr>
+<td>random input</td>
+<td><code>TRY AGAIN</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><code>TRY AGAIN</code> is free information, not <code>EMPTY SKY</code> &amp; <code>BIG BANG</code> though. We can tell that it’s not a fixed ROM, because it emits different strings for different machine states.</p>
+<p>Also, sky &amp; big bang? That sounds like a big hint. It reminded me of that <a href="https://www.janestreet.com/culture/street-view/numberphile-star-puzzle/">Jane Street’s Star Battle Puzzle</a> on Numberphile, and I’m going to use that as my main lead.</p>
+<h2 id="understanding-the-shape">3. Understanding the shape</h2>
+<p>As the extraction is done and functionally proved, we move to the part with no algorithm: 738 gates with machine-generated names, and what are their meanings.</p>
+<p>To investigate, we use 3 different techniques:</p>
+<p><strong>Cone of influence.</strong> Walk backwards from a signal through its driver, that driver’s inputs, their drivers, recursively. Basically trace everything back to its origin.</p>
+<div class="table-wrap"><table class="booktabs">
+<thead>
+<tr>
+<th>Region</th>
+<th>Instances</th>
+<th>Flops</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>success</code> cone</td>
+<td>484</td>
+<td>79</td>
+</tr>
+<tr>
+<td><code>O[7:0]</code> cone 71</td>
+<td>3 92</td>
+<td></td>
+</tr>
+<tr>
+<td>O-only (the output generator)</td>
+<td>229</td>
+<td>13</td>
+</tr>
+<tr>
+<td>success-only</td>
+<td>0</td>
+<td>n/a</td>
+</tr>
+</tbody>
+</table></div>
+<p>The <code>success</code> cone is entirely contained in the <code>O</code> cone and nothing is success-only. This confirmed what was stated in the Jane Street’s blog:</p>
+<blockquote>
+<p>“There is one section of the design that is used to generate the output but does not affect the <code>success</code> output.”</p>
+</blockquote>
+<p>One-way information flow. Practically, 229 cells can be ignored until the very end.</p>
+<p><strong>Physical clustering.</strong> Placement is not random. The placer puts cells that talk to each other near each other, because wiring is expensive =&gt; proximity is evidence of relatedness.</p>
+<p>By bucketing on a 60 µm grid, we can sort the checker on the left and center of the die and the generator on the right, past about 120 µm. We also find that 118 instances, zero flops, almost entirely in the <code>success</code> cone, which could be a comparator, an adder, or a wide decoder.</p>
+<p><strong>Flop dependency graph.</strong> Collapse combinational logic to edges, exposing sequential structure while hiding gate-level noise. Those are the patterns we are looking for:</p>
+<div class="table-wrap"><table class="booktabs">
+<thead>
+<tr>
+<th>Pattern</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>long chain, each flop one source</td>
+<td>shift register</td>
+</tr>
+<tr>
+<td>self-loop plus narrow increment logic</td>
+<td>counter</td>
+</tr>
+<tr>
+<td>self-loop plus XOR of a few taps</td>
+<td>LFSR</td>
+</tr>
+<tr>
+<td>dense mutual dependency</td>
+<td>state machine/data path</td>
+</tr>
+</tbody>
+</table></div>
+<p>Which gave:</p>
+<ul>
+<li><p>Zero simple chains. Not one flop has exactly one source flop.</p></li>
+<li><p>All 92 flops depend on themselves through combinational logic.</p></li>
+<li><p>Data-input fan-in widths cluster bimodally at 7 (25 flops) and 11 (22 flops). (7/11 lol. Easter egg worthy?)</p></li>
+<li><p><code>I</code> fans out to 45 gates directly.</p></li>
+</ul>
+<p>Looking at the results, my natural first guess for a 1-bit serial input and 92 flops is “shift register, then compare”, which is exactly what the warm-up design does.</p>
+<p>But that’s not it. Also, a serial input touching 45 gates in one cycle doesn’t look like a shift-register load. It’s more like it’s participating in a wide computation every cycle.</p>
+<p>My second guess is a “nonlinear cipher-style state being stirred by the input stream and compared against a hidden constant,” which almost sold the investigation.</p>
+<h2 id="the-verification">4. The Verification</h2>
+<p>The method I used to validate was <strong>Perturbation</strong>: Reset, run the chip with <code>I = 0</code> for <code>N</code> cycles (I used 140. The goal is just to investigate the flops’ states throughout the cycles). Call that the baseline. Then, for each cycle <code>k</code>, reset and run the same stimulus except with <code>I = 1</code> at cycle <code>k</code> alone. Then compare the results:</p>
+<div class="table-wrap"><table class="booktabs">
+<thead>
+<tr>
+<th>Hypothesis</th>
+<th>Prediction</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nonlinear digest</td>
+<td>one bit flip diverges to roughly half the state within a few cycles and stays diverged</td>
+</tr>
+<tr>
+<td>structured checker</td>
+<td>one bit permanently perturbs only the accumulators that cell feeds</td>
+</tr>
+</tbody>
+</table></div>
+<p>The result:</p>
+<pre><code>k= 0  hd=[5,5,5,5,5,5,5,5,5,5] ... final= 3  changed={22, 55, 73}
+k= 1  hd=[5,5,5,5,5,5,5,5,5,4] ... final= 3  changed={ 6, 55, 73}
+k= 2  hd=[5,5,5,5,5,5,5,5,4,4] ... final= 3  changed={20, 55, 73}
+...
+k=10  hd=[4,4,4,4,4,4,4,4,4,4] ... final= 3  changed={ 9, 26, 55}
+k=11  hd=[5,5,5,5,5,5,5,5,5,5] ... final= 3  changed={22, 55, 73} &lt;= identical to k=0
+k=12  hd=[5,5,5,5,5,5,5,5,5,4] ... final= 3  changed={ 6, 55, 73} &lt;= identical to k=1</code></pre>
+<figure>
+  <img src="../img/jsasic/impulse-response.webp" alt="" width="1600" height="564" loading="lazy">
+  <figcaption>Impulse response: which accumulator each grid cell permanently moves.</figcaption>
+</figure>
+<ol type="1">
+<li>Maximum divergence is 5 flops out of 79, settling to 3 =&gt; Not nonlinear digest</li>
+<li>Exactly three flops change permanently, one of which changes for every <code>k</code>: 2 per-position accumulators, and one global counter (flop 55 always changes).</li>
+<li><code>k = 11</code> reproduces <code>k = 0</code> &amp; <code>k = 12</code> reproduces <code>k = 1</code> exactly =&gt; Period of 11</li>
+</ol>
+<p>We can deduce that a serial input whose effect depends only on <code>k mod 11</code> is a raster scan. From this we can infer that the bit stream is a 2-D array read row-by-row, eleven cells per row =&gt; 11x11 grid, 121 cells with read row-major with the column advancing fastest.</p>
+<p>Combined with the <code>EMPTY SKY</code> hint above, we can almost certainly tell that this is a Star Battle Puzzle.</p>
+<h2 id="reading-the-machine">5. Reading the Machine</h2>
+<p>Remember the bimodal cluster of 7 and 11? This is where it comes into play:</p>
+<pre><code>column accumulator, bit 0 :  {own_bit_0, own_bit_1, step, col[3:0]}             =  7
+region accumulator, bit 0 :  {own_bit_0, own_bit_1, step, col[3:0], row[3:0]}   = 11
+delay-line stage          :  {previous stage, itself, step}                     =  3</code></pre>
+<ul>
+<li>own_bit_0: the flop’s own Q fed back</li>
+<li>own_bit_1: another flop in the same 2-bit counter (for counting the stars)</li>
+<li>col[3:0] &amp; row[3:0]: cover the 11x11 grid</li>
+<li>column accumulator: we need a separate accumulator since the design is row-major, and we can’t check and reset a column after 1 visit</li>
+<li>region accumulator: same idea</li>
+</ul>
+<p>That is the entire content of the bimodality that looked so cryptographic. Not two cipher banks, but two banks of counters addressed by different indices. The self-feedback is a counter holding its value. The arithmetic is <code>+1</code>.</p>
+<p>The count is also now clean:</p>
+<ul>
+<li><p>2 flops wired together =&gt; 2 bits</p></li>
+<li><p>22 flops with width 11: 11 regions x 2 bits</p></li>
+<li><p>22 flops with width 7: 11 columns x 2 bits</p></li>
+<li><p>2 flops with width 7: row-star counters (passed col[3:0] inside too =&gt; detects when the row end to check the number of stars)</p></li>
+<li><p>1 flop with width 7: a bit of the total-star counter (coincidence, found after solving everything)</p></li>
+</ul>
+<p>Fit the bimodal cluster count perfectly.</p>
+<p>Note: If everything seems too abstract for now, just jump straight to section 8 for a quick sneak peek of the architecture.</p>
+<h3 id="reading-the-region-map-straight-off-the-silicon">Reading the region map straight off the silicon</h3>
+<p>As everything is layout-ed perfectly, solving it becomes easy. We read the region partition directly, by 121 simulations, one per cell, with no inference at all:</p>
+<pre><code>for each (r, c) in the 11x11 grid:
+    run the chip with a single star at (r, c)
+    record which region flop differs from baseline at the end
+    that flop&#39;s identity IS the region label of (r, c)</code></pre>
+<p>The answer:</p>
+<pre><code>    I I I I I C C H G G A          region  size
+    I I K I I C H H G G A            A      28
+    I I K C C C C H H G A            B       6
+    I I K C J J J A H H A            C      21
+    K I K C J A A A A A A            D       8
+    K K K C J J J A E E E            E       9
+    C C C C C C J A E B B            F       4
+    C D D D J J J A E B B            G       5
+    C D D F A A A A E B B            H       7
+    C C D F F A A A E E E            I      14
+    C D D F A A A A A A A            J      11
+                                     K       8</code></pre>
+<p>Feeding it into a Star Battle generator, we got this:</p>
+<figure class="smaller">
+  <img src="../img/jsasic/region-map.webp" alt="" width="792" height="796" loading="lazy">
+  <figcaption>The region map, drawn as a Star Battle board.</figcaption>
+</figure>
+<p>We can all see it right? I know, but I’m going to save it for the easter egg section.</p>
+<h3 id="the-adjacency-window">The adjacency window</h3>
+<p>Next, we have 12 flops with fan-in 3. It is a 12-deep delay line, and we can trace the stage order from reading “which cell leaves a trace in which flop”.</p>
+<p>The sticky flag next to it taps exactly four stages: delays 1, 10, 11 and 12. And when we lay those out on the grid:</p>
+<pre><code>         c-1    c    c+1
+  r-1     12    11    10      &lt;- cells already scanned, this many cycles ago
+  r        1     *</code></pre>
+<p>Delay 1 is the cell to the left. Delay 11 is directly above, one full row back. Delays 12 and 10 are the two diagonals above. Only four of the eight neighbors, because adjacency is symmetric and a raster visits every pair exactly once, so checking the four already-seen neighbors of each cell covers all eight-way pairs across the whole grid.</p>
+<p>And that is why the flag’s fan-in also includes the column counter: at column 0 the left and up-left neighbors are on the previous row and must be masked out, and at column 10 the up-right one wraps.</p>
+<h2 id="solving-it">6. Solving it</h2>
+<p>Feed it into a Star Battle Solver, we have the solution:</p>
+<figure class="smaller">
+  <img src="../img/jsasic/solution.webp" alt="" width="966" height="1016" loading="lazy">
+  <figcaption>The solver&rsquo;s answer. Exactly one solution.</figcaption>
+</figure>
+<p>Then we flatten row-major into 121 bits, drive them into the extracted netlist from a cold reset:</p>
+<pre><code>cycle 120 : last cell consumed
+cycle 121 : success = 1, and stays 1
+cycle 121+: O emits  40 42 32 84 87 79 32 83 84 65 82 83 32 42 41
+                 =   (  *  _  T  W  O  _  S  T  A  R  S  _  *  )</code></pre>
+<p>We got <code>(* TWO STARS *)</code>, another message.</p>
+<h2 id="proving-the-solution">7. Proving the Solution</h2>
+<div class="table-wrap"><table class="booktabs">
+<thead>
+<tr>
+<th>Test</th>
+<th>Count</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>single-star relocations (move one star to any free cell)</td>
+<td>2,178</td>
+<td>all rejected</td>
+</tr>
+<tr>
+<td>rectangle swaps</td>
+<td>189</td>
+<td>all rejected</td>
+</tr>
+<tr>
+<td>random 22-star placements</td>
+<td>200</td>
+<td>all rejected</td>
+</tr>
+<tr>
+<td>placement breaking only adjacency</td>
+<td>exists</td>
+<td>rejected</td>
+</tr>
+<tr>
+<td>placement breaking only the region rule</td>
+<td>exists</td>
+<td>rejected</td>
+</tr>
+</tbody>
+</table></div>
+<p>All three rules are independently enforced in silicon, and none is a coincidence of the unique solution.</p>
+<h2 id="rebuilding-the-machine">8. Rebuilding the Machine</h2>
+<p>Now that we have a full understanding of the chip, we’re going to rebuild everything, from RTL to GDS.</p>
+<figure>
+  <img src="../img/jsasic/architecture.webp" alt="" width="2432" height="2011" loading="lazy">
+  <figcaption>The recovered architecture.</figcaption>
+</figure>
+<p>As for the verification, we create the golden vectors from simulating the extracted netlist. This step ensures that the testbench won’t just only encodes our expectations while hiding other edge cases.</p>
+<p>18,943 cycles across 119 scenarios: the vendor waveform, the solution, the empty board, 25 relocations, 25 rectangle swaps, 25 random placements, <code>enable</code> stalls mid-grid, <code>enable</code> dropping mid-message, misaligned grids, back-to-back attempts, and reset asserted at every character position of an in-flight message.</p>
+<div class="table-wrap"><table class="booktabs">
+<thead>
+<tr>
+<th>Device under test</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>RTL</td>
+<td>bit-exact, 18,943 cycles</td>
+</tr>
+<tr>
+<td>after synthesis to sky130 gates</td>
+<td>bit-exact</td>
+</tr>
+<tr>
+<td>after place-and-route</td>
+<td>bit-exact</td>
+</tr>
+</tbody>
+</table></div>
+<div class="table-wrap"><table class="booktabs">
+<thead>
+<tr>
+<th></th>
+<th>original</th>
+<th>rebuild</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>standard cells</td>
+<td>738</td>
+<td>758</td>
+</tr>
+<tr>
+<td>flip-flops</td>
+<td>92</td>
+<td>84</td>
+</tr>
+<tr>
+<td>standard-cell area</td>
+<td>8,417 µm²</td>
+<td>6,466 µm²</td>
+</tr>
+<tr>
+<td>die</td>
+<td>60,000 µm² (200 × 300)</td>
+<td>17,237 µm²</td>
+</tr>
+<tr>
+<td>utilisation</td>
+<td>14.0%</td>
+<td>49.2%</td>
+</tr>
+</tbody>
+</table></div>
+<p>More cells but less area. 51 of my 758 cells are timing-repair buffers and 29 are clock buffers, none of which is like the OG. Since I didn’t know Jane Street’s target, I just constrained a 12 ns clock. Their clock tree is a single <code>clkbuf_16</code> feeding two levels while mine is sized to a constraint. Take those 80 buffers out and the remaining logic is smaller than theirs =&gt; where the area goes.</p>
+<p>Also, the die difference is for the easter eggs’ area. It’s just a floorplanning thing, not logic related.</p>
+<p>Splitting both designs by when each flop moves gives an exact accounting:</p>
+<div class="table-wrap"><table class="booktabs">
+<thead>
+<tr>
+<th></th>
+<th>original</th>
+<th>rebuild</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>checker state</td>
+<td>78</td>
+<td>78</td>
+</tr>
+<tr>
+<td>message sequencer</td>
+<td>6</td>
+<td>6</td>
+</tr>
+<tr>
+<td>output byte register</td>
+<td>8</td>
+<td>0</td>
+</tr>
+<tr>
+<td>total</td>
+<td>92</td>
+<td>84</td>
+</tr>
+</tbody>
+</table></div>
+<p>The checker and the sequencer match flop for flop. The sequencer is a 4-bit character index plus two control flags in both, the only difference being that the original’s index has no reset at all, the four <code>dfxtp</code> that are the only reset-less flops on the die.</p>
+<p>Moreover, the OG circuit registers its output byte, which I didn’t implement here. Eight flops, one per bit: four <code>dfstp</code> (set on reset) driving <code>O[0]</code>, <code>O[2]</code>, <code>O[5]</code>, <code>O[7]</code>, and four <code>dfrtp</code> driving the rest. I just drive all eight combinationally off the character index.</p>
+<p>However, closing the gap is rather straightforward once the structure is known. We just need to decode the next index and register the byte, which keeps <code>O</code> cycle-identical while matching the original’s shape. It is bit-exact on all 18,943 vectors, passes the same equivalence proofs, and synthesises to 91 flops. The 92nd is <code>O[7]</code>, which is 0 for every character of all five messages, so <code>yosys</code> just folds it away and the original’s flow did not.</p>
+<div class="table-wrap"><table class="booktabs">
+<thead>
+<tr>
+<th>Signoff, LibreLane 3.0.9 / sky130A / 12 ns</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DRC (magic, KLayout, router)</td>
+<td>0 / 0 / 0</td>
+</tr>
+<tr>
+<td>LVS</td>
+<td>0</td>
+</tr>
+<tr>
+<td>antenna violations</td>
+<td>0</td>
+</tr>
+<tr>
+<td>setup, all 9 corners</td>
+<td>closed, worst +0.137 ns (<code>max_ss_100C_1v60</code>)</td>
+</tr>
+<tr>
+<td>hold, worst</td>
+<td>+0.028 ns</td>
+</tr>
+<tr>
+<td>max slew</td>
+<td>115 pins, slow corner only, worst 0.98 ns against the PDK’s own 1.5 ns limit</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="what-building-it-back-found">What building it back found</h3>
+<p>Rebuilding the chip was actually method. It revealed the one message that the original blackbox-probing method had missed, and completes the set:</p>
+<div class="table-wrap"><table class="booktabs">
+<thead>
+<tr>
+<th>rows</th>
+<th>cols</th>
+<th>regions</th>
+<th>adjacency</th>
+<th>message</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td><code>(* TWO STARS *)</code></td>
+</tr>
+<tr>
+<td>✓</td>
+<td>✓</td>
+<td>✓</td>
+<td>✗</td>
+<td><code>TWO"NOT TOUCH</code></td>
+</tr>
+<tr>
+<td>no stars at all</td>
+<td></td>
+<td></td>
+<td></td>
+<td><code>EMPTY SKY</code></td>
+</tr>
+<tr>
+<td>every cell a star</td>
+<td></td>
+<td></td>
+<td></td>
+<td><code>BIG BANG</code></td>
+</tr>
+<tr>
+<td>anything else</td>
+<td></td>
+<td></td>
+<td></td>
+<td><code>TRY AGAIN</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><code>TWO"NOT TOUCH</code> is the one probing never produced. It needs a placement that is correct in every count and wrong only in adjacency, especially when we hadn’t solved the puzzle before probing.</p>
+<p>There must be an easier way to figure out this output, but we’d already had the RTL version, so... yeah.</p>
+<h2 id="formal-proving-the-machine">9. Formal Proving the Machine</h2>
+<p>We can always take it further. To make sure that we cover all the boards, let’s start formally verify the circuit.</p>
+<h3 id="a-demonstration-first">A demonstration first</h3>
+<p>I gave a SAT solver the extracted netlist and exactly one constraint, <code>success == 1</code>. The SAT solver knows nothing else.</p>
+<pre><code>$ yosys ... sat -seq 127 -set-init-zero -set-at 127 win 1 -dump_vcd solve.vcd
+   127  \win                                          1
+Dumping SAT model to VCD file reimpl/out/solve.vcd</code></pre>
+<p>1.8 seconds. It returned a 121-bit board carrying exactly 22 stars, and that board is the Star Battle solution, identical to our solution. Replaying it through the simulator gives <code>(* TWO STARS *)</code>.</p>
+<p>We just proved that the whole puzzle can therefore be solved with no knowledge of the puzzle by asking the silicon what would satisfy it.</p>
+<h3 id="turning-a-circuit-into-a-formula">Turning a circuit into a formula</h3>
+<p>A SAT solver takes a Boolean formula and answers one of two things: either here is an assignment that makes it true, or no such assignment exists. And to do that, we’re going to unroll the entire circuit, strip its sequential logic &amp; time elements out of the way.</p>
+<p>The chip as extracted is 738 cells: 92 flip-flops and 646 combinational gates. Those 92 flops are not a chain with logic between them. They are a single 92-bit register, every bit updating on the same edge, with the whole combinational block wrapped around it in feedback:</p>
+<figure class="smallest">
+  <img src="../img/jsasic/register-feedback.webp" alt="" width="827" height="1235" loading="lazy">
+  <figcaption>The chip as one 92-bit register wrapped in combinational feedback.</figcaption>
+</figure>
+<p>Unrolling makes one copy of that combinational block per clock cycle, and wires copy <code>C</code>’s next-state output straight into copy <code>C+1</code>’s current-state input:</p>
+<figure>
+  <img src="../img/jsasic/unrolled.webp" alt="" width="1816" height="546" loading="lazy">
+  <figcaption>Unrolled: one copy of the logic block per clock cycle.</figcaption>
+</figure>
+<p>Now the flip-flops are gone. No clock, no memory and no feedback. Just one enormous block of combinational logic, which converts to a formula mechanically.</p>
+<p>145 is a window I chose rather than a property of the design. It includes 4 cycles of reset, 121 grid cells, and 20 for the message. It’s also the reason the method is bounded. If anything goes wrong on cycle 146, we wouldn’t know. But let’s assume 145 is safe for now.</p>
+<p>Note: only the 145 bits of the input pin are free. Every other variable in the formula, including all 92 state bits at all 145 cycles, is derived. Once the inputs are fixed the gates force everything else.</p>
+<h3 id="how-does-it-cover-all-boards-literally">How does it cover all boards literally?</h3>
+<p>The inputs go into the formula as symbols and are never assigned a value. The question is not “what happens for this board” but “does a board exist that makes the two designs differ”. <code>UNSAT</code> means no such board exists, established by deduction over the structure of the formula.</p>
+<p>For example: suppose the formula contains <code>a AND b = 1</code> together with <code>NOT a = 1</code>. The first forces <code>a = 1</code>, the second forces <code>a = 0</code> =&gt; contradiction. And <code>b</code> was never assigned. Because <code>b</code> was never touched, that single step covers both of its values at once.</p>
+<p>Scale that up. When the solver reaches a contradiction having committed to <code>N</code> of the 145 input bits, it retires every sequence agreeing on those <code>N</code> regardless of the other <code>145 - N</code>. That is 2<sup>145 − N</sup> input sequences eliminated in one step. By using reasoning instead of looping through 2<sup>145</sup> possible boards, we can iterate through each logical board in seconds.</p>
+<h3 id="the-miter">The miter</h3>
+<figure class="smaller">
+  <img src="../img/jsasic/miter.webp" alt="" width="762" height="502" loading="lazy">
+  <figcaption>The miter. Same input into both designs, compare the outputs.</figcaption>
+</figure>
+<p>Firstly, it compares outputs only. Even though my own implementation is different from the original (according to the flops &amp; netlist after running RTL-to-GDS), none of that is compared or required to agree.</p>
+<h3 id="what-the-proof-found">What the proof found</h3>
+<p>The first run failed, with a counterexample pointing at <code>U525_a31oi.A1</code>, the floating net from section 2 (confirmed by Jane Street). This is expected since a floating net can take any input it likes, which directly influence the output (not <code>success</code> though). Tracing the net forward through the netlist:</p>
+<figure class="small">
+  <img src="../img/jsasic/floating-net.webp" alt="" width="851" height="181" loading="lazy">
+  <figcaption>Tracing the floating net forward.</figcaption>
+</figure>
+<p>The floating net can move two bits of the output byte, and reaches neither <code>success</code> nor any flip-flop. Touching no state, it cannot influence a later cycle either. Pinning it to 0, the value that reproduces the vendor’s own waveform, and everything goes through:</p>
+<div class="table-wrap"><table class="booktabs">
+<thead>
+<tr>
+<th>Claim</th>
+<th>Window</th>
+<th>Result</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>success</code> agrees, for every possible board</td>
+<td>145 cycles, a whole attempt</td>
+<td>proved, 4 s</td>
+</tr>
+<tr>
+<td><code>success</code> agrees for any value the floating net takes</td>
+<td>145 cycles</td>
+<td>proved, 4 s</td>
+</tr>
+<tr>
+<td><code>O</code> &amp;&amp; <code>success</code> agree, for every possible board</td>
+<td>145 cycles, the whole attempt including every character of the longest message</td>
+<td>proved, 5 min</td>
+</tr>
+<tr>
+<td><code>O</code> &amp;&amp; <code>success</code> agree under arbitrary stalls and mid-stream resets</td>
+<td>100 cycles</td>
+<td>proved, 13 s</td>
+</tr>
+<tr>
+<td>the same, across the full 145-cycle window</td>
+<td>145 cycles</td>
+<td>no result after 30 min</td>
+</tr>
+</tbody>
+</table></div>
+<p>For all 2<sup>121</sup> boards, the recovered design and the original agree on the win condition. It takes four seconds, because comparing only <code>success</code> drops the entire message generator out of the cone and the solver never has to consider it.</p>
+<p>Row three is the strongest statement in this writeup. Every output byte, on every board, across a complete attempt. 2,049,750 variables and 5,359,575 clauses, and it is worth noting that this instance was intractable earlier in the project: it only became solvable once the counters in my rebuild were fixed to saturate like the original’s, which gave the solver far more internal structure to match up.</p>
+<p>The last row is the honest limit. Leaving <code>enable</code> and <code>rst_n</code> free as well, so the solver may stall the scan or reset it anywhere, is proved over 100 cycles but does not finish over 145. So arbitrary stall and reset patterns are covered through the verdict and the opening bytes, and the tail of the message under those conditions rests on the 18,943 simulated cycles instead. Everything on a clean run is proved outright.</p>
+<h2 id="the-easter-eggs">10. The Easter Eggs</h2>
+<h3 id="the-jane-street-logo">The Jane Street Logo</h3>
+<p>This is quite obvious since we only need to open a GDS viewer to see it. The same one appears in the warmup GDS file.</p>
+<figure>
+  <div class="pair"><img src="../img/jsasic/logo-puzzle.webp" alt="" width="988" height="1482" loading="lazy"><img src="../img/jsasic/logo-warmup.webp" alt="" width="1466" height="1468" loading="lazy"></div>
+  <figcaption>The Jane Street logo in the GDS viewer.</figcaption>
+</figure>
+<h3 id="star-battle-grid">Star Battle Grid</h3>
+<p>The regions form 3 letters: JSC =&gt; Jane Street Capital</p>
+<figure class="smaller">
+  <img src="../img/jsasic/jsc-regions.webp" alt="" width="999" height="1005" loading="lazy">
+  <figcaption>The regions spell JSC.</figcaption>
+</figure>
+<h3 id="verilog-attribute">Verilog Attribute</h3>
+<p>The solution, <code>(* TWO STARS *)</code>, is Verilog attribute syntax. Not sure if it’s an easter egg, but it’s cool that the winning message is wrapped inside the language the chip was written in (I was so wrong here. Reading other write ups, it appears that <code>(* *)</code> is how you comment in Hardcaml/OCaml, Jane Street’s aces. This chip is probably writed in Hardcaml too (wild guess))</p>
+<h3 id="perfect-number">Perfect Number</h3>
+<p>In the warm-up puzzle, Jane Street chose <code>comparator496</code>, the third perfect number. According to other writeups, there are some more perfect numbers throughout the warmup files, but I don’t have the links to them &amp; forgot what the numbers are so yeah we skipping that.</p>
+<h3 id="morse-code">Morse code</h3>
+<p>On the outer bound of the chip, we can see the layer:</p>
+<figure>
+  <img src="../img/jsasic/morse.webp" alt="" width="1192" height="74" loading="lazy">
+  <figcaption>The layer on the chip&rsquo;s outer bound.</figcaption>
+</figure>
+<pre><code>.--. . .-.  /  .- .-. . -. .- --  /  .- -..  /  .- ... - .-. .-
+ P   E  R       A  R   E  N  A  M     A  D      A  S   T  R   A</code></pre>
+<p><code>PER ARENAM AD ASTRA</code>, or “through the arena to the stars”. A pun on <code>per aspera ad astra</code> (“through hardships to the stars”). Arena here can mean the grid we playing the Star Battle on, and also, in Latin, it refers to a sandy place, and silicon is sand. Tuff word play. Like actually so cold I can’t lie. They cooked so hard here.</p>
+<h3 id="a-message-in-the-sample-stimulus">A message in the sample stimulus</h3>
+<p>This one might be the trickiest one, and it’s in <code>example_inputs.vcd</code>, the sample waveform the puzzle ships alongside the GDS.</p>
+<p>The file’s <code>$date</code> reads <code>Sat Dec 31 23:59:60 2016</code>, a real UTC leap second. This can stand on its own as another easter egg.</p>
+<p>Its <code>$version</code> field shows “Leave no stone unturned! But for this file, consider looking at it in a waveform viewer instead.” It seems like it’s telling us to read the stimulus instead of just replaying them through the netlist just to get <code>TRY AGAIN</code> twice.</p>
+<p>So we folded the <code>I</code> stream into the same 11-wide raster that gave us the region map, and</p>
+<pre><code>attempt 1 (columns 0-10):  4  3  5  4  3 10  9  0  0  0  0    total 38
+attempt 2 (columns 0-10):  7  3  2  3  4 11  8  0  0  0  0    total 38</code></pre>
+<p>First of all, 38 stars on a 11x11 grid? Those are not real attempts to solve the board, hinting at something else. Secondly, columns 7-10 are identically zero across all 22 rows of both attempts.</p>
+<p>It’s obviously telling us to only read the first 7 bits. And when we read those bits as a byte, column 0 as the LSB up to column 6 as the MSB, and every one of the 22 rows decodes cleanly to printable ASCII, we have this:</p>
+<pre><code>attempt 1                                   attempt 2
+row 0  0010101 -&gt; 1010100 = 0x54 &#39;T&#39;        row 0  1101011 -&gt; 1101011 = 0x6b &#39;k&#39;
+row 1  0001011 -&gt; 1101000 = 0x68 &#39;h&#39;        row 1  1001111 -&gt; 1111001 = 0x79 &#39;y&#39;
+row 2  1010011 -&gt; 1100101 = 0x65 &#39;e&#39;        row 2  0000010 -&gt; 0100000 = 0x20 &#39; &#39;
+row 3  0000010 -&gt; 0100000 = 0x20 &#39; &#39;        row 3  1000011 -&gt; 1100001 = 0x61 &#39;a&#39;
+row 4  0111011 -&gt; 1101110 = 0x6e &#39;n&#39;        row 4  1110111 -&gt; 1110111 = 0x77 &#39;w&#39;
+row 5  1001011 -&gt; 1101001 = 0x69 &#39;i&#39;        row 5  1000011 -&gt; 1100001 = 0x61 &#39;a&#39;
+row 6  1110011 -&gt; 1100111 = 0x67 &#39;g&#39;        row 6  1001011 -&gt; 1101001 = 0x69 &#39;i&#39;
+row 7  0001011 -&gt; 1101000 = 0x68 &#39;h&#39;        row 7  0010111 -&gt; 1110100 = 0x74 &#39;t&#39;
+row 8  0010111 -&gt; 1110100 = 0x74 &#39;t&#39;        row 8  1100111 -&gt; 1110011 = 0x73 &#39;s&#39;
+row 9  0000010 -&gt; 0100000 = 0x20 &#39; &#39;        row 9  0000010 -&gt; 0100000 = 0x20 &#39; &#39;
+row10  1100111 -&gt; 1110011 = 0x73 &#39;s&#39;        row10  0000010 -&gt; 0100000 = 0x20 &#39; &#39;</code></pre>
+<blockquote>
+<p><strong><em>The night sky awaits</em></strong></p>
+</blockquote>
+<p>As expected from Jane Street. Such sophisticated eggs.</p>
+<h2 id="reproducing-the-test">11. Reproducing the test</h2>
+<p><a href="https://github.com/AndrewVu23/asic-puzzle-2026" class="uri">https://github.com/AndrewVu23/asic-puzzle-2026</a></p>
+
+<figure>
+  <a href="../img/jsasic/email.webp"><img src="../img/jsasic/email.webp" alt="Email from the Jane Street ASIC Puzzle team" width="1574" height="712" loading="lazy"></a>
+  <figcaption>I GOT CHOSEN YEAHHHHHHHH!!!!</figcaption>
+</figure>
+</article>
+
+<footer class="footer"><a href="../blog.html">&larr; back to Blog</a></footer>
+<script src="../words.js"></script>
+</body>
+</html>
