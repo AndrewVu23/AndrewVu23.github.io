@@ -27,6 +27,11 @@
 <p>This is my first time solving a Jane Street puzzle. I picked this specifically since it’s reverse engineering an ASIC, and I’m a wannabe hardware engineer.</p>
 <p>The problem: Jane Street provides us with a GDS file, the final file we send to a foundry to get our chip taped out. Our mission is to derive the purpose of the chip based on the layout and polygons.</p>
 <p>This writeup shows how the chip was cracked.</p>
+<dl class="list">
+  <dt>code</dt>        <dd><a href="https://github.com/AndrewVu23/asic-puzzle-2026">github.com/AndrewVu23/asic-puzzle-2026</a></dd>
+  <dt>the puzzle</dt>  <dd><a href="https://blog.janestreet.com/can-you-reverse-engineer-an-asic/">Can you reverse engineer an ASIC?</a> (Jane Street)</dd>
+  <dt>the results</dt> <dd><a href="https://blog.janestreet.com/asic-puzzle-results/">Results from the ASIC puzzle</a> (Jane Street)</dd>
+</dl>
 
 <nav class="contents">
 <p><b>Contents</b></p>
@@ -42,7 +47,6 @@
   <li><a href="#rebuilding-the-machine">8. Rebuilding the Machine</a></li>
   <li><a href="#formal-proving-the-machine">9. Formal Proving the Machine</a></li>
   <li><a href="#the-easter-eggs">10. The Easter Eggs</a></li>
-  <li><a href="#reproducing-the-test">11. Reproducing the test</a></li>
 </ul>
 </nav>
 
@@ -732,8 +736,6 @@ row10  1100111 -&gt; 1110011 = 0x73 &#39;s&#39;        row10  0000010 -&gt; 0100
 <p><strong><em>The night sky awaits</em></strong></p>
 </blockquote>
 <p>As expected from Jane Street. Such sophisticated eggs.</p>
-<h2 id="reproducing-the-test">11. Reproducing the test</h2>
-<p><a href="https://github.com/AndrewVu23/asic-puzzle-2026" class="uri">https://github.com/AndrewVu23/asic-puzzle-2026</a></p>
 
 <figure>
   <a href="../img/jsasic/email.webp"><img src="../img/jsasic/email.webp" alt="Email from the Jane Street ASIC Puzzle team" width="1574" height="712" loading="lazy"></a>
